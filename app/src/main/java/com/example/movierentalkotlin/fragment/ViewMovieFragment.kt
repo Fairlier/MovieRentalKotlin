@@ -3,8 +3,12 @@ package com.example.movierentalkotlin.fragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -23,14 +27,31 @@ class ViewMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding = FragmentViewMovieBinding.inflate(inflater, container, false)
         val view = binding.root
-        val taskId = ViewMovieFragmentArgs.fromBundle(requireArguments()).id
+
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_toolbar_view_movie, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.editMovieFragment -> {
+//                        findNavController().navigate(R.id.action_movieCatalogFragment_to_searchMovieFragment)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner)
 
         val application = requireNotNull(this.activity).application
         val dao = MovieRentalDatabase.getInstance(application).movieDao
 
-        val viewModelFactory = ViewMovieViewModelFactory(taskId, dao)
+        val id = ViewMovieFragmentArgs.fromBundle(requireArguments()).id
+        val viewModelFactory = ViewMovieViewModelFactory(id, dao)
         val viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ViewMovieViewModel::class.java)
 
@@ -44,6 +65,7 @@ class ViewMovieFragment : Fragment() {
                 viewModel.onNavigatedToCatalog()
             }
         })
+
         return view
     }
 

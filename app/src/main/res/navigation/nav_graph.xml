@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_graph"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/movieCatalogFragment">
 
     <fragment
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/viewMovieFragment"
         android:name="com.example.movierentalkotlin.fragment.ViewMovieFragment"
-        android:label="fragment_edit_task"
+        android:label="fragment_view_movie"
         tools:layout="@layout/fragment_view_movie" >
 
         <argument

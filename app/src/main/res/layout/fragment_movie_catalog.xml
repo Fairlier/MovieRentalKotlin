@@ -38,6 +38,6 @@
             android:layout_weight="1"
             android:gravity="top"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2" />
+            app:spanCount="1" />
     </LinearLayout>
 </layout>
