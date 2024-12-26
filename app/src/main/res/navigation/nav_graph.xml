@@ -14,6 +14,14 @@
         <action
             android:id="@+id/action_movieCatalogFragment_to_viewMovieFragment"
             app:destination="@id/viewMovieFragment" />
+
+        <action
+            android:id="@+id/action_movieCatalogFragment_to_insertMovieFragment"
+            app:destination="@id/insertMovieFragment" />
+
+        <action
+            android:id="@+id/action_movieCatalogFragment_to_searchMovieFragment"
+            app:destination="@id/searchMovieFragment" />
     </fragment>
 
     <fragment
@@ -25,8 +33,62 @@
         <argument
             android:name="id"
             app:argType="long" />
+
         <action
             android:id="@+id/action_viewMovieFragment_to_movieCatalogFragment"
+            app:destination="@id/movieCatalogFragment"
+            app:popUpTo="@id/movieCatalogFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_viewMovieFragment_to_editMovieFragment"
+            app:destination="@id/editMovieFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/editMovieFragment"
+        android:name="com.example.movierentalkotlin.fragment.EditMovieFragment"
+        android:label="fragment_edit_movie"
+        tools:layout="@layout/fragment_edit_movie" >
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_editMovieFragment_to_viewMovieFragment"
+            app:destination="@id/viewMovieFragment"
+            app:popUpTo="@id/viewMovieFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_editMovieFragment_to_movieCatalogFragment"
+            app:destination="@id/movieCatalogFragment"
+            app:popUpTo="@id/movieCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/insertMovieFragment"
+        android:name="com.example.movierentalkotlin.fragment.InsertMovieFragment"
+        android:label="fragment_insert_movie"
+        tools:layout="@layout/fragment_insert_movie" >
+
+        <action
+            android:id="@+id/action_insertMovieFragment_to_movieCatalogFragment"
+            app:destination="@id/movieCatalogFragment"
+            app:popUpTo="@id/movieCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchMovieFragment"
+        android:name="com.example.movierentalkotlin.fragment.SearchMovieFragment"
+        android:label="fragment_search_movie"
+        tools:layout="@layout/fragment_search_movie" >
+
+        <action
+            android:id="@+id/action_searchMovieFragment_to_movieCatalogFragment"
             app:destination="@id/movieCatalogFragment"
             app:popUpTo="@id/movieCatalogFragment"
             app:popUpToInclusive="true" />

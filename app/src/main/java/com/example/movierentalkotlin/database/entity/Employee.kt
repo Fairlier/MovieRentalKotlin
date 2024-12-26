@@ -31,5 +31,8 @@ data class Employee(
     val dateOfDismissal: String = "",
 
     @ColumnInfo(name = Constants.Employee.SALARY)
-    val salary: Double = 0.0
+    val salary: Double = 0.0,
+
+    @ColumnInfo(name = Constants.Movie.IMAGE)
+    val image: String? = null
 )

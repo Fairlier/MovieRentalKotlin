@@ -1,7 +1,6 @@
 package com.example.movierentalkotlin.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,55 +9,59 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import com.example.movierentalkotlin.R
 import com.example.movierentalkotlin.database.MovieRentalDatabase
-import com.example.movierentalkotlin.databinding.FragmentViewMovieBinding
-import com.example.movierentalkotlin.viewmodel.ViewMovieViewModel
-import com.example.movierentalkotlin.viewmodelfactory.ViewMovieViewModelFactory
+import com.example.movierentalkotlin.databinding.FragmentSearchMovieBinding
+import com.example.movierentalkotlin.viewmodel.SearchMovieViewModel
+import com.example.movierentalkotlin.viewmodel.SharedViewModel
+import com.example.movierentalkotlin.viewmodelfactory.SearchMovieViewModelFactory
 
-class ViewMovieFragment : Fragment() {
+class SearchMovieFragment : Fragment() {
 
-    private var _binding: FragmentViewMovieBinding? = null
+    private var _binding: FragmentSearchMovieBinding? = null
     private val binding get() = _binding!!
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentViewMovieBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchMovieBinding.inflate(inflater, container, false)
         val view = binding.root
 
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_toolbar_view_movie, menu)
+                menuInflater.inflate(R.menu.menu_toolbar, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.editMovieFragment -> {
-                        val id = ViewMovieFragmentArgs.fromBundle(requireArguments()).id
-                        val action = ViewMovieFragmentDirections.actionViewMovieFragmentToEditMovieFragment(id)
-                        findNavController().navigate(action)
-                        true
-                    }
-                    else -> false
-                }
+                return false
             }
         }, viewLifecycleOwner)
 
         val application = requireNotNull(this.activity).application
         val dao = MovieRentalDatabase.getInstance(application).movieDao
 
-        val id = ViewMovieFragmentArgs.fromBundle(requireArguments()).id
-        val viewModelFactory = ViewMovieViewModelFactory(id, dao)
+        val viewModelFactory = SearchMovieViewModelFactory(dao)
         val viewModel = ViewModelProvider(this,
-            viewModelFactory)[ViewMovieViewModel::class.java]
+            viewModelFactory)[SearchMovieViewModel::class.java]
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.navigateToViewAfterSearch.observe(viewLifecycleOwner, Observer { navigate ->
+            if (navigate) {
+                viewModel.filters.value?.let { sharedViewModel.setMovieFilters(it) }
+                view.findNavController()
+                    .navigate(R.id.action_searchMovieFragment_to_movieCatalogFragment)
+                viewModel.onNavigatedToViewAfterSearch()
+            }
+        })
 
         return view
     }

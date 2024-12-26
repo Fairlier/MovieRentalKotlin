@@ -16,23 +16,26 @@ data class Movie(
     var title: String = "",
 
     @ColumnInfo(name = Constants.Movie.RELEASE_YEAR)
-    val releaseYear: String = "",
+    var releaseYear: String = "",
 
     @ColumnInfo(name = Constants.Movie.DIRECTOR)
-    val director: String = "",
+    var director: String = "",
 
     @ColumnInfo(name = Constants.Movie.COUNTRY)
-    val country: String = "",
+    var country: String = "",
 
     @ColumnInfo(name = Constants.Movie.DURATION)
-    val duration: Double = 0.0,
+    var duration: Double = 0.0,
 
     @ColumnInfo(name = Constants.Movie.RENTAL_COST)
-    val rentalCost: Double = 0.0,
+    var rentalCost: Double = 0.0,
 
     @ColumnInfo(name = Constants.Movie.AVERAGE_RATING)
     val averageRating: Double = 0.0,
 
     @ColumnInfo(name = Constants.Movie.DESCRIPTION)
-    val description: String = ""
+    var description: String = "",
+
+    @ColumnInfo(name = Constants.Movie.IMAGE)
+    var image: String? = null
 )

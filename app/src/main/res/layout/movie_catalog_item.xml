@@ -44,7 +44,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:text="@{movie.title}" />
 
@@ -59,15 +58,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Год: "
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
+                        android:textColor="@android:color/darker_gray" />
 
                     <TextView
                         android:id="@+id/movie_release_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:text="@{movie.releaseYear}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -81,15 +79,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Страна: "
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
+                        android:textColor="@android:color/darker_gray" />
 
                     <TextView
                         android:id="@+id/movie_country"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:text="@{movie.country}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -103,15 +100,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Режиссер: "
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
+                        android:textColor="@android:color/darker_gray"/>
 
                     <TextView
                         android:id="@+id/movie_director"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:text="@{movie.director}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -125,15 +121,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Длительность: "
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp" />
+                        android:textColor="@android:color/darker_gray" />
 
                     <TextView
                         android:id="@+id/movie_duration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:text="@{String.valueOf(movie.duration)}" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -152,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:text="@{String.valueOf(movie.averageRating)}" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -165,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:text="@{String.valueOf(movie.rentalCost)}" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

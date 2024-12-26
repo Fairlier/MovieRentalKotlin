@@ -13,7 +13,7 @@ object Constants {
         const val COUNTRY: String = "country"
         const val DURATION: String = "duration"
         const val RENTAL_COST: String = "rental_cost"
-        const val AVERAGE_RATING: String = "rating"
+        const val AVERAGE_RATING: String = "average_rating"
         const val DESCRIPTION: String = "description"
         const val IMAGE: String = "image"
     }

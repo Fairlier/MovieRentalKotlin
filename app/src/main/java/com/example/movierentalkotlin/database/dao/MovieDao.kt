@@ -25,4 +25,24 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies ORDER BY id DESC")
     fun getAll(): LiveData<List<Movie>>
+
+    @Query("""
+        SELECT * FROM movies
+        WHERE (:title IS NULL OR title LIKE :title)
+        AND (:releaseYear IS NULL OR release_year = :releaseYear)
+        AND (:director IS NULL OR director LIKE :director)
+        AND (:country IS NULL OR country LIKE :country)
+        AND (:duration IS NULL OR duration = :duration)
+        AND (:rentalCost IS NULL OR rental_cost = :rentalCost)
+        AND (:averageRating IS NULL OR average_rating = :averageRating)
+    """)
+    fun search(
+        title: String?,
+        releaseYear: String?,
+        director: String?,
+        country: String?,
+        duration: Double?,
+        rentalCost: Double?,
+        averageRating: Double?
+    ): LiveData<List<Movie>>
 }

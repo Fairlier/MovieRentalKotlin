@@ -3,32 +3,28 @@ package com.example.movierentalkotlin.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.movierentalkotlin.database.dao.MovieDao
-import kotlinx.coroutines.launch
 
 class ViewMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
 
-    private val _navigateToCatalog = MutableLiveData<Boolean>(false)
-    val navigateToCatalog: LiveData<Boolean> get() = _navigateToCatalog
+    val durationAsString = MutableLiveData<String>()
+    val rentalCostAsString = MutableLiveData<String>()
+
+    private val _navigateToEdit = MutableLiveData<Boolean>(false)
+    val navigateToEdit: LiveData<Boolean> get() = _navigateToEdit
 
     val movie = dao.getById(id)
 
-    fun updateMovie() {
-        viewModelScope.launch {
-            dao.update(movie.value!!)
-            _navigateToCatalog.value = true
+    init {
+        movie.observeForever { movie ->
+            if (movie != null) {
+                durationAsString.value = movie.duration.toString()
+                rentalCostAsString.value = movie.rentalCost.toString()
+            }
         }
     }
 
-    fun deleteMovie() {
-        viewModelScope.launch {
-            dao.delete(movie.value!!)
-            _navigateToCatalog.value = true
-        }
-    }
-
-    fun onNavigatedToCatalog() {
-        _navigateToCatalog.value = false
+    fun onNavigatedToEdit() {
+        _navigateToEdit.value = false
     }
 }

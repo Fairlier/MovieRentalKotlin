@@ -15,22 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/movie_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Enter a movie title"
-            android:text="@={viewModel.newMovieTitle}" />
-
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Save Movie"
-            android:onClick="@{() -> viewModel.addMovie()}" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movie_catalog"
             android:layout_width="match_parent"
@@ -39,5 +23,11 @@
             android:gravity="top"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="1" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/menu_bottom_movie_catalog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/menu_bottom_movie_catalog" />
     </LinearLayout>
 </layout>

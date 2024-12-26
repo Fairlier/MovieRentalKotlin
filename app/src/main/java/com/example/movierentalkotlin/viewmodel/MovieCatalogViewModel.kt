@@ -3,35 +3,50 @@ package com.example.movierentalkotlin.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.movierentalkotlin.database.dao.MovieDao
 import com.example.movierentalkotlin.database.entity.Movie
-import kotlinx.coroutines.launch
+import com.example.movierentalkotlin.util.Constants
 
 class MovieCatalogViewModel(val dao: MovieDao) : ViewModel() {
 
-    private val _navigateToMovie = MutableLiveData<Long?>()
+    private val _navigateToView = MutableLiveData<Long?>()
+    val navigateToView: LiveData<Long?> get() = _navigateToView
 
-    var newMovieTitle = ""
+    fun onCatalogItemClicked(id: Long) {
+        _navigateToView.value = id
+    }
 
-    val movieCatalog = dao.getAll()
+    fun onCatalogItemNavigated() {
+        _navigateToView.value = null
+    }
 
-    val navigateToMovie: LiveData<Long?>
-        get() = _navigateToMovie
+    private val _catalog = MutableLiveData<List<Movie>>()
+    val catalog: LiveData<List<Movie>> get() = _catalog
 
-    fun addMovie() {
-        viewModelScope.launch {
-            val movie = Movie()
-            movie.title = newMovieTitle
-            dao.insert(movie)
+    init {
+        search(emptyMap())
+    }
+
+    fun setFilters(filters: Map<String, Any?>) {
+        search(filters)
+    }
+
+    private fun search(filters: Map<String, Any?>) {
+        val itemsLiveData = if (filters.isEmpty()) {
+            dao.getAll()
+        } else {
+            dao.search(
+                filters[Constants.Movie.TITLE] as? String,
+                filters[Constants.Movie.RELEASE_YEAR] as? String,
+                filters[Constants.Movie.DIRECTOR] as? String,
+                filters[Constants.Movie.COUNTRY] as? String,
+                filters[Constants.Movie.DURATION] as? Double,
+                filters[Constants.Movie.RENTAL_COST] as? Double,
+                filters[Constants.Movie.AVERAGE_RATING] as? Double
+            )
         }
-    }
-
-    fun onMovieClicked(taskId: Long) {
-        _navigateToMovie.value = taskId
-    }
-
-    fun onMovieNavigated() {
-        _navigateToMovie.value = null
+        itemsLiveData.observeForever { items ->
+            _catalog.postValue(items)
+        }
     }
 }

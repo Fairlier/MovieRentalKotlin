@@ -5,14 +5,14 @@
         <item
             android:id="@+id/movieCatalogFragment"
             android:icon="@android:drawable/ic_dialog_email"
-            android:title="Inbox" />
+            android:title="Фильмы" />
         <item
             android:id="@+id/viewMovieFragment"
             android:icon="@android:drawable/ic_menu_send"
-            android:title="Sent Items" />
+            android:title="Клиенты" />
     </group>
 
-    <item android:title="Support">
+    <item android:title="Помощь">
         <menu>
             <group android:checkableBehavior="single">
             </group>

@@ -5,6 +5,6 @@
     <item
         android:id="@+id/searchMovieFragment"
         android:icon="@drawable/baseline_search_24"
-        android:title="Search"
+        android:title="Поиск"
         app:showAsAction="always" />
 </menu>

@@ -9,20 +9,24 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.movierentalkotlin.R
 import com.example.movierentalkotlin.adapter.MovieCatalogItemAdapter
 import com.example.movierentalkotlin.database.MovieRentalDatabase
 import com.example.movierentalkotlin.databinding.FragmentMovieCatalogBinding
 import com.example.movierentalkotlin.viewmodel.MovieCatalogViewModel
+import com.example.movierentalkotlin.viewmodel.SharedViewModel
 import com.example.movierentalkotlin.viewmodelfactory.MovieCatalogViewModelFactory
 
 class MovieCatalogFragment : Fragment() {
 
     private var _binding: FragmentMovieCatalogBinding? = null
     private val binding get() = _binding!!
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +43,8 @@ class MovieCatalogFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.searchMovieFragment -> {
-//                        findNavController().navigate(R.id.action_movieCatalogFragment_to_searchMovieFragment)
+                        val action = MovieCatalogFragmentDirections.actionMovieCatalogFragmentToSearchMovieFragment()
+                        findNavController().navigate(action)
                         true
                     }
                     else -> false
@@ -47,33 +52,40 @@ class MovieCatalogFragment : Fragment() {
             }
         }, viewLifecycleOwner)
 
+        binding.menuBottomMovieCatalog.setupWithNavController(findNavController())
+
         val application = requireNotNull(this.activity).application
         val dao = MovieRentalDatabase.getInstance(application).movieDao
 
         val viewModelFactory = MovieCatalogViewModelFactory(dao)
-        val viewModel = ViewModelProvider(this, viewModelFactory)
-                        .get(MovieCatalogViewModel::class.java)
+        val viewModel = ViewModelProvider(this,
+            viewModelFactory)[MovieCatalogViewModel::class.java]
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         val adapter = MovieCatalogItemAdapter{ id ->
-            viewModel.onMovieClicked(id)
+            viewModel.onCatalogItemClicked(id)
         }
         binding.movieCatalog.adapter = adapter
 
-        viewModel.movieCatalog.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.submitList(it)
+        sharedViewModel.movieFilters.observe(viewLifecycleOwner) { filters ->
+            viewModel.setFilters(filters)
+        }
+
+        viewModel.catalog.observe(viewLifecycleOwner, Observer { movies ->
+            movies?.let {
+                println("Movies updated in catalog: ${movies.size}")
+                adapter.submitList(movies)
             }
         })
 
-        viewModel.navigateToMovie.observe(viewLifecycleOwner, Observer { id ->
+        viewModel.navigateToView.observe(viewLifecycleOwner, Observer { id ->
             id?.let {
                 val action = MovieCatalogFragmentDirections
                     .actionMovieCatalogFragmentToViewMovieFragment(id)
                 this.findNavController().navigate(action)
-                viewModel.onMovieNavigated()
+                viewModel.onCatalogItemNavigated()
             }
         })
 

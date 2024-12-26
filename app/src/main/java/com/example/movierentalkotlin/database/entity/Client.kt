@@ -25,5 +25,8 @@ data class Client(
     val phoneNumber: String = "",
 
     @ColumnInfo(name = Constants.Client.DATE_OF_REGISTRATION)
-    val dateOfRegistration: String = ""
+    val dateOfRegistration: String = "",
+
+    @ColumnInfo(name = Constants.Movie.IMAGE)
+    val image: String? = null
 )

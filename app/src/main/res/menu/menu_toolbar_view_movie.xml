@@ -5,6 +5,6 @@
     <item
         android:id="@+id/editMovieFragment"
         android:icon="@drawable/baseline_edit_24"
-        android:title="Edit"
+        android:title="Редактировать"
         app:showAsAction="always" />
 </menu>

@@ -10,8 +10,10 @@ import com.example.movierentalkotlin.diffutil.MovieDiffItemCallback
 
 class MovieCatalogItemAdapter(val clickListener: (taskId: Long) -> Unit)
     : ListAdapter<Movie, MovieCatalogItemAdapter.TaskItemViewHolder>(MovieDiffItemCallback()) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : TaskItemViewHolder = TaskItemViewHolder.inflateFrom(parent)
+
     override fun onBindViewHolder(holder: TaskItemViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item, clickListener)
@@ -26,6 +28,7 @@ class MovieCatalogItemAdapter(val clickListener: (taskId: Long) -> Unit)
                 return TaskItemViewHolder(binding)
             }
         }
+
         fun bind(item: Movie, clickListener: (id: Long) -> Unit) {
             binding.movie = item
             binding.root.setOnClickListener { clickListener(item.id) }
