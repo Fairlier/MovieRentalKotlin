@@ -7,24 +7,24 @@ import com.example.movierentalkotlin.database.dao.MovieDao
 
 class ViewMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
 
-    val durationAsString = MutableLiveData<String>()
-    val rentalCostAsString = MutableLiveData<String>()
+    private val _durationAsString = MutableLiveData<String>()
+    val durationAsString: LiveData<String> = _durationAsString
 
-    private val _navigateToEdit = MutableLiveData<Boolean>(false)
-    val navigateToEdit: LiveData<Boolean> get() = _navigateToEdit
+    private val _averageRatingAsString = MutableLiveData<String>()
+    val averageRatingAsString: LiveData<String> = _averageRatingAsString
+
+    private val _rentalCostAsString = MutableLiveData<String>()
+    val rentalCostAsString: LiveData<String> = _rentalCostAsString
 
     val movie = dao.getById(id)
 
     init {
         movie.observeForever { movie ->
             if (movie != null) {
-                durationAsString.value = movie.duration.toString()
-                rentalCostAsString.value = movie.rentalCost.toString()
+                _durationAsString.value = movie.duration.toString()
+                _averageRatingAsString.value = movie.averageRating.toString()
+                _rentalCostAsString.value = movie.rentalCost.toString()
             }
         }
-    }
-
-    fun onNavigatedToEdit() {
-        _navigateToEdit.value = false
     }
 }

@@ -8,7 +8,7 @@ import com.example.movierentalkotlin.viewmodel.InsertMovieViewModel
 class InsertMovieViewModelFactory(private val dao: MovieDao)
     : ViewModelProvider.Factory {
 
-    override fun <T: ViewModel> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(InsertMovieViewModel::class.java)) {
             return InsertMovieViewModel(dao) as T
         }

@@ -3,5 +3,5 @@
     <item
         android:id="@+id/insertMovieFragment"
         android:icon="@drawable/baseline_add_24"
-        android:title="Добавить" />
+        android:title="Добавить фильм" />
 </menu>

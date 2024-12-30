@@ -8,13 +8,16 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.example.movierentalkotlin.R
 import com.example.movierentalkotlin.database.MovieRentalDatabase
 import com.example.movierentalkotlin.databinding.FragmentInsertMovieBinding
+import com.example.movierentalkotlin.util.Constants
 import com.example.movierentalkotlin.viewmodel.InsertMovieViewModel
 import com.example.movierentalkotlin.viewmodelfactory.InsertMovieViewModelFactory
 
@@ -51,13 +54,33 @@ class InsertMovieFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.navigateToViewAfterInsert.observe(viewLifecycleOwner, Observer { navigate ->
+        viewModel.currentImageUrl.observe(viewLifecycleOwner) { url ->
+            Glide.with(this)
+                .load(url)
+                .placeholder(R.drawable.baseline_image_not_supported_24)
+                .error(R.drawable.baseline_image_not_supported_24)
+                .into(binding.movieImage)
+        }
+
+        viewModel.navigateToCatalogAfterInsert.observe(viewLifecycleOwner, Observer { navigate ->
             if (navigate) {
-                view.findNavController()
-                    .navigate(R.id.action_insertMovieFragment_to_movieCatalogFragment)
-                viewModel.onNavigatedToViewAfterInsert()
+                val action = InsertMovieFragmentDirections
+                    .actionInsertMovieFragmentToMovieCatalogFragment()
+                view.findNavController().navigate(action)
+                viewModel.onNavigatedToCatalogAfterInsert()
             }
         })
+
+        viewModel.showValidationError.observe(viewLifecycleOwner) { shouldShow ->
+            if (shouldShow == true) {
+                Toast.makeText(
+                    requireContext(),
+                    Constants.INSERT_TEXT,
+                    Toast.LENGTH_SHORT
+                ).show()
+                viewModel.onValidationErrorShown()
+            }
+        }
 
         return view
     }

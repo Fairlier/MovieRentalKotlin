@@ -73,10 +73,9 @@ class MovieCatalogFragment : Fragment() {
             viewModel.setFilters(filters)
         }
 
-        viewModel.catalog.observe(viewLifecycleOwner, Observer { movies ->
-            movies?.let {
-                println("Movies updated in catalog: ${movies.size}")
-                adapter.submitList(movies)
+        viewModel.catalog.observe(viewLifecycleOwner, Observer { items ->
+            items?.let {
+                adapter.submitList(items)
             }
         })
 

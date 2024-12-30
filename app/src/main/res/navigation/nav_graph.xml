@@ -93,4 +93,184 @@
             app:popUpTo="@id/movieCatalogFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
+
+
+    <fragment
+        android:id="@+id/clientCatalogFragment"
+        android:name="com.example.movierentalkotlin.fragment.ClientCatalogFragment"
+        android:label="fragment_client_catalog"
+        tools:layout="@layout/fragment_client_catalog" >
+
+        <action
+            android:id="@+id/action_clientCatalogFragment_to_viewClientFragment"
+            app:destination="@id/viewClientFragment" />
+
+        <action
+            android:id="@+id/action_clientCatalogFragment_to_insertClientFragment"
+            app:destination="@id/insertClientFragment" />
+
+        <action
+            android:id="@+id/action_clientCatalogFragment_to_searchClientFragment"
+            app:destination="@id/searchClientFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewClientFragment"
+        android:name="com.example.movierentalkotlin.fragment.ViewClientFragment"
+        android:label="fragment_view_client"
+        tools:layout="@layout/fragment_view_client" >
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_viewClientFragment_to_clientCatalogFragment"
+            app:destination="@id/clientCatalogFragment"
+            app:popUpTo="@id/clientCatalogFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_viewClientFragment_to_editClientFragment"
+            app:destination="@id/editClientFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/editClientFragment"
+        android:name="com.example.movierentalkotlin.fragment.EditClientFragment"
+        android:label="fragment_edit_client"
+        tools:layout="@layout/fragment_edit_client" >
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_editClientFragment_to_viewClientFragment"
+            app:destination="@id/viewClientFragment"
+            app:popUpTo="@id/viewClientFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_editClientFragment_to_clientCatalogFragment"
+            app:destination="@id/clientCatalogFragment"
+            app:popUpTo="@id/clientCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/insertClientFragment"
+        android:name="com.example.movierentalkotlin.fragment.InsertClientFragment"
+        android:label="fragment_insert_client"
+        tools:layout="@layout/fragment_insert_client" >
+
+        <action
+            android:id="@+id/action_insertClientFragment_to_clientCatalogFragment"
+            app:destination="@id/clientCatalogFragment"
+            app:popUpTo="@id/clientCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchClientFragment"
+        android:name="com.example.movierentalkotlin.fragment.SearchClientFragment"
+        android:label="fragment_search_client"
+        tools:layout="@layout/fragment_search_client" >
+
+        <action
+            android:id="@+id/action_searchClientFragment_to_clientCatalogFragment"
+            app:destination="@id/clientCatalogFragment"
+            app:popUpTo="@id/clientCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/employeeCatalogFragment"
+        android:name="com.example.movierentalkotlin.fragment.EmployeeCatalogFragment"
+        android:label="fragment_employee_catalog"
+        tools:layout="@layout/fragment_employee_catalog" >
+
+        <action
+            android:id="@+id/action_employeeCatalogFragment_to_viewEmployeeFragment"
+            app:destination="@id/viewEmployeeFragment" />
+
+        <action
+            android:id="@+id/action_employeeCatalogFragment_to_insertEmployeeFragment"
+            app:destination="@id/insertEmployeeFragment" />
+
+        <action
+            android:id="@+id/action_employeeCatalogFragment_to_searchEmployeeFragment"
+            app:destination="@id/searchEmployeeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewEmployeeFragment"
+        android:name="com.example.movierentalkotlin.fragment.ViewEmployeeFragment"
+        android:label="fragment_view_employee"
+        tools:layout="@layout/fragment_view_employee" >
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_viewEmployeeFragment_to_employeeCatalogFragment"
+            app:destination="@id/employeeCatalogFragment"
+            app:popUpTo="@id/employeeCatalogFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_viewEmployeeFragment_to_editEmployeeFragment"
+            app:destination="@id/editEmployeeFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/editEmployeeFragment"
+        android:name="com.example.movierentalkotlin.fragment.EditEmployeeFragment"
+        android:label="fragment_edit_employee"
+        tools:layout="@layout/fragment_edit_employee" >
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_editEmployeeFragment_to_viewEmployeeFragment"
+            app:destination="@id/viewEmployeeFragment"
+            app:popUpTo="@id/viewEmployeeFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_editEmployeeFragment_to_employeeCatalogFragment"
+            app:destination="@id/employeeCatalogFragment"
+            app:popUpTo="@id/employeeCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/insertEmployeeFragment"
+        android:name="com.example.movierentalkotlin.fragment.InsertEmployeeFragment"
+        android:label="fragment_insert_employee"
+        tools:layout="@layout/fragment_insert_employee" >
+
+        <action
+            android:id="@+id/action_insertEmployeeFragment_to_employeeCatalogFragment"
+            app:destination="@id/employeeCatalogFragment"
+            app:popUpTo="@id/employeeCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchEmployeeFragment"
+        android:name="com.example.movierentalkotlin.fragment.SearchEmployeeFragment"
+        android:label="fragment_search_employee"
+        tools:layout="@layout/fragment_search_employee" >
+
+        <action
+            android:id="@+id/action_searchEmployeeFragment_to_employeeCatalogFragment"
+            app:destination="@id/employeeCatalogFragment"
+            app:popUpTo="@id/employeeCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

@@ -25,4 +25,24 @@ interface EmployeeDao {
 
     @Query("SELECT * FROM employees ORDER BY id DESC")
     fun getAll(): LiveData<List<Employee>>
+
+    @Query("""
+        SELECT * FROM employees
+        WHERE (:fullName IS NULL OR full_name LIKE '%' || :fullName || '%')
+        AND (:dateOfBirth IS NULL OR date_of_birth LIKE '%' || :dateOfBirth || '%')
+        AND (:address IS NULL OR address LIKE '%' || :address || '%')
+        AND (:phoneNumber IS NULL OR phone_number LIKE '%' || :phoneNumber|| '%')
+        AND (:dateOfHire IS NULL OR date_of_hire LIKE '%' || :dateOfHire|| '%')
+        AND (:dateOfDismissal IS NULL OR date_of_dismissal LIKE '%' || :dateOfDismissal|| '%')
+        AND (:salary IS NULL OR salary = :salary)
+    """)
+    fun search(
+        fullName: String?,
+        dateOfBirth: String?,
+        address: String?,
+        phoneNumber: String?,
+        dateOfHire: String?,
+        dateOfDismissal: String?,
+        salary: Double?
+    ): LiveData<List<Employee>>
 }

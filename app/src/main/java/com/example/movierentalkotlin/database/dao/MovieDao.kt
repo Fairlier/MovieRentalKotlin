@@ -28,10 +28,10 @@ interface MovieDao {
 
     @Query("""
         SELECT * FROM movies
-        WHERE (:title IS NULL OR title LIKE :title)
-        AND (:releaseYear IS NULL OR release_year = :releaseYear)
-        AND (:director IS NULL OR director LIKE :director)
-        AND (:country IS NULL OR country LIKE :country)
+        WHERE (:title IS NULL OR title LIKE '%' || :title || '%')
+        AND (:releaseYear IS NULL OR release_year LIKE '%' || :releaseYear || '%')
+        AND (:director IS NULL OR director LIKE '%' || :director || '%')
+        AND (:country IS NULL OR country LIKE '%' || :country|| '%')
         AND (:duration IS NULL OR duration = :duration)
         AND (:rentalCost IS NULL OR rental_cost = :rentalCost)
         AND (:averageRating IS NULL OR average_rating = :averageRating)

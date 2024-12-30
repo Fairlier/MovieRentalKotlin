@@ -9,8 +9,12 @@ import kotlinx.coroutines.launch
 
 class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
 
-    val durationAsString = MutableLiveData<String>()
-    val rentalCostAsString = MutableLiveData<String>()
+    val _durationAsString = MutableLiveData<String>()
+
+    val _rentalCostAsString = MutableLiveData<String>()
+
+    val _currentImageUrl = MutableLiveData<String?>()
+    val currentImageUrl: LiveData<String?> get() = _currentImageUrl
 
     private val _navigateToViewAfterUpdate = MutableLiveData<Boolean>(false)
     val navigateToViewAfterUpdate: LiveData<Boolean> get() = _navigateToViewAfterUpdate
@@ -23,19 +27,21 @@ class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
     init {
         movie.observeForever { movie ->
             if (movie != null) {
-                durationAsString.value = movie.duration.toString()
-                rentalCostAsString.value = movie.rentalCost.toString()
+                _durationAsString.value = movie.duration.toString()
+                _rentalCostAsString.value = movie.rentalCost.toString()
+                _currentImageUrl.value = movie.imageUrl
             }
         }
     }
 
     fun update() {
         viewModelScope.launch {
-            val movieToUpdate = movie.value
-            if (movieToUpdate != null) {
-                movieToUpdate.duration = durationAsString.value?.toDoubleOrNull() ?: 0.0
-                movieToUpdate.rentalCost = rentalCostAsString.value?.toDoubleOrNull() ?: 0.0
-                dao.update(movieToUpdate)
+            val itemToUpdate = movie.value
+            if (itemToUpdate != null) {
+                itemToUpdate.duration = _durationAsString.value?.toDoubleOrNull() ?: 0.0
+                itemToUpdate.rentalCost = _rentalCostAsString.value?.toDoubleOrNull() ?: 0.0
+                itemToUpdate.imageUrl = _currentImageUrl.value
+                dao.update(itemToUpdate)
                 _navigateToViewAfterUpdate.value = true
             }
         }

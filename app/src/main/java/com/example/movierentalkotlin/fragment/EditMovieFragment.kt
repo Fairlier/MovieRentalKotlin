@@ -12,6 +12,7 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.example.movierentalkotlin.R
 import com.example.movierentalkotlin.database.MovieRentalDatabase
 import com.example.movierentalkotlin.databinding.FragmentEditMovieBinding
@@ -52,6 +53,14 @@ class EditMovieFragment  : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        viewModel.currentImageUrl.observe(viewLifecycleOwner) { url ->
+            Glide.with(this)
+                .load(url)
+                .placeholder(R.drawable.baseline_image_not_supported_24)
+                .error(R.drawable.baseline_image_not_supported_24)
+                .into(binding.movieImage)
+        }
+
         viewModel.navigateToViewAfterUpdate.observe(viewLifecycleOwner, Observer { navigate ->
             if (navigate) {
                 val action = EditMovieFragmentDirections
@@ -63,9 +72,10 @@ class EditMovieFragment  : Fragment() {
 
         viewModel.navigateToViewAfterDelete.observe(viewLifecycleOwner, Observer { navigate ->
             if (navigate) {
-                view.findNavController()
-                    .navigate(R.id.action_editMovieFragment_to_movieCatalogFragment)
-                viewModel.onNavigatedToViewAfterUpdate()
+                val action = EditMovieFragmentDirections
+                    .actionEditMovieFragmentToMovieCatalogFragment()
+                view.findNavController().navigate(action)
+                viewModel.onNavigatedToViewAfterDelete()
             }
         })
 

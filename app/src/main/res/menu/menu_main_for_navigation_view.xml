@@ -6,10 +6,16 @@
             android:id="@+id/movieCatalogFragment"
             android:icon="@android:drawable/ic_dialog_email"
             android:title="Фильмы" />
+
         <item
-            android:id="@+id/viewMovieFragment"
+            android:id="@+id/clientCatalogFragment"
             android:icon="@android:drawable/ic_menu_send"
             android:title="Клиенты" />
+
+        <item
+            android:id="@+id/employeeCatalogFragment"
+            android:icon="@android:drawable/ic_menu_send"
+            android:title="Сотрудники" />
     </group>
 
     <item android:title="Помощь">

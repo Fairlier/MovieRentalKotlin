@@ -18,7 +18,7 @@ class InsertMovieViewModel(val dao: MovieDao) : ViewModel() {
     var rentalCost = 0.0
     var averageRating = 0.0
     var description = ""
-    var image: String? = null
+    var imageUrl: String? = null
 
     var durationAsString: String get() = duration.toString()
         set(value) {
@@ -30,12 +30,26 @@ class InsertMovieViewModel(val dao: MovieDao) : ViewModel() {
             rentalCost = value.toDoubleOrNull() ?: 0.0
         }
 
-    private val _navigateToViewAfterInsert = MutableLiveData<Boolean>(false)
-    val navigateToViewAfterInsert: LiveData<Boolean> get() = _navigateToViewAfterInsert
+    val _currentImageUrl = MutableLiveData<String?>()
+    val currentImageUrl: LiveData<String?> get() = _currentImageUrl
+
+    private val _navigateToCatalogAfterInsert = MutableLiveData<Boolean>(false)
+    val navigateToCatalogAfterInsert: LiveData<Boolean> get() = _navigateToCatalogAfterInsert
+
+    private val _showValidationError = MutableLiveData<Boolean>(false)
+    val showValidationError: LiveData<Boolean> get() = _showValidationError
 
     fun insert() {
         viewModelScope.launch {
-            val movie = Movie(
+            if (title.isBlank()
+//                || releaseYear.isBlank() || director.isBlank() ||
+//                country.isBlank() || duration <= 0.0 || rentalCost <= 0.0 || averageRating < 0.0 ||
+//                description.isBlank()
+            ) {
+                _showValidationError.value = true
+                return@launch
+            }
+                val movie = Movie(
                 title = title,
                 releaseYear = releaseYear,
                 director = director,
@@ -44,14 +58,18 @@ class InsertMovieViewModel(val dao: MovieDao) : ViewModel() {
                 rentalCost = rentalCost,
                 averageRating = averageRating,
                 description = description,
-                image = image
+                imageUrl = _currentImageUrl.value
             )
             dao.insert(movie)
-            _navigateToViewAfterInsert.value = true
+            _navigateToCatalogAfterInsert.value = true
         }
     }
 
-    fun onNavigatedToViewAfterInsert() {
-        _navigateToViewAfterInsert.value = false
+    fun onNavigatedToCatalogAfterInsert() {
+        _navigateToCatalogAfterInsert.value = false
+    }
+
+    fun onValidationErrorShown() {
+        _showValidationError.value = false
     }
 }

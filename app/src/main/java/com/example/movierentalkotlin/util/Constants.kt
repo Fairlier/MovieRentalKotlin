@@ -2,6 +2,8 @@ package com.example.movierentalkotlin.util
 
 object Constants {
 
+    const val INSERT_TEXT = "Заполните все поля перед добавлением записи."
+
     const val DATABASE_NAME: String = "movie_rental"
 
     object Movie {
@@ -15,7 +17,7 @@ object Constants {
         const val RENTAL_COST: String = "rental_cost"
         const val AVERAGE_RATING: String = "average_rating"
         const val DESCRIPTION: String = "description"
-        const val IMAGE: String = "image"
+        const val IMAGE_URL: String = "image_url"
     }
 
     object Employee {
@@ -25,10 +27,10 @@ object Constants {
         const val DATE_OF_BIRTH: String = "date_of_birth"
         const val ADDRESS: String = "address"
         const val PHONE_NUMBER: String = "phone_number"
-        const val DATE_OF_HIRE: String = "hire_date"
+        const val DATE_OF_HIRE: String = "date_of_hire"
         const val DATE_OF_DISMISSAL: String = "date_of_dismissal"
         const val SALARY: String = "salary"
-        const val IMAGE: String = "image"
+        const val IMAGE_URL: String = "image_url"
     }
 
     object Client {
@@ -38,8 +40,8 @@ object Constants {
         const val DATE_OF_BIRTH: String = "date_of_birth"
         const val ADDRESS: String = "address"
         const val PHONE_NUMBER: String = "phone_number"
-        const val DATE_OF_REGISTRATION: String = "registration_date"
-        const val IMAGE: String = "image"
+        const val DATE_OF_REGISTRATION: String = "date_of_registration"
+        const val IMAGE_URL: String = "image_url"
     }
 
     object MovieRental {

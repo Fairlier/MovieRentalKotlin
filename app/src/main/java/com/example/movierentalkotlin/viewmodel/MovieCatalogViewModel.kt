@@ -9,8 +9,15 @@ import com.example.movierentalkotlin.util.Constants
 
 class MovieCatalogViewModel(val dao: MovieDao) : ViewModel() {
 
+    private val _catalog = MutableLiveData<List<Movie>>()
+    val catalog: LiveData<List<Movie>> get() = _catalog
+
     private val _navigateToView = MutableLiveData<Long?>()
     val navigateToView: LiveData<Long?> get() = _navigateToView
+
+    init {
+        search(emptyMap())
+    }
 
     fun onCatalogItemClicked(id: Long) {
         _navigateToView.value = id
@@ -18,13 +25,6 @@ class MovieCatalogViewModel(val dao: MovieDao) : ViewModel() {
 
     fun onCatalogItemNavigated() {
         _navigateToView.value = null
-    }
-
-    private val _catalog = MutableLiveData<List<Movie>>()
-    val catalog: LiveData<List<Movie>> get() = _catalog
-
-    init {
-        search(emptyMap())
     }
 
     fun setFilters(filters: Map<String, Any?>) {

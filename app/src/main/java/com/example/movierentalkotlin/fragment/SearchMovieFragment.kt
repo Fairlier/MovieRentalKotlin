@@ -54,12 +54,13 @@ class SearchMovieFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.navigateToViewAfterSearch.observe(viewLifecycleOwner, Observer { navigate ->
+        viewModel.navigateToCatalogAfterSearch.observe(viewLifecycleOwner, Observer { navigate ->
             if (navigate) {
                 viewModel.filters.value?.let { sharedViewModel.setMovieFilters(it) }
-                view.findNavController()
-                    .navigate(R.id.action_searchMovieFragment_to_movieCatalogFragment)
-                viewModel.onNavigatedToViewAfterSearch()
+                val action = SearchMovieFragmentDirections
+                    .actionSearchMovieFragmentToMovieCatalogFragment()
+                view.findNavController().navigate(action)
+                viewModel.onNavigatedToCatalogAfterSearch()
             }
         })
 

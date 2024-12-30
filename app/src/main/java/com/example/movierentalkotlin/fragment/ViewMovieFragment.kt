@@ -1,7 +1,6 @@
 package com.example.movierentalkotlin.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -40,7 +39,8 @@ class ViewMovieFragment : Fragment() {
                 return when (menuItem.itemId) {
                     R.id.editMovieFragment -> {
                         val id = ViewMovieFragmentArgs.fromBundle(requireArguments()).id
-                        val action = ViewMovieFragmentDirections.actionViewMovieFragmentToEditMovieFragment(id)
+                        val action = ViewMovieFragmentDirections
+                            .actionViewMovieFragmentToEditMovieFragment(id)
                         findNavController().navigate(action)
                         true
                     }

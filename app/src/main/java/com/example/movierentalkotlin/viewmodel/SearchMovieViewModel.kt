@@ -31,8 +31,8 @@ class SearchMovieViewModel(val dao: MovieDao) : ViewModel() {
             averageRating = value.toDoubleOrNull() ?: 0.0
         }
 
-    private val _navigateToViewAfterSearch = MutableLiveData<Boolean>(false)
-    val navigateToViewAfterSearch: LiveData<Boolean> get() = _navigateToViewAfterSearch
+    private val _navigateToCatalogAfterSearch = MutableLiveData<Boolean>(false)
+    val navigateToCatalogAfterSearch: LiveData<Boolean> get() = _navigateToCatalogAfterSearch
 
     private val _filters = MutableLiveData<Map<String, Any?>>()
     val filters: LiveData<Map<String, Any?>> get() = _filters
@@ -47,10 +47,10 @@ class SearchMovieViewModel(val dao: MovieDao) : ViewModel() {
             Constants.Movie.RENTAL_COST to if (rentalCost > 0) rentalCost else null,
             Constants.Movie.AVERAGE_RATING to if (averageRating > 0) averageRating else null
         )
-        _navigateToViewAfterSearch.value = true
+        _navigateToCatalogAfterSearch.value = true
     }
 
-    fun onNavigatedToViewAfterSearch() {
-        _navigateToViewAfterSearch.value = false
+    fun onNavigatedToCatalogAfterSearch() {
+        _navigateToCatalogAfterSearch.value = false
     }
 }

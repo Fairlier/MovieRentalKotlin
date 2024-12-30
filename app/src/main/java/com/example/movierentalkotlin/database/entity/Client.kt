@@ -13,20 +13,20 @@ data class Client(
     var id: Long = 0L,
 
     @ColumnInfo(name = Constants.Client.FULL_NAME)
-    val fullName: String = "",
+    var fullName: String = "",
 
     @ColumnInfo(name = Constants.Client.DATE_OF_BIRTH)
-    val dateOfBirth: String = "",
+    var dateOfBirth: String = "",
 
     @ColumnInfo(name = Constants.Client.ADDRESS)
-    val address: String = "",
+    var address: String = "",
 
     @ColumnInfo(name = Constants.Client.PHONE_NUMBER)
-    val phoneNumber: String = "",
+    var phoneNumber: String = "",
 
     @ColumnInfo(name = Constants.Client.DATE_OF_REGISTRATION)
-    val dateOfRegistration: String = "",
+    var dateOfRegistration: String = "",
 
-    @ColumnInfo(name = Constants.Movie.IMAGE)
-    val image: String? = null
+    @ColumnInfo(name = Constants.Client.IMAGE_URL)
+    var imageUrl: String? = null
 )

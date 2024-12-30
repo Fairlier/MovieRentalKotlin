@@ -10,29 +10,29 @@ data class Employee(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = Constants.Employee.ID)
-    val id: Long = 0L,
+    var id: Long = 0L,
 
     @ColumnInfo(name = Constants.Employee.FULL_NAME)
-    val fullName: String = "",
+    var fullName: String = "",
 
     @ColumnInfo(name = Constants.Employee.DATE_OF_BIRTH)
-    val dateOfBirth: String = "",
+    var dateOfBirth: String = "",
 
     @ColumnInfo(name = Constants.Employee.ADDRESS)
-    val address: String = "",
+    var address: String = "",
 
     @ColumnInfo(name = Constants.Employee.PHONE_NUMBER)
-    val phoneNumber: String = "",
+    var phoneNumber: String = "",
 
     @ColumnInfo(name = Constants.Employee.DATE_OF_HIRE)
-    val dateOfHire: String = "",
+    var dateOfHire: String = "",
 
     @ColumnInfo(name = Constants.Employee.DATE_OF_DISMISSAL)
-    val dateOfDismissal: String = "",
+    var dateOfDismissal: String = "",
 
     @ColumnInfo(name = Constants.Employee.SALARY)
-    val salary: Double = 0.0,
+    var salary: Double = 0.0,
 
-    @ColumnInfo(name = Constants.Movie.IMAGE)
-    val image: String? = null
+    @ColumnInfo(name = Constants.Employee.IMAGE_URL)
+    var imageUrl: String? = null
 )

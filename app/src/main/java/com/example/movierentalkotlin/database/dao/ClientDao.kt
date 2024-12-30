@@ -25,4 +25,20 @@ interface ClientDao {
 
     @Query("SELECT * FROM clients ORDER BY id DESC")
     fun getAll(): LiveData<List<Client>>
+
+    @Query("""
+        SELECT * FROM clients
+        WHERE (:fullName IS NULL OR full_name LIKE '%' || :fullName || '%')
+        AND (:dateOfBirth IS NULL OR date_of_birth LIKE '%' || :dateOfBirth || '%')
+        AND (:address IS NULL OR address LIKE '%' || :address || '%')
+        AND (:phoneNumber IS NULL OR phone_number LIKE '%' || :phoneNumber|| '%')
+        AND (:dateOfRegistration IS NULL OR date_of_registration LIKE '%' || :dateOfRegistration|| '%')
+    """)
+    fun search(
+        fullName: String?,
+        dateOfBirth: String?,
+        address: String?,
+        phoneNumber: String?,
+        dateOfRegistration: String?
+    ): LiveData<List<Client>>
 }

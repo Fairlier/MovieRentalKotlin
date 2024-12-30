@@ -31,11 +31,11 @@ data class Movie(
     var rentalCost: Double = 0.0,
 
     @ColumnInfo(name = Constants.Movie.AVERAGE_RATING)
-    val averageRating: Double = 0.0,
+    var averageRating: Double = 0.0,
 
     @ColumnInfo(name = Constants.Movie.DESCRIPTION)
     var description: String = "",
 
-    @ColumnInfo(name = Constants.Movie.IMAGE)
-    var image: String? = null
+    @ColumnInfo(name = Constants.Movie.IMAGE_URL)
+    var imageUrl: String? = null
 )

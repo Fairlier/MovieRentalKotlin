@@ -4,6 +4,7 @@ plugins {
 
     id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs")
+    id("org.jetbrains.kotlin.kapt")
     kotlin("plugin.serialization") version "2.0.21"
 }
 
@@ -87,4 +88,9 @@ dependencies {
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
     androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+
+    val glide_version = "4.14.2"
+    implementation("com.github.bumptech.glide:glide:$glide_version")
+    annotationProcessor("com.github.bumptech.glide:compiler:$glide_version")
+
 }
