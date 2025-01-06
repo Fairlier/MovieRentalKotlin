@@ -8,13 +8,15 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.movierentalkotlin.R
+import com.example.movierentalkotlin.activity.MainActivity
 import com.example.movierentalkotlin.adapter.EmployeeCatalogItemAdapter
 import com.example.movierentalkotlin.database.MovieRentalDatabase
 import com.example.movierentalkotlin.databinding.FragmentEmployeeCatalogBinding
@@ -33,7 +35,21 @@ class EmployeeCatalogFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEmployeeCatalogBinding.inflate(inflater, container, false)
-        val view = binding.root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val application = requireNotNull(this.activity).application
+        val dao = MovieRentalDatabase.getInstance(application).employeeDao
+
+        val viewModelFactory = EmployeeCatalogViewModelFactory(dao)
+        val viewModel = ViewModelProvider(this,
+            viewModelFactory)[EmployeeCatalogViewModel::class.java]
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -53,43 +69,46 @@ class EmployeeCatalogFragment : Fragment() {
             }
         }, viewLifecycleOwner)
 
-        binding.menuBottomEmployeeCatalog.setupWithNavController(findNavController())
-
-        val application = requireNotNull(this.activity).application
-        val dao = MovieRentalDatabase.getInstance(application).employeeDao
-
-        val viewModelFactory = EmployeeCatalogViewModelFactory(dao)
-        val viewModel = ViewModelProvider(this,
-            viewModelFactory)[EmployeeCatalogViewModel::class.java]
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.menuToolbar)
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.employeeCatalogFragment),
+            (requireActivity() as MainActivity).binding.drawerLayout
+        )
+        binding.menuToolbar.setupWithNavController(navController, appBarConfiguration)
 
         val adapter = EmployeeCatalogItemAdapter{ id ->
             viewModel.onCatalogItemClicked(id)
         }
         binding.employeeCatalog.adapter = adapter
 
-        sharedViewModel.movieFilters.observe(viewLifecycleOwner) { filters ->
+        sharedViewModel.employeeFilters.observe(viewLifecycleOwner) { filters ->
             viewModel.setFilters(filters)
         }
 
-        viewModel.catalog.observe(viewLifecycleOwner, Observer { items ->
+        viewModel.catalog.observe(viewLifecycleOwner) { items ->
             items?.let {
                 adapter.submitList(items)
             }
-        })
+        }
 
-        viewModel.navigateToView.observe(viewLifecycleOwner, Observer { id ->
+        viewModel.navigateToView.observe(viewLifecycleOwner) { id ->
             id?.let {
                 val action = EmployeeCatalogFragmentDirections
                     .actionEmployeeCatalogFragmentToViewEmployeeFragment(id)
                 this.findNavController().navigate(action)
                 viewModel.onCatalogItemNavigated()
             }
-        })
+        }
 
-        return view
+        viewModel.navigateToInsert.observe(viewLifecycleOwner) { navigate ->
+            if (navigate) {
+                val action = EmployeeCatalogFragmentDirections
+                    .actionEmployeeCatalogFragmentToInsertEmployeeFragment()
+                this.findNavController().navigate(action)
+                viewModel.onNavigatedToInsert()
+            }
+        }
     }
 
     override fun onDestroyView() {

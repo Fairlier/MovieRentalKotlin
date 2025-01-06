@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context=".fragment.AuthorizationFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.movierentalkotlin.viewmodel.AuthorizationViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/image_logo"
+                android:layout_width="290dp"
+                android:layout_height="300dp"
+                android:src="@drawable/movie_rental" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/spinner_role"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/button_login"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:text="Войти"
+                android:textSize="16sp"
+                android:onClick="@{() -> viewModel.login(context)}" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -18,9 +18,13 @@
             android:title="Сотрудники" />
     </group>
 
-    <item android:title="Помощь">
+    <item android:title="">
         <menu>
             <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/authorizationFragment"
+                    android:icon="@drawable/baseline_logout_24"
+                    android:title="Выйти" />
             </group>
         </menu>
     </item>

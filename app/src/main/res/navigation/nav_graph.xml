@@ -3,12 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/movieCatalogFragment">
+    app:startDestination="@id/authorizationFragment">
+
+    <fragment
+        android:id="@+id/authorizationFragment"
+        android:name="com.example.movierentalkotlin.fragment.AuthorizationFragment"
+        android:label="Авторизация"
+        tools:layout="@layout/fragment_authorization">
+        <action
+            android:id="@+id/action_authorizationFragment_to_movieCatalogFragment"
+            app:destination="@id/movieCatalogFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/movieCatalogFragment"
         android:name="com.example.movierentalkotlin.fragment.MovieCatalogFragment"
-        android:label="fragment_movie_catalog"
+        android:label="Фильмы"
         tools:layout="@layout/fragment_movie_catalog" >
 
         <action
@@ -27,7 +37,7 @@
     <fragment
         android:id="@+id/viewMovieFragment"
         android:name="com.example.movierentalkotlin.fragment.ViewMovieFragment"
-        android:label="fragment_view_movie"
+        android:label=""
         tools:layout="@layout/fragment_view_movie" >
 
         <argument
@@ -48,7 +58,7 @@
     <fragment
         android:id="@+id/editMovieFragment"
         android:name="com.example.movierentalkotlin.fragment.EditMovieFragment"
-        android:label="fragment_edit_movie"
+        android:label="Редактирование"
         tools:layout="@layout/fragment_edit_movie" >
 
         <argument
@@ -71,7 +81,7 @@
     <fragment
         android:id="@+id/insertMovieFragment"
         android:name="com.example.movierentalkotlin.fragment.InsertMovieFragment"
-        android:label="fragment_insert_movie"
+        android:label="Добавление"
         tools:layout="@layout/fragment_insert_movie" >
 
         <action
@@ -84,7 +94,7 @@
     <fragment
         android:id="@+id/searchMovieFragment"
         android:name="com.example.movierentalkotlin.fragment.SearchMovieFragment"
-        android:label="fragment_search_movie"
+        android:label="Поиск"
         tools:layout="@layout/fragment_search_movie" >
 
         <action
@@ -99,7 +109,7 @@
     <fragment
         android:id="@+id/clientCatalogFragment"
         android:name="com.example.movierentalkotlin.fragment.ClientCatalogFragment"
-        android:label="fragment_client_catalog"
+        android:label="Клиенты"
         tools:layout="@layout/fragment_client_catalog" >
 
         <action
@@ -118,7 +128,7 @@
     <fragment
         android:id="@+id/viewClientFragment"
         android:name="com.example.movierentalkotlin.fragment.ViewClientFragment"
-        android:label="fragment_view_client"
+        android:label=""
         tools:layout="@layout/fragment_view_client" >
 
         <argument
@@ -139,7 +149,7 @@
     <fragment
         android:id="@+id/editClientFragment"
         android:name="com.example.movierentalkotlin.fragment.EditClientFragment"
-        android:label="fragment_edit_client"
+        android:label="Редактирование"
         tools:layout="@layout/fragment_edit_client" >
 
         <argument
@@ -162,7 +172,7 @@
     <fragment
         android:id="@+id/insertClientFragment"
         android:name="com.example.movierentalkotlin.fragment.InsertClientFragment"
-        android:label="fragment_insert_client"
+        android:label="Добавление"
         tools:layout="@layout/fragment_insert_client" >
 
         <action
@@ -175,7 +185,7 @@
     <fragment
         android:id="@+id/searchClientFragment"
         android:name="com.example.movierentalkotlin.fragment.SearchClientFragment"
-        android:label="fragment_search_client"
+        android:label="Поиск"
         tools:layout="@layout/fragment_search_client" >
 
         <action
@@ -188,12 +198,12 @@
     <fragment
         android:id="@+id/employeeCatalogFragment"
         android:name="com.example.movierentalkotlin.fragment.EmployeeCatalogFragment"
-        android:label="fragment_employee_catalog"
+        android:label="Сотрудники"
         tools:layout="@layout/fragment_employee_catalog" >
 
         <action
             android:id="@+id/action_employeeCatalogFragment_to_viewEmployeeFragment"
-            app:destination="@id/viewEmployeeFragment" />
+            app:destination="@id/viewEmployeeCatalogFragment" />
 
         <action
             android:id="@+id/action_employeeCatalogFragment_to_insertEmployeeFragment"
@@ -205,9 +215,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/viewEmployeeFragment"
+        android:id="@+id/viewEmployeeCatalogFragment"
         android:name="com.example.movierentalkotlin.fragment.ViewEmployeeFragment"
-        android:label="fragment_view_employee"
+        android:label=""
         tools:layout="@layout/fragment_view_employee" >
 
         <argument
@@ -228,7 +238,7 @@
     <fragment
         android:id="@+id/editEmployeeFragment"
         android:name="com.example.movierentalkotlin.fragment.EditEmployeeFragment"
-        android:label="fragment_edit_employee"
+        android:label="Редактирование"
         tools:layout="@layout/fragment_edit_employee" >
 
         <argument
@@ -237,8 +247,8 @@
 
         <action
             android:id="@+id/action_editEmployeeFragment_to_viewEmployeeFragment"
-            app:destination="@id/viewEmployeeFragment"
-            app:popUpTo="@id/viewEmployeeFragment"
+            app:destination="@id/viewEmployeeCatalogFragment"
+            app:popUpTo="@id/viewEmployeeCatalogFragment"
             app:popUpToInclusive="true" />
 
         <action
@@ -251,7 +261,7 @@
     <fragment
         android:id="@+id/insertEmployeeFragment"
         android:name="com.example.movierentalkotlin.fragment.InsertEmployeeFragment"
-        android:label="fragment_insert_employee"
+        android:label="Добавление"
         tools:layout="@layout/fragment_insert_employee" >
 
         <action
@@ -264,7 +274,7 @@
     <fragment
         android:id="@+id/searchEmployeeFragment"
         android:name="com.example.movierentalkotlin.fragment.SearchEmployeeFragment"
-        android:label="fragment_search_employee"
+        android:label="Поиск"
         tools:layout="@layout/fragment_search_employee" >
 
         <action

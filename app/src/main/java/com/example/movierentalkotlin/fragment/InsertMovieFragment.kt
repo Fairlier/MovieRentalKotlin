@@ -9,12 +9,16 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.example.movierentalkotlin.R
+import com.example.movierentalkotlin.activity.MainActivity
 import com.example.movierentalkotlin.database.MovieRentalDatabase
 import com.example.movierentalkotlin.databinding.FragmentInsertMovieBinding
 import com.example.movierentalkotlin.util.Constants
@@ -30,19 +34,12 @@ class InsertMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentInsertMovieBinding.inflate(inflater, container, false)
-        val view = binding.root
+        return binding.root
+    }
 
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_toolbar, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return false
-            }
-        }, viewLifecycleOwner)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val application = requireNotNull(this.activity).application
         val dao = MovieRentalDatabase.getInstance(application).movieDao
@@ -54,6 +51,29 @@ class InsertMovieFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        requireActivity().addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_toolbar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return false
+            }
+        }, viewLifecycleOwner)
+
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.menuToolbar)
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.movieCatalogFragment),
+            (requireActivity() as MainActivity).binding.drawerLayout
+        )
+        binding.menuToolbar.setupWithNavController(navController, appBarConfiguration)
+
+        binding.menuToolbar.setNavigationOnClickListener {
+            navController.navigate(InsertMovieFragmentDirections
+                .actionInsertMovieFragmentToMovieCatalogFragment())
+        }
+
         viewModel.currentImageUrl.observe(viewLifecycleOwner) { url ->
             Glide.with(this)
                 .load(url)
@@ -62,14 +82,14 @@ class InsertMovieFragment : Fragment() {
                 .into(binding.movieImage)
         }
 
-        viewModel.navigateToCatalogAfterInsert.observe(viewLifecycleOwner, Observer { navigate ->
+        viewModel.navigateToCatalogAfterInsert.observe(viewLifecycleOwner) { navigate ->
             if (navigate) {
                 val action = InsertMovieFragmentDirections
                     .actionInsertMovieFragmentToMovieCatalogFragment()
                 view.findNavController().navigate(action)
                 viewModel.onNavigatedToCatalogAfterInsert()
             }
-        })
+        }
 
         viewModel.showValidationError.observe(viewLifecycleOwner) { shouldShow ->
             if (shouldShow == true) {
@@ -81,8 +101,6 @@ class InsertMovieFragment : Fragment() {
                 viewModel.onValidationErrorShown()
             }
         }
-
-        return view
     }
 
     override fun onDestroyView() {

@@ -8,10 +8,14 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.movierentalkotlin.R
+import com.example.movierentalkotlin.activity.MainActivity
 import com.example.movierentalkotlin.database.MovieRentalDatabase
 import com.example.movierentalkotlin.databinding.FragmentViewMovieBinding
 import com.example.movierentalkotlin.viewmodel.ViewMovieViewModel
@@ -26,9 +30,23 @@ class ViewMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentViewMovieBinding.inflate(inflater, container, false)
-        val view = binding.root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val application = requireNotNull(this.activity).application
+        val dao = MovieRentalDatabase.getInstance(application).movieDao
+
+        val id = ViewMovieFragmentArgs.fromBundle(requireArguments()).id
+        val viewModelFactory = ViewMovieViewModelFactory(id, dao)
+        val viewModel = ViewModelProvider(this,
+            viewModelFactory)[ViewMovieViewModel::class.java]
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -49,18 +67,18 @@ class ViewMovieFragment : Fragment() {
             }
         }, viewLifecycleOwner)
 
-        val application = requireNotNull(this.activity).application
-        val dao = MovieRentalDatabase.getInstance(application).movieDao
+        (requireActivity() as AppCompatActivity).setSupportActionBar(binding.menuToolbar)
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.movieCatalogFragment),
+            (requireActivity() as MainActivity).binding.drawerLayout
+        )
+        binding.menuToolbar.setupWithNavController(navController, appBarConfiguration)
 
-        val id = ViewMovieFragmentArgs.fromBundle(requireArguments()).id
-        val viewModelFactory = ViewMovieViewModelFactory(id, dao)
-        val viewModel = ViewModelProvider(this,
-            viewModelFactory)[ViewMovieViewModel::class.java]
-
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-        return view
+        binding.menuToolbar.setNavigationOnClickListener {
+            navController.navigate(ViewMovieFragmentDirections
+                .actionViewMovieFragmentToMovieCatalogFragment())
+        }
     }
 
     override fun onDestroyView() {

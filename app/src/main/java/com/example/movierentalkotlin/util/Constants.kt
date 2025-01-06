@@ -4,6 +4,12 @@ object Constants {
 
     const val INSERT_TEXT = "Заполните все поля перед добавлением записи."
 
+    object Role {
+        const val ADMINISTRATOR = "Администратор"
+    }
+
+    object Prefere
+
     const val DATABASE_NAME: String = "movie_rental"
 
     object Movie {

@@ -9,15 +9,14 @@ import com.example.movierentalkotlin.util.Constants
 
 class EmployeeCatalogViewModel(val dao: EmployeeDao) : ViewModel() {
 
-    private val _catalog = MutableLiveData<List<Employee>>()
-    val catalog: LiveData<List<Employee>> get() = _catalog
-
     private val _navigateToView = MutableLiveData<Long?>()
     val navigateToView: LiveData<Long?> get() = _navigateToView
 
-    init {
-        search(emptyMap())
-    }
+    private val _navigateToInsert = MutableLiveData<Boolean>(false)
+    val navigateToInsert: LiveData<Boolean> get() = _navigateToInsert
+
+    private val _catalog = MutableLiveData<List<Employee>>()
+    val catalog: LiveData<List<Employee>> get() = _catalog
 
     fun onCatalogItemClicked(id: Long) {
         _navigateToView.value = id
@@ -25,6 +24,18 @@ class EmployeeCatalogViewModel(val dao: EmployeeDao) : ViewModel() {
 
     fun onCatalogItemNavigated() {
         _navigateToView.value = null
+    }
+
+    fun insert() {
+        _navigateToInsert.value = true
+    }
+
+    fun onNavigatedToInsert() {
+        _navigateToInsert.value = false
+    }
+
+    init {
+        search(emptyMap())
     }
 
     fun setFilters(filters: Map<String, Any?>) {

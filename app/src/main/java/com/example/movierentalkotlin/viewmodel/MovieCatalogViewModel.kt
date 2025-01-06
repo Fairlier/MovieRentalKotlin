@@ -15,9 +15,8 @@ class MovieCatalogViewModel(val dao: MovieDao) : ViewModel() {
     private val _navigateToView = MutableLiveData<Long?>()
     val navigateToView: LiveData<Long?> get() = _navigateToView
 
-    init {
-        search(emptyMap())
-    }
+    private val _navigateToInsert = MutableLiveData<Boolean>(false)
+    val navigateToInsert: LiveData<Boolean> get() = _navigateToInsert
 
     fun onCatalogItemClicked(id: Long) {
         _navigateToView.value = id
@@ -27,8 +26,20 @@ class MovieCatalogViewModel(val dao: MovieDao) : ViewModel() {
         _navigateToView.value = null
     }
 
+    fun insert() {
+        _navigateToInsert.value = true
+    }
+
+    fun onNavigatedToInsert() {
+        _navigateToInsert.value = false
+    }
+
     fun setFilters(filters: Map<String, Any?>) {
         search(filters)
+    }
+
+    init {
+        search(emptyMap())
     }
 
     private fun search(filters: Map<String, Any?>) {
