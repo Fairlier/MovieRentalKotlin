@@ -13,14 +13,14 @@ data class ClientMovieRating(
     var id: Long = 0L,
 
     @ColumnInfo(name = Constants.ClientMovieRating.CLIENT_ID)
-    val clientId: Long = 0L,
+    var clientId: Long = 0L,
 
     @ColumnInfo(name = Constants.ClientMovieRating.MOVIE_ID)
-    val movieId: Long = 0L,
+    var movieId: Long = 0L,
 
     @ColumnInfo(name = Constants.ClientMovieRating.RATING)
-    val rating: Double = 0.0,
+    var rating: Double = 0.0,
 
     @ColumnInfo(name = Constants.ClientMovieRating.COMMENT)
-    val comment: String = ""
+    var comment: String = ""
 )

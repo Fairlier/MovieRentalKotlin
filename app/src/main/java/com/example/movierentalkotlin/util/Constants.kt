@@ -8,7 +8,14 @@ object Constants {
         const val ADMINISTRATOR = "Администратор"
     }
 
-    object Prefere
+    enum class FragmentSource {
+        INSERT_CLIENT_MOVIE_RATING,
+        SEARCH_CLIENT_MOVIE_RATING,
+        EDIT_CLIENT_MOVIE_RATING,
+        INSERT_MOVIE_RENTAL,
+        SEARCH_MOVIE_RENTAL,
+        EDIT_MOVIE_RENTAL
+    }
 
     const val DATABASE_NAME: String = "movie_rental"
 

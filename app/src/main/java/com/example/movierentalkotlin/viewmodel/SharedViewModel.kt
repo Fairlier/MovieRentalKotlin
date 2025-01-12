@@ -3,6 +3,8 @@ package com.example.movierentalkotlin.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.movierentalkotlin.util.ClientMovieRatingData
+import com.example.movierentalkotlin.util.Constants
 
 class SharedViewModel : ViewModel() {
 
@@ -20,6 +22,20 @@ class SharedViewModel : ViewModel() {
 
     private val _clientMovieRatingFilters = MutableLiveData<Map<String, Any?>>()
     val clientMovieRatingFilters: LiveData<Map<String, Any?>> get() = _clientMovieRatingFilters
+
+    private val _sourceFragment = MutableLiveData<Constants.FragmentSource?>()
+    val sourceFragment: LiveData<Constants.FragmentSource?> get() = _sourceFragment
+
+    private val _selectedClientId = MutableLiveData<Long?>()
+    val selectedClientId: LiveData<Long?> get() = _selectedClientId
+
+    private val _selectedMovieId = MutableLiveData<Long?>()
+    val selectedMovieId: LiveData<Long?> get() = _selectedMovieId
+
+    private val _selectedEmployeeId = MutableLiveData<Long?>()
+    val selectedEmployeeId: LiveData<Long?> get() = _selectedEmployeeId
+
+    var clientMovieRatingData = ClientMovieRatingData()
 
     fun setMovieFilters(filters: Map<String, Any?>) {
         _movieFilters.value = filters
@@ -39,5 +55,45 @@ class SharedViewModel : ViewModel() {
 
     fun setClientMovieRatingFilters(filters: Map<String, Any?>) {
         _clientMovieRatingFilters.value = filters
+    }
+
+    fun setSourceFragment(source: Constants.FragmentSource) {
+        _sourceFragment.value = source
+    }
+
+    fun clearSourceFragment() {
+        _sourceFragment.value = null
+    }
+
+    fun setSelectedClientId(id: Long?) {
+        _selectedClientId.value = id
+    }
+
+    fun clearSelectedClientId() {
+        _selectedClientId.value = null
+    }
+
+    fun setSelectedMovieId(id: Long?) {
+        _selectedMovieId.value = id
+    }
+
+    fun clearSelectedMovieId() {
+        _selectedMovieId.value = null
+    }
+
+    fun setSelectedEmployeeId(id: Long?) {
+        _selectedEmployeeId.value = id
+    }
+
+    fun clearSelectedEmployeeId() {
+        _selectedEmployeeId.value = null
+    }
+
+    fun initializationClientMovieRatingData(clientMovieRatingData: ClientMovieRatingData) {
+        this.clientMovieRatingData = clientMovieRatingData.copy()
+    }
+
+    fun clearClientMovieRatingData() {
+        this.clientMovieRatingData = ClientMovieRatingData()
     }
 }

@@ -10,6 +10,7 @@
         android:name="com.example.movierentalkotlin.fragment.AuthorizationFragment"
         android:label="Авторизация"
         tools:layout="@layout/fragment_authorization">
+
         <action
             android:id="@+id/action_authorizationFragment_to_movieCatalogFragment"
             app:destination="@id/movieCatalogFragment" />
@@ -17,7 +18,7 @@
 
     <fragment
         android:id="@+id/movieCatalogFragment"
-        android:name="com.example.movierentalkotlin.fragment.MovieCatalogFragment"
+        android:name="com.example.movierentalkotlin.fragment.movie.MovieCatalogFragment"
         android:label="Фильмы"
         tools:layout="@layout/fragment_movie_catalog" >
 
@@ -36,7 +37,7 @@
 
     <fragment
         android:id="@+id/viewMovieFragment"
-        android:name="com.example.movierentalkotlin.fragment.ViewMovieFragment"
+        android:name="com.example.movierentalkotlin.fragment.movie.ViewMovieFragment"
         android:label=""
         tools:layout="@layout/fragment_view_movie" >
 
@@ -57,7 +58,7 @@
 
     <fragment
         android:id="@+id/editMovieFragment"
-        android:name="com.example.movierentalkotlin.fragment.EditMovieFragment"
+        android:name="com.example.movierentalkotlin.fragment.movie.EditMovieFragment"
         android:label="Редактирование"
         tools:layout="@layout/fragment_edit_movie" >
 
@@ -80,7 +81,7 @@
 
     <fragment
         android:id="@+id/insertMovieFragment"
-        android:name="com.example.movierentalkotlin.fragment.InsertMovieFragment"
+        android:name="com.example.movierentalkotlin.fragment.movie.InsertMovieFragment"
         android:label="Добавление"
         tools:layout="@layout/fragment_insert_movie" >
 
@@ -93,7 +94,7 @@
 
     <fragment
         android:id="@+id/searchMovieFragment"
-        android:name="com.example.movierentalkotlin.fragment.SearchMovieFragment"
+        android:name="com.example.movierentalkotlin.fragment.movie.SearchMovieFragment"
         android:label="Поиск"
         tools:layout="@layout/fragment_search_movie" >
 
@@ -108,7 +109,7 @@
 
     <fragment
         android:id="@+id/clientCatalogFragment"
-        android:name="com.example.movierentalkotlin.fragment.ClientCatalogFragment"
+        android:name="com.example.movierentalkotlin.fragment.client.ClientCatalogFragment"
         android:label="Клиенты"
         tools:layout="@layout/fragment_client_catalog" >
 
@@ -127,7 +128,7 @@
 
     <fragment
         android:id="@+id/viewClientFragment"
-        android:name="com.example.movierentalkotlin.fragment.ViewClientFragment"
+        android:name="com.example.movierentalkotlin.fragment.client.ViewClientFragment"
         android:label=""
         tools:layout="@layout/fragment_view_client" >
 
@@ -148,7 +149,7 @@
 
     <fragment
         android:id="@+id/editClientFragment"
-        android:name="com.example.movierentalkotlin.fragment.EditClientFragment"
+        android:name="com.example.movierentalkotlin.fragment.client.EditClientFragment"
         android:label="Редактирование"
         tools:layout="@layout/fragment_edit_client" >
 
@@ -171,7 +172,7 @@
 
     <fragment
         android:id="@+id/insertClientFragment"
-        android:name="com.example.movierentalkotlin.fragment.InsertClientFragment"
+        android:name="com.example.movierentalkotlin.fragment.client.InsertClientFragment"
         android:label="Добавление"
         tools:layout="@layout/fragment_insert_client" >
 
@@ -184,7 +185,7 @@
 
     <fragment
         android:id="@+id/searchClientFragment"
-        android:name="com.example.movierentalkotlin.fragment.SearchClientFragment"
+        android:name="com.example.movierentalkotlin.fragment.client.SearchClientFragment"
         android:label="Поиск"
         tools:layout="@layout/fragment_search_client" >
 
@@ -197,7 +198,7 @@
 
     <fragment
         android:id="@+id/employeeCatalogFragment"
-        android:name="com.example.movierentalkotlin.fragment.EmployeeCatalogFragment"
+        android:name="com.example.movierentalkotlin.fragment.employee.EmployeeCatalogFragment"
         android:label="Сотрудники"
         tools:layout="@layout/fragment_employee_catalog" >
 
@@ -216,7 +217,7 @@
 
     <fragment
         android:id="@+id/viewEmployeeCatalogFragment"
-        android:name="com.example.movierentalkotlin.fragment.ViewEmployeeFragment"
+        android:name="com.example.movierentalkotlin.fragment.employee.ViewEmployeeFragment"
         android:label=""
         tools:layout="@layout/fragment_view_employee" >
 
@@ -237,7 +238,7 @@
 
     <fragment
         android:id="@+id/editEmployeeFragment"
-        android:name="com.example.movierentalkotlin.fragment.EditEmployeeFragment"
+        android:name="com.example.movierentalkotlin.fragment.employee.EditEmployeeFragment"
         android:label="Редактирование"
         tools:layout="@layout/fragment_edit_employee" >
 
@@ -260,7 +261,7 @@
 
     <fragment
         android:id="@+id/insertEmployeeFragment"
-        android:name="com.example.movierentalkotlin.fragment.InsertEmployeeFragment"
+        android:name="com.example.movierentalkotlin.fragment.employee.InsertEmployeeFragment"
         android:label="Добавление"
         tools:layout="@layout/fragment_insert_employee" >
 
@@ -273,7 +274,7 @@
 
     <fragment
         android:id="@+id/searchEmployeeFragment"
-        android:name="com.example.movierentalkotlin.fragment.SearchEmployeeFragment"
+        android:name="com.example.movierentalkotlin.fragment.employee.SearchEmployeeFragment"
         android:label="Поиск"
         tools:layout="@layout/fragment_search_employee" >
 
@@ -281,6 +282,183 @@
             android:id="@+id/action_searchEmployeeFragment_to_employeeCatalogFragment"
             app:destination="@id/employeeCatalogFragment"
             app:popUpTo="@id/employeeCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieCatalogSelectionFragment"
+        android:name="com.example.movierentalkotlin.fragment.movie.MovieCatalogSelectionFragment"
+        android:label="Фильмы"
+        tools:layout="@layout/fragment_movie_catalog_selection" >
+
+        <action
+            android:id="@+id/action_movieCatalogSelectionFragment_to_searchMovieSelectionFragment"
+            app:destination="@id/searchMovieSelectionFragment" />
+
+        <action
+            android:id="@+id/action_movieCatalogSelectionFragment_to_insertClientMovieRatingFragment"
+            app:destination="@id/insertClientMovieRatingFragment"
+            app:popUpTo="@id/insertClientMovieRatingFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_movieCatalogSelectionFragment_to_searchClientMovieRatingFragment"
+            app:destination="@id/searchClientMovieRatingFragment"
+            app:popUpTo="@id/searchClientMovieRatingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchMovieSelectionFragment"
+        android:name="com.example.movierentalkotlin.fragment.movie.SearchMovieSelectionFragment"
+        android:label="Поиск"
+        tools:layout="@layout/fragment_search_movie_selection" >
+
+        <action
+            android:id="@+id/action_searchMovieSelectionFragment_to_movieCatalogSelectionFragment"
+            app:destination="@id/movieCatalogSelectionFragment"
+            app:popUpTo="@id/movieCatalogSelectionFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/clientCatalogSelectionFragment"
+        android:name="com.example.movierentalkotlin.fragment.client.ClientCatalogSelectionFragment"
+        android:label="Клиенты"
+        tools:layout="@layout/fragment_client_catalog_selection" >
+
+        <action
+            android:id="@+id/action_clientCatalogSelectionFragment_to_searchClientSelectionFragment"
+            app:destination="@id/searchClientSelectionFragment" />
+
+        <action
+            android:id="@+id/action_clientCatalogSelectionFragment_to_insertClientMovieRatingFragment"
+            app:destination="@id/insertClientMovieRatingFragment"
+            app:popUpTo="@id/insertClientMovieRatingFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_clientCatalogSelectionFragment_to_searchClientMovieRatingFragment"
+            app:destination="@id/searchClientMovieRatingFragment"
+            app:popUpTo="@id/searchClientMovieRatingFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchClientSelectionFragment"
+        android:name="com.example.movierentalkotlin.fragment.client.SearchClientSelectionFragment"
+        android:label="Поиск"
+        tools:layout="@layout/fragment_search_client_selection" >
+
+        <action
+            android:id="@+id/action_searchClientSelectionFragment_to_clientCatalogSelectionFragment"
+            app:destination="@id/clientCatalogSelectionFragment"
+            app:popUpTo="@id/clientCatalogSelectionFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/clientMovieRatingCatalogFragment"
+        android:name="com.example.movierentalkotlin.fragment.clientMovieRating.ClientMovieRatingCatalogFragment"
+        android:label="Рейтинг фильмов"
+        tools:layout="@layout/fragment_employee_catalog" >
+
+        <action
+            android:id="@+id/action_clientMovieRatingCatalogFragment_to_viewClientMovieRatingFragment"
+            app:destination="@id/viewClientMovieRatingFragment" />
+
+        <action
+            android:id="@+id/action_clientMovieRatingCatalogFragment_to_insertClientMovieRatingFragment"
+            app:destination="@id/insertClientMovieRatingFragment" />
+
+        <action
+            android:id="@+id/action_clientMovieRatingCatalogFragment_to_searchClientMovieRatingFragment"
+            app:destination="@id/searchClientMovieRatingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/insertClientMovieRatingFragment"
+        android:name="com.example.movierentalkotlin.fragment.clientMovieRating.InsertClientMovieRatingFragment"
+        android:label="Добавление"
+        tools:layout="@layout/fragment_insert_client_movie_rating" >
+
+        <action
+            android:id="@+id/action_insertClientMovieRatingFragment_to_movieCatalogSelectionFragment"
+            app:destination="@id/movieCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_insertClientMovieRatingFragment_to_clientCatalogSelectionFragment"
+            app:destination="@id/clientCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_insertClientMovieRatingFragment_to_clientMovieRatingCatalogFragment"
+            app:destination="@id/clientMovieRatingCatalogFragment"
+            app:popUpTo="@id/clientMovieRatingCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchClientMovieRatingFragment"
+        android:name="com.example.movierentalkotlin.fragment.clientMovieRating.SearchClientMovieRatingFragment"
+        android:label="Поиск"
+        tools:layout="@layout/fragment_search_client_movie_rating" >
+
+        <action
+            android:id="@+id/action_searchClientMovieRatingFragment_to_movieCatalogSelectionFragment"
+            app:destination="@id/movieCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_searchClientMovieRatingFragment_to_clientCatalogSelectionFragment"
+            app:destination="@id/clientCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_searchClientMovieRatingFragment_to_clientMovieRatingCatalogFragment"
+            app:destination="@id/clientMovieRatingCatalogFragment"
+            app:popUpTo="@id/clientMovieRatingCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewClientMovieRatingFragment"
+        android:name="com.example.movierentalkotlin.fragment.clientMovieRating.ViewClientMovieRatingFragment"
+        android:label=""
+        tools:layout="@layout/fragment_view_client_movie_rating" >
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_viewClientMovieRatingFragment_to_editClientMovieRatingFragment"
+            app:destination="@id/editClientMovieRatingFragment" />
+
+        <action
+            android:id="@+id/action_viewClientMovieRatingFragment_to_clientMovieRatingCatalogFragment"
+            app:destination="@id/clientMovieRatingCatalogFragment"
+            app:popUpTo="@id/clientMovieRatingCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editClientMovieRatingFragment"
+        android:name="com.example.movierentalkotlin.fragment.clientMovieRating.EditClientMovieRatingFragment"
+        android:label="Редактирование"
+        tools:layout="@layout/fragment_edit_client_movie_rating" >
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_editClientMovieRatingFragment_to_viewClientMovieRatingFragment"
+            app:destination="@id/viewEmployeeCatalogFragment"
+            app:popUpTo="@id/viewClientMovieRatingFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_editClientMovieRatingFragment_to_clientMovieRatingCatalogFragment"
+            app:destination="@id/clientMovieRatingCatalogFragment"
+            app:popUpTo="@id/clientMovieRatingCatalogFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

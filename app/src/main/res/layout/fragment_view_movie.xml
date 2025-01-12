@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragment.ViewMovieFragment">
+    tools:context=".fragment.movie.ViewMovieFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="com.example.movierentalkotlin.viewmodel.ViewMovieViewModel" />
+            type="com.example.movierentalkotlin.viewmodel.movie.ViewMovieViewModel" />
     </data>
 
     <LinearLayout
@@ -153,7 +153,7 @@
                             android:id="@+id/movie_duration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.durationAsString}"
+                            android:text="@{String.valueOf(viewModel.movie.duration)}"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -176,7 +176,7 @@
                             android:id="@+id/movie_rental_cost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.rentalCostAsString}"
+                            android:text="@{String.valueOf(viewModel.movie.rentalCost)}"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -199,7 +199,7 @@
                             android:id="@+id/movie_average_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.averageRatingAsString}"
+                            android:text="@{String.valueOf(viewModel.movie.averageRating)}"
                             android:textColor="@android:color/black"
                             android:textSize="16sp" />
                     </LinearLayout>

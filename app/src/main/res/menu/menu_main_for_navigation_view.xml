@@ -4,18 +4,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/movieCatalogFragment"
-            android:icon="@android:drawable/ic_dialog_email"
+            android:icon="@drawable/baseline_movie_24"
             android:title="Фильмы" />
 
         <item
             android:id="@+id/clientCatalogFragment"
-            android:icon="@android:drawable/ic_menu_send"
+            android:icon="@drawable/baseline_supervisor_account_24"
             android:title="Клиенты" />
 
         <item
             android:id="@+id/employeeCatalogFragment"
-            android:icon="@android:drawable/ic_menu_send"
+            android:icon="@drawable/baseline_supervisor_account_24"
             android:title="Сотрудники" />
+
+        <item
+            android:id="@+id/clientMovieRatingCatalogFragment"
+            android:icon="@drawable/baseline_star_rate_24"
+            android:title="Рейтинг фильмов" />
     </group>
 
     <item android:title="">

@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragment.InsertClientFragment">
+    tools:context=".fragment.client.InsertClientFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="com.example.movierentalkotlin.viewmodel.InsertClientViewModel" />
+            type="com.example.movierentalkotlin.viewmodel.client.InsertClientViewModel" />
     </data>
 
     <LinearLayout

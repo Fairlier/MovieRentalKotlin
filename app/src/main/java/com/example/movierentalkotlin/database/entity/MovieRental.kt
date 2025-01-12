@@ -3,6 +3,7 @@ package com.example.movierentalkotlin.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.movierentalkotlin.util.Constants
 
@@ -20,7 +21,12 @@ import com.example.movierentalkotlin.util.Constants
         entity = Movie::class,
         parentColumns = [Constants.Movie.ID],
         childColumns = [Constants.MovieRental.MOVIE_ID]
-    )]
+    )],
+    indices = [
+        Index(value = [Constants.MovieRental.CLIENT_ID]),
+        Index(value = [Constants.MovieRental.EMPLOYEE_ID]),
+        Index(value = [Constants.MovieRental.MOVIE_ID])
+    ]
 )
 data class MovieRental(
 
@@ -29,17 +35,17 @@ data class MovieRental(
     var id: Long = 0L,
 
     @ColumnInfo(name = Constants.MovieRental.CLIENT_ID)
-    val clientId: Long = 0L,
+    var clientId: Long = 0L,
 
     @ColumnInfo(name = Constants.MovieRental.EMPLOYEE_ID)
-    val employeeId: Long = 0L,
+    var employeeId: Long = 0L,
 
     @ColumnInfo(name = Constants.MovieRental.MOVIE_ID)
-    val movieId: Long = 0L,
+    var movieId: Long = 0L,
 
     @ColumnInfo(name = Constants.MovieRental.DATE_OF_RECEIPT)
-    val dateOfReceipt: String = "",
+    var dateOfReceipt: String = "",
 
     @ColumnInfo(name = Constants.MovieRental.DATE_OF_RETURN)
-    val dateOfReturn: String = ""
+    var dateOfReturn: String = ""
 )
