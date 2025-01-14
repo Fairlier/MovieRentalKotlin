@@ -76,6 +76,12 @@ class EditMovieRentalViewModel(val id: Long,
                         updatedData.movieAverageRating = it.movieAverageRating
                         updatedData.movieImageUrl = it.movieImageUrl
                     }
+                    if (updatedData.dateOfReceipt.isEmpty()) {
+                        updatedData.dateOfReceipt = it.dateOfReceipt
+                    }
+                    if (updatedData.dateOfReturn.isEmpty()) {
+                        updatedData.dateOfReturn = it.dateOfReturn
+                    }
                     movieRentalData.value = updatedData
                 }
             }

@@ -75,7 +75,7 @@ class EditMovieRentalFragment : Fragment() {
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.menuToolbar)
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.clientMovieRatingCatalogFragment),
+            setOf(R.id.movieRentalCatalogFragment),
             (requireActivity() as MainActivity).binding.drawerLayout
         )
         binding.menuToolbar.setupWithNavController(navController, appBarConfiguration)

@@ -69,6 +69,12 @@ class EditClientMovieRatingViewModel(val id: Long,
                         updatedData.movieAverageRating = it.movieAverageRating
                         updatedData.movieImageUrl = it.movieImageUrl
                     }
+                    if (updatedData.rating <= 0.0) {
+                        updatedData.rating = it.rating
+                    }
+                    if (updatedData.comment.isEmpty()) {
+                        updatedData.comment = it.comment
+                    }
                     clientMovieRatingData.value = updatedData
                 }
             }
