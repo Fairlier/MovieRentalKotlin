@@ -17,7 +17,7 @@ class EditMovieRentalViewModelFactory(private val id: Long,
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EditMovieRentalViewModel::class.java)) {
-            return EditMovieRentalViewModel(id, clientDao, employeeDao, movieDao) as T
+            return EditMovieRentalViewModel(id, movieRentalDao, clientDao, employeeDao, movieDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel")
     }

@@ -142,7 +142,7 @@ class InsertMovieRentalFragment : Fragment() {
                 val action = InsertMovieRentalFragmentDirections
                     .actionInsertMovieRentalFragmentToEmployeeCatalogSelectionFragment()
                 view.findNavController().navigate(action)
-                viewModel.onClientCardNavigated()
+                viewModel.onEmployeeCardNavigated()
             }
         }
 

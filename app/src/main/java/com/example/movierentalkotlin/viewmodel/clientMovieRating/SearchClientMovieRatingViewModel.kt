@@ -97,7 +97,7 @@ class SearchClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRati
     fun search() {
         val currentData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
         _filters.value = mapOf(
-            Constants.ClientMovieRating.CLIENT_ID to null,
+            Constants.ClientMovieRating.CLIENT_ID to currentData.clientId,
             Constants.ClientMovieRating.MOVIE_ID to currentData.movieId,
             Constants.ClientMovieRating.RATING to if (currentData.rating > 0) currentData.rating else null
         )

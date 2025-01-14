@@ -4,24 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movierentalkotlin.database.dao.ClientDao
-import com.example.movierentalkotlin.database.dao.ClientMovieRatingDao
+import com.example.movierentalkotlin.database.dao.EmployeeDao
 import com.example.movierentalkotlin.database.dao.MovieDao
-import com.example.movierentalkotlin.util.ClientMovieRatingData
+import com.example.movierentalkotlin.database.dao.MovieRentalDao
 import com.example.movierentalkotlin.util.Constants
+import com.example.movierentalkotlin.util.MovieRentalData
 
-class SearchMovieRentalViewModel(val clientMovieRatingDao: ClientMovieRatingDao,
+class SearchMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
                                  val clientDao: ClientDao,
+                                 val employeeDao: EmployeeDao,
                                  val movieDao: MovieDao) : ViewModel() {
 
-    val clientMovieRatingData = MutableLiveData<ClientMovieRatingData>(ClientMovieRatingData())
-
-    var ratingAsString: String
-        get() = clientMovieRatingData.value?.rating?.toString() ?: ""
-        set(value) {
-            val updatedData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
-            updatedData.rating = value.toDoubleOrNull() ?: 0.0
-            clientMovieRatingData.value = updatedData
-        }
+    val movieRentalData = MutableLiveData<MovieRentalData>(MovieRentalData())
 
     private val _navigateToCatalogAfterSearch = MutableLiveData<Boolean>(false)
     val navigateToCatalogAfterSearch: LiveData<Boolean> get() = _navigateToCatalogAfterSearch
@@ -32,14 +26,17 @@ class SearchMovieRentalViewModel(val clientMovieRatingDao: ClientMovieRatingDao,
     private val _navigateToClientCatalogSelection = MutableLiveData<Boolean>(false)
     val navigateToClientCatalogSelection: LiveData<Boolean> get() = _navigateToClientCatalogSelection
 
+    private val _navigateToEmployeeCatalogSelection = MutableLiveData<Boolean>(false)
+    val navigateToEmployeeCatalogSelection: LiveData<Boolean> get() = _navigateToEmployeeCatalogSelection
+
     private val _navigateToMovieCatalogSelection = MutableLiveData<Boolean>(false)
     val navigateToMovieCatalogSelection: LiveData<Boolean> get() = _navigateToMovieCatalogSelection
 
     private val _showValidationError = MutableLiveData<Boolean>(false)
     val showValidationError: LiveData<Boolean> get() = _showValidationError
 
-    fun initializationClientMovieRatingData(clientMovieRatingData: ClientMovieRatingData) {
-        this.clientMovieRatingData.value = clientMovieRatingData.copy()
+    fun initializationMovieRentalData(movieRentalData: MovieRentalData) {
+        this.movieRentalData.value = movieRentalData.copy()
     }
 
     fun onClientCardClicked() {
@@ -48,6 +45,14 @@ class SearchMovieRentalViewModel(val clientMovieRatingDao: ClientMovieRatingDao,
 
     fun onClientCardNavigated() {
         _navigateToClientCatalogSelection.value = false
+    }
+
+    fun onEmployeeCardClicked() {
+        _navigateToEmployeeCatalogSelection.value = true
+    }
+
+    fun onEmployeeCardNavigated() {
+        _navigateToEmployeeCatalogSelection.value = false
     }
 
     fun onMovieCardClicked() {
@@ -59,10 +64,10 @@ class SearchMovieRentalViewModel(val clientMovieRatingDao: ClientMovieRatingDao,
     }
 
     fun updateClient(id: Long) {
-        val clientLiveDataDataMovie = clientDao.getById(id)
-        clientLiveDataDataMovie.observeForever { client ->
+        val clientLiveData = clientDao.getById(id)
+        clientLiveData.observeForever { client ->
             client?.let {
-                val updatedData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
+                val updatedData = movieRentalData.value?.copy() ?: MovieRentalData()
                 updatedData.clientId = it.id
                 updatedData.clientFullName = it.fullName
                 updatedData.clientDateOfBirth = it.dateOfBirth
@@ -70,16 +75,35 @@ class SearchMovieRentalViewModel(val clientMovieRatingDao: ClientMovieRatingDao,
                 updatedData.clientPhoneNumber = it.phoneNumber
                 updatedData.clientDateOfRegistration = it.dateOfRegistration
                 updatedData.clientImageUrl = it.imageUrl
-                clientMovieRatingData.postValue(updatedData)
+                movieRentalData.postValue(updatedData)
+            }
+        }
+    }
+
+    fun updateEmployee(id: Long) {
+        val employeeLiveData = employeeDao.getById(id)
+        employeeLiveData.observeForever { employee ->
+            employee?.let {
+                val updatedData = movieRentalData.value?.copy() ?: MovieRentalData()
+                updatedData.employeeId = it.id
+                updatedData.employeeFullName = it.fullName
+                updatedData.employeeDateOfBirth = it.dateOfBirth
+                updatedData.employeeAddress = it.address
+                updatedData.employeePhoneNumber = it.phoneNumber
+                updatedData.employeeDateOfHire = it.dateOfHire
+                updatedData.employeeDateOfDismissal = it.dateOfDismissal
+                updatedData.employeeSalary = it.salary
+                updatedData.clientImageUrl = it.imageUrl
+                movieRentalData.postValue(updatedData)
             }
         }
     }
 
     fun updateMovie(id: Long) {
-        val liveDataMovie = movieDao.getById(id)
-        liveDataMovie.observeForever { movie ->
+        val movieLiveData = movieDao.getById(id)
+        movieLiveData.observeForever { movie ->
             movie?.let {
-                val updatedData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
+                val updatedData = movieRentalData.value?.copy() ?: MovieRentalData()
                 updatedData.movieId = it.id
                 updatedData.movieTitle = it.title
                 updatedData.movieReleaseYear = it.releaseYear
@@ -89,17 +113,19 @@ class SearchMovieRentalViewModel(val clientMovieRatingDao: ClientMovieRatingDao,
                 updatedData.movieRentalCost = it.rentalCost
                 updatedData.movieAverageRating = it.averageRating
                 updatedData.movieImageUrl = it.imageUrl
-                clientMovieRatingData.postValue(updatedData)
+                movieRentalData.postValue(updatedData)
             }
         }
     }
 
     fun search() {
-        val currentData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
+        val currentData = movieRentalData.value?.copy() ?: MovieRentalData()
         _filters.value = mapOf(
-            Constants.ClientMovieRating.CLIENT_ID to null,
-            Constants.ClientMovieRating.MOVIE_ID to currentData.movieId,
-            Constants.ClientMovieRating.RATING to if (currentData.rating > 0) currentData.rating else null
+            Constants.MovieRental.CLIENT_ID to  currentData.clientId,
+            Constants.MovieRental.EMPLOYEE_ID to  currentData.employeeId,
+            Constants.MovieRental.MOVIE_ID to currentData.movieId,
+            Constants.MovieRental.DATE_OF_RECEIPT to currentData.dateOfReceipt.takeIf { it.isNotEmpty() },
+            Constants.MovieRental.DATE_OF_RETURN to currentData.dateOfReturn.takeIf { it.isNotEmpty() }
         )
         _navigateToCatalogAfterSearch.value = true
     }
