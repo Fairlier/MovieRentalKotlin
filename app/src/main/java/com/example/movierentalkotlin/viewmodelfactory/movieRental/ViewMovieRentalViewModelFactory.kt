@@ -1,12 +1,12 @@
-package com.example.movierentalkotlin.viewmodelfactory.clientMovieRating
+package com.example.movierentalkotlin.viewmodelfactory.movieRental
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.movierentalkotlin.database.dao.ClientMovieRatingDao
 import com.example.movierentalkotlin.viewmodel.clientMovieRating.ViewClientMovieRatingViewModel
 
-class ViewClientMovieRatingViewModelFactory(private val id: Long,
-                                            private val clientMovieRatingDao: ClientMovieRatingDao)
+class ViewMovieRentalViewModelFactory(private val id: Long,
+                                      private val clientMovieRatingDao: ClientMovieRatingDao)
     : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

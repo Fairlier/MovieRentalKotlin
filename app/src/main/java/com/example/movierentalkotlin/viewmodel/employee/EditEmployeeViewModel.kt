@@ -14,12 +14,6 @@ class EditEmployeeViewModel(id: Long, val dao: EmployeeDao) : ViewModel() {
     val _currentImageUrl = MutableLiveData<String?>()
     val currentImageUrl: LiveData<String?> get() = _currentImageUrl
 
-    private val _navigateToViewAfterUpdate = MutableLiveData<Boolean>(false)
-    val navigateToViewAfterUpdate: LiveData<Boolean> get() = _navigateToViewAfterUpdate
-
-    private val _navigateToViewAfterDelete = MutableLiveData<Boolean>(false)
-    val navigateToViewAfterDelete: LiveData<Boolean> get() = _navigateToViewAfterDelete
-
     val employee = dao.getById(id)
 
     init {
@@ -30,6 +24,12 @@ class EditEmployeeViewModel(id: Long, val dao: EmployeeDao) : ViewModel() {
             }
         }
     }
+
+    private val _navigateToViewAfterUpdate = MutableLiveData<Boolean>(false)
+    val navigateToViewAfterUpdate: LiveData<Boolean> get() = _navigateToViewAfterUpdate
+
+    private val _navigateToViewAfterDelete = MutableLiveData<Boolean>(false)
+    val navigateToViewAfterDelete: LiveData<Boolean> get() = _navigateToViewAfterDelete
 
     fun update() {
         viewModelScope.launch {

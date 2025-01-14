@@ -60,8 +60,8 @@ class SearchClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRati
 
     fun updateClient(id: Long) {
         val clientLiveDataDataMovie = clientDao.getById(id)
-        clientLiveDataDataMovie.observeForever { movie ->
-            movie?.let {
+        clientLiveDataDataMovie.observeForever { client ->
+            client?.let {
                 val updatedData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
                 updatedData.clientId = it.id
                 updatedData.clientFullName = it.fullName

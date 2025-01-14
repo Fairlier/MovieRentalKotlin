@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragment.clientMovieRating.EditClientMovieRatingFragment">
+    tools:context=".fragment.movieRental.InsertMovieRentalFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="com.example.movierentalkotlin.viewmodel.clientMovieRating.EditClientMovieRatingViewModel" />
+            type="com.example.movierentalkotlin.viewmodel.movieRental.InsertMovieRentalViewModel" />
     </data>
 
     <LinearLayout
@@ -77,7 +77,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:scaleType="centerCrop"
-                                        app:imageUrl="@{viewModel.clientMovieRatingData.clientImageUrl}" />
+                                        app:imageUrl="@{viewModel.movieRentalData.clientImageUrl}" />
                                 </androidx.cardview.widget.CardView>
 
                                 <LinearLayout
@@ -90,7 +90,7 @@
                                         android:id="@+id/client_full_name"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{viewModel.clientMovieRatingData.clientFullName}"
+                                        android:text="@{viewModel.movieRentalData.clientFullName}"
                                         android:textColor="@android:color/black"
                                         android:textStyle="bold" />
 
@@ -111,7 +111,7 @@
                                             android:id="@+id/client_date_of_birth"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingData.clientDateOfBirth}"
+                                            android:text="@{viewModel.movieRentalData.clientDateOfBirth}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -132,7 +132,7 @@
                                             android:id="@+id/client_address"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingData.clientAddress}"
+                                            android:text="@{viewModel.movieRentalData.clientAddress}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -153,7 +153,7 @@
                                             android:id="@+id/client_phone_number"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingData.clientPhoneNumber}"
+                                            android:text="@{viewModel.movieRentalData.clientPhoneNumber}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -174,7 +174,171 @@
                                             android:id="@+id/client_date_of_registration"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingData.clientDateOfRegistration}"
+                                            android:text="@{viewModel.movieRentalData.clientDateOfRegistration}"
+                                            android:textColor="@android:color/black" />
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/employee_card_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Сотрудник: "
+                            android:textColor="@android:color/darker_gray" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardElevation="4dp"
+                            android:onClick="@{() -> viewModel.onEmployeeCardClicked()}" >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="16dp">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="100dp"
+                                    android:layout_height="150dp"
+                                    app:cardCornerRadius="16dp"
+                                    app:cardElevation="0dp">
+
+                                    <ImageView
+                                        android:id="@+id/employee_image"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:scaleType="centerCrop"
+                                        app:imageUrl="@{viewModel.movieRentalData.employeeImageUrl}" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/employee_full_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{viewModel.movieRentalData.employeeFullName}"
+                                        android:textColor="@android:color/black"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/employee_date_of_birth_label"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Дата рождения: "
+                                            android:textColor="@android:color/darker_gray" />
+
+                                        <TextView
+                                            android:id="@+id/employee_date_of_birth"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{viewModel.movieRentalData.employeeDateOfBirth}"
+                                            android:textColor="@android:color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/employee_address_label"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Адрес: "
+                                            android:textColor="@android:color/darker_gray" />
+
+                                        <TextView
+                                            android:id="@+id/employee_address"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{viewModel.movieRentalData.employeeAddress}"
+                                            android:textColor="@android:color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/employee_phone_number_label"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Номер телефона: "
+                                            android:textColor="@android:color/darker_gray" />
+
+                                        <TextView
+                                            android:id="@+id/employee_phone_number"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{viewModel.movieRentalData.employeePhoneNumber}"
+                                            android:textColor="@android:color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/employee_date_of_receipt_label"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Дата найма: "
+                                            android:textColor="@android:color/darker_gray" />
+
+                                        <TextView
+                                            android:id="@+id/employee_date_of_receipt"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{viewModel.movieRentalData.employeeDateOfHire}"
+                                            android:textColor="@android:color/black" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/employee_date_of_return_label"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Дата увольнения: "
+                                            android:textColor="@android:color/darker_gray" />
+
+                                        <TextView
+                                            android:id="@+id/employee_date_of_return"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{viewModel.movieRentalData.employeeDateOfDismissal}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -220,7 +384,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:scaleType="centerCrop"
-                                        app:imageUrl="@{viewModel.clientMovieRatingData.movieImageUrl}" />
+                                        app:imageUrl="@{viewModel.movieRentalData.movieImageUrl}" />
                                 </androidx.cardview.widget.CardView>
 
                                 <LinearLayout
@@ -233,7 +397,7 @@
                                         android:id="@+id/movie_title"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{viewModel.clientMovieRatingData.movieTitle}"
+                                        android:text="@{viewModel.movieRentalData.movieTitle}"
                                         android:textColor="@android:color/black"
                                         android:textStyle="bold" />
 
@@ -254,7 +418,7 @@
                                             android:id="@+id/movie_release_year"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingData.movieReleaseYear}"
+                                            android:text="@{viewModel.movieRentalData.movieReleaseYear}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -275,7 +439,7 @@
                                             android:id="@+id/movie_country"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingData.movieCountry}"
+                                            android:text="@{viewModel.movieRentalData.movieCountry}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -296,7 +460,7 @@
                                             android:id="@+id/movie_director"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingData.movieDirector}"
+                                            android:text="@{viewModel.movieRentalData.movieDirector}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -317,7 +481,7 @@
                                             android:id="@+id/movie_duration"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{String.valueOf(viewModel.clientMovieRatingData.movieDuration)}"
+                                            android:text="@{String.valueOf(viewModel.movieRentalData.movieDuration)}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -336,7 +500,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="end"
-                                        android:text="@{String.valueOf(viewModel.clientMovieRatingData.movieAverageRating)}"
+                                        android:text="@{String.valueOf(viewModel.movieRentalData.movieAverageRating)}"
                                         android:textColor="@android:color/black" />
 
                                     <Space
@@ -349,7 +513,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="end"
-                                        android:text="@{String.valueOf(viewModel.clientMovieRatingData.movieRentalCost)}"
+                                        android:text="@{String.valueOf(viewModel.movieRentalData.movieRentalCost)}"
                                         android:textColor="@android:color/black" />
                                 </LinearLayout>
                             </LinearLayout>
@@ -362,40 +526,39 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/client_movie_rating_rating_label"
+                            android:id="@+id/movie_rental_date_of_receipt_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Оценка: "
+                            android:text="Дата получения: "
                             android:textColor="@android:color/darker_gray" />
 
                         <EditText
-                            android:id="@+id/client_movie_rating_rating"
+                            android:id="@+id/movie_rental_date_of_receipt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"
-                            android:text="@={viewModel.ratingAsString}"
+                            android:inputType="textMultiLine"
+                            android:text="@={viewModel.movieRentalData.dateOfReceipt}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/client_movie_rating_comment_label"
+                            android:id="@+id/movie_rental_date_of_return_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Комментарий: "
+                            android:text="Дата возврата: "
                             android:textColor="@android:color/darker_gray" />
 
                         <EditText
-                            android:id="@+id/client_movie_rating_comment"
+                            android:id="@+id/movie_rental_date_of_return"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
-                            android:text="@={viewModel.clientMovieRatingData.comment}"
+                            android:text="@={viewModel.movieRentalData.dateOfReturn}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
                 </LinearLayout>
@@ -417,28 +580,13 @@
                 android:gravity="center_vertical">
 
                 <ImageButton
-                    android:id="@+id/button_delete"
+                    android:id="@+id/button_insert"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/baseline_delete_24"
-                    android:onClick="@{() -> viewModel.delete()}"
-                    android:layout_gravity="center" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageButton
-                    android:id="@+id/button_update"
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/baseline_check_24"
-                    android:onClick="@{() -> viewModel.update()}"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:onClick="@{() -> viewModel.insert()}"
                     android:layout_gravity="center" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>

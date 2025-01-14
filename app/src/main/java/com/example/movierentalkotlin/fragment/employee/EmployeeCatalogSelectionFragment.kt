@@ -1,4 +1,4 @@
-package com.example.movierentalkotlin.fragment.movie
+package com.example.movierentalkotlin.fragment.employee
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,18 +17,18 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.movierentalkotlin.R
 import com.example.movierentalkotlin.activity.MainActivity
-import com.example.movierentalkotlin.adapter.MovieCatalogItemAdapter
+import com.example.movierentalkotlin.adapter.EmployeeCatalogItemAdapter
 import com.example.movierentalkotlin.database.MovieRentalDatabase
-import com.example.movierentalkotlin.databinding.FragmentMovieCatalogSelectionBinding
-import com.example.movierentalkotlin.fragment.client.ClientCatalogSelectionFragmentDirections
+import com.example.movierentalkotlin.databinding.FragmentEmployeeCatalogSelectionBinding
+import com.example.movierentalkotlin.fragment.movie.MovieCatalogSelectionFragmentDirections
 import com.example.movierentalkotlin.util.Constants
-import com.example.movierentalkotlin.viewmodel.movie.MovieCatalogSelectionViewModel
 import com.example.movierentalkotlin.viewmodel.SharedViewModel
-import com.example.movierentalkotlin.viewmodelfactory.movie.MovieCatalogSelectionViewModelFactory
+import com.example.movierentalkotlin.viewmodel.employee.EmployeeCatalogSelectionViewModel
+import com.example.movierentalkotlin.viewmodelfactory.employee.EmployeeCatalogSelectionViewModelFactory
 
-class MovieCatalogSelectionFragment : Fragment() {
+class EmployeeCatalogSelectionFragment : Fragment() {
 
-    private var _binding: FragmentMovieCatalogSelectionBinding? = null
+    private var _binding: FragmentEmployeeCatalogSelectionBinding? = null
     private val binding get() = _binding!!
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
@@ -36,7 +36,7 @@ class MovieCatalogSelectionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMovieCatalogSelectionBinding.inflate(inflater, container, false)
+        _binding = FragmentEmployeeCatalogSelectionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,26 +44,25 @@ class MovieCatalogSelectionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val application = requireNotNull(this.activity).application
-        val dao = MovieRentalDatabase.getInstance(application).movieDao
+        val dao = MovieRentalDatabase.getInstance(application).employeeDao
 
-        val viewModelFactory = MovieCatalogSelectionViewModelFactory(dao)
+        val viewModelFactory = EmployeeCatalogSelectionViewModelFactory(dao)
         val viewModel = ViewModelProvider(this,
-            viewModelFactory)[MovieCatalogSelectionViewModel::class.java]
+            viewModelFactory)[EmployeeCatalogSelectionViewModel::class.java]
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_toolbar_movie_catalog, menu)
+                menuInflater.inflate(R.menu.menu_toolbar_employee_catalog, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.id.searchMovieFragment -> {
-                        val action =
-                            MovieCatalogSelectionFragmentDirections
-                                .actionMovieCatalogSelectionFragmentToSearchMovieSelectionFragment()
+                    R.id.searchEmployeeFragment -> {
+                        val action = EmployeeCatalogSelectionFragmentDirections
+                            .actionEmployeeCatalogSelectionFragmentToSearchEmployeeSelectionFragment()
                         findNavController().navigate(action)
                         true
                     }
@@ -75,10 +74,7 @@ class MovieCatalogSelectionFragment : Fragment() {
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.menuToolbar)
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.clientMovieRatingCatalogFragment,
-                R.id.movieRentalCatalogFragment
-            ),
+            setOf(R.id.movieRentalCatalogFragment),
             (requireActivity() as MainActivity).binding.drawerLayout
         )
         binding.menuToolbar.setupWithNavController(navController, appBarConfiguration)
@@ -87,12 +83,12 @@ class MovieCatalogSelectionFragment : Fragment() {
             this.findNavController().navigateUp()
         }
 
-        val adapter = MovieCatalogItemAdapter{ id ->
+        val adapter = EmployeeCatalogItemAdapter{ id ->
             viewModel.onCatalogItemClicked(id)
         }
-        binding.movieCatalog.adapter = adapter
+        binding.employeeCatalog.adapter = adapter
 
-        sharedViewModel.movieFilters.observe(viewLifecycleOwner) { filters ->
+        sharedViewModel.employeeFilters.observe(viewLifecycleOwner) { filters ->
             viewModel.setFilters(filters)
         }
 
@@ -105,54 +101,27 @@ class MovieCatalogSelectionFragment : Fragment() {
         viewModel.navigateToBack.observe(viewLifecycleOwner) { id ->
             id?.let {
                 when (sharedViewModel.sourceFragment.value) {
-                    Constants.FragmentSource.INSERT_CLIENT_MOVIE_RATING -> {
-                        sharedViewModel.setSelectedMovieId(id)
-                        val action =
-                            MovieCatalogSelectionFragmentDirections
-                                .actionMovieCatalogSelectionFragmentToInsertClientMovieRatingFragment()
-                        this.findNavController().navigate(action)
-                        viewModel.onCatalogItemNavigated()
-                    }
-                    Constants.FragmentSource.SEARCH_CLIENT_MOVIE_RATING -> {
-                        sharedViewModel.setSelectedMovieId(id)
-                        val action =
-                            MovieCatalogSelectionFragmentDirections
-                                .actionMovieCatalogSelectionFragmentToSearchClientMovieRatingFragment()
-                        this.findNavController().navigate(action)
-                        viewModel.onCatalogItemNavigated()
-                    }
-                    Constants.FragmentSource.EDIT_CLIENT_MOVIE_RATING -> {
-                        sharedViewModel.setSelectedMovieId(id)
-                        sharedViewModel.currentIdForEditClientMovieRating?.let { currentIdForEditClientMovieRating ->
-                            val action =
-                                MovieCatalogSelectionFragmentDirections
-                                    .actionMovieCatalogSelectionFragmentToEditClientMovieRatingFragment(currentIdForEditClientMovieRating)
-                            findNavController().navigate(action)
-                            viewModel.onCatalogItemNavigated()
-                        }
-                    }
                     Constants.FragmentSource.INSERT_MOVIE_RENTAL -> {
-                        sharedViewModel.setSelectedMovieId(id)
-                        val action =
-                            MovieCatalogSelectionFragmentDirections
-                                .actionMovieCatalogSelectionFragmentToInsertMovieRentalFragment()
+                        sharedViewModel.setSelectedEmployeeId(id)
+                        val action = EmployeeCatalogSelectionFragmentDirections
+                                .actionEmployeeCatalogSelectionFragmentToInsertMovieRentalFragment()
                         this.findNavController().navigate(action)
                         viewModel.onCatalogItemNavigated()
                     }
                     Constants.FragmentSource.SEARCH_MOVIE_RENTAL -> {
-                        sharedViewModel.setSelectedMovieId(id)
+                        sharedViewModel.setSelectedEmployeeId(id)
                         val action =
-                            MovieCatalogSelectionFragmentDirections
-                                .actionMovieCatalogSelectionFragmentToSearchMovieRentalFragment()
+                            EmployeeCatalogSelectionFragmentDirections
+                                .actionEmployeeCatalogSelectionFragmentToSearchMovieRentalFragment()
                         this.findNavController().navigate(action)
                         viewModel.onCatalogItemNavigated()
                     }
                     Constants.FragmentSource.EDIT_MOVIE_RENTAL -> {
-                        sharedViewModel.setSelectedMovieId(id)
+                        sharedViewModel.setSelectedEmployeeId(id)
                         sharedViewModel.currentIdForEditMovieRental?.let { currentIdForEditMovieRental ->
                             val action =
-                                MovieCatalogSelectionFragmentDirections
-                                    .actionMovieCatalogSelectionFragmentToEditMovieRentalFragment(currentIdForEditMovieRental)
+                                EmployeeCatalogSelectionFragmentDirections
+                                    .actionEmployeeCatalogSelectionFragmentToEditMovieRentalFragment(currentIdForEditMovieRental)
                             findNavController().navigate(action)
                             viewModel.onCatalogItemNavigated()
                         }

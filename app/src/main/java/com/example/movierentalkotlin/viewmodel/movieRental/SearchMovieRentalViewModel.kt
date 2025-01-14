@@ -1,19 +1,17 @@
-package com.example.movierentalkotlin.viewmodel.clientMovieRating
+package com.example.movierentalkotlin.viewmodel.movieRental
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.movierentalkotlin.database.dao.ClientDao
 import com.example.movierentalkotlin.database.dao.ClientMovieRatingDao
 import com.example.movierentalkotlin.database.dao.MovieDao
-import com.example.movierentalkotlin.database.entity.ClientMovieRating
 import com.example.movierentalkotlin.util.ClientMovieRatingData
-import kotlinx.coroutines.launch
+import com.example.movierentalkotlin.util.Constants
 
-class InsertClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRatingDao,
-                                       val clientDao: ClientDao,
-                                       val movieDao: MovieDao) : ViewModel() {
+class SearchMovieRentalViewModel(val clientMovieRatingDao: ClientMovieRatingDao,
+                                 val clientDao: ClientDao,
+                                 val movieDao: MovieDao) : ViewModel() {
 
     val clientMovieRatingData = MutableLiveData<ClientMovieRatingData>(ClientMovieRatingData())
 
@@ -25,8 +23,11 @@ class InsertClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRati
             clientMovieRatingData.value = updatedData
         }
 
-    private val _navigateToCatalogAfterInsert = MutableLiveData<Boolean>(false)
-    val navigateToCatalogAfterInsert: LiveData<Boolean> get() = _navigateToCatalogAfterInsert
+    private val _navigateToCatalogAfterSearch = MutableLiveData<Boolean>(false)
+    val navigateToCatalogAfterSearch: LiveData<Boolean> get() = _navigateToCatalogAfterSearch
+
+    private val _filters = MutableLiveData<Map<String, Any?>>()
+    val filters: LiveData<Map<String, Any?>> get() = _filters
 
     private val _navigateToClientCatalogSelection = MutableLiveData<Boolean>(false)
     val navigateToClientCatalogSelection: LiveData<Boolean> get() = _navigateToClientCatalogSelection
@@ -58,8 +59,8 @@ class InsertClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRati
     }
 
     fun updateClient(id: Long) {
-        val clientLiveData = clientDao.getById(id)
-        clientLiveData.observeForever { client ->
+        val clientLiveDataDataMovie = clientDao.getById(id)
+        clientLiveDataDataMovie.observeForever { client ->
             client?.let {
                 val updatedData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
                 updatedData.clientId = it.id
@@ -75,8 +76,8 @@ class InsertClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRati
     }
 
     fun updateMovie(id: Long) {
-        val movieLiveData = movieDao.getById(id)
-        movieLiveData.observeForever { movie ->
+        val liveDataMovie = movieDao.getById(id)
+        liveDataMovie.observeForever { movie ->
             movie?.let {
                 val updatedData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
                 updatedData.movieId = it.id
@@ -93,27 +94,18 @@ class InsertClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRati
         }
     }
 
-    fun insert() {
-        viewModelScope.launch {
-            val currentData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
-            if (currentData.clientId == null || currentData.movieId == null) {
-                _showValidationError.value = true
-                return@launch
-            }
-
-            val clientMovieRating = ClientMovieRating(
-                clientId = currentData.clientId!!,
-                movieId = currentData.movieId!!,
-                rating = currentData.rating,
-                comment = currentData.comment
-            )
-            clientMovieRatingDao.insert(clientMovieRating)
-            _navigateToCatalogAfterInsert.value = true
-        }
+    fun search() {
+        val currentData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
+        _filters.value = mapOf(
+            Constants.ClientMovieRating.CLIENT_ID to null,
+            Constants.ClientMovieRating.MOVIE_ID to currentData.movieId,
+            Constants.ClientMovieRating.RATING to if (currentData.rating > 0) currentData.rating else null
+        )
+        _navigateToCatalogAfterSearch.value = true
     }
 
-    fun onNavigatedToCatalogAfterInsert() {
-        _navigateToCatalogAfterInsert.value = false
+    fun onNavigatedToCatalogAfterSearch() {
+        _navigateToCatalogAfterSearch.value = false
     }
 
     fun onValidationErrorShown() {

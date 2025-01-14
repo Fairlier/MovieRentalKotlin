@@ -76,7 +76,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:scaleType="centerCrop"
-                                        app:imageUrl="@{viewModel.clientMovieRatingWithDetailsDto.client.imageUrl}" />
+                                        app:imageUrl="@{viewModel.clientMovieRatingWithDetailsDto.clientImageUrl}" />
                                 </androidx.cardview.widget.CardView>
 
                                 <LinearLayout
@@ -89,7 +89,7 @@
                                         android:id="@+id/client_full_name"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{viewModel.clientMovieRatingWithDetailsDto.client.fullName}"
+                                        android:text="@{viewModel.clientMovieRatingWithDetailsDto.clientFullName}"
                                         android:textColor="@android:color/black"
                                         android:textStyle="bold" />
 
@@ -110,7 +110,7 @@
                                             android:id="@+id/client_date_of_birth"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.client.dateOfBirth}"
+                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.clientDateOfBirth}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -131,7 +131,7 @@
                                             android:id="@+id/client_address"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.client.address}"
+                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.clientAddress}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -152,7 +152,7 @@
                                             android:id="@+id/client_phone_number"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.client.phoneNumber}"
+                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.clientPhoneNumber}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -173,7 +173,7 @@
                                             android:id="@+id/client_date_of_registration"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.client.dateOfRegistration}"
+                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.clientDateOfRegistration}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -218,7 +218,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:scaleType="centerCrop"
-                                        app:imageUrl="@{viewModel.clientMovieRatingWithDetailsDto.movie.imageUrl}" />
+                                        app:imageUrl="@{viewModel.clientMovieRatingWithDetailsDto.movieImageUrl}" />
                                 </androidx.cardview.widget.CardView>
 
                                 <LinearLayout
@@ -231,7 +231,7 @@
                                         android:id="@+id/movie_title"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@{viewModel.clientMovieRatingWithDetailsDto.movie.title}"
+                                        android:text="@{viewModel.clientMovieRatingWithDetailsDto.movieTitle}"
                                         android:textColor="@android:color/black"
                                         android:textStyle="bold" />
 
@@ -252,7 +252,7 @@
                                             android:id="@+id/movie_release_year"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.movie.releaseYear}"
+                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.movieReleaseYear}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -273,7 +273,7 @@
                                             android:id="@+id/movie_country"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.movie.country}"
+                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.movieCountry}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -294,7 +294,7 @@
                                             android:id="@+id/movie_director"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.movie.director}"
+                                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.movieDirector}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
 
@@ -315,7 +315,7 @@
                                             android:id="@+id/movie_duration"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{String.valueOf(viewModel.clientMovieRatingWithDetailsDto.movie.duration)}"
+                                            android:text="@{String.valueOf(viewModel.clientMovieRatingWithDetailsDto.movieDuration)}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -334,7 +334,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="end"
-                                        android:text="@{String.valueOf(viewModel.clientMovieRatingWithDetailsDto.movie.averageRating)}"
+                                        android:text="@{String.valueOf(viewModel.clientMovieRatingWithDetailsDto.movieAverageRating)}"
                                         android:textColor="@android:color/black" />
 
                                     <Space
@@ -347,7 +347,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="end"
-                                        android:text="@{String.valueOf(viewModel.clientMovieRatingWithDetailsDto.movie.rentalCost)}"
+                                        android:text="@{String.valueOf(viewModel.clientMovieRatingWithDetailsDto.movieRentalCost)}"
                                         android:textColor="@android:color/black" />
                                 </LinearLayout>
                             </LinearLayout>
@@ -371,7 +371,7 @@
                             android:id="@+id/client_movie_rating_rating"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{String.valueOf(viewModel.clientMovieRatingWithDetailsDto.clientMovieRating.rating)}"
+                            android:text="@{String.valueOf(viewModel.clientMovieRatingWithDetailsDto.rating)}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
 
@@ -392,7 +392,7 @@
                             android:id="@+id/client_movie_rating_comment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.clientMovieRating.comment}"
+                            android:text="@{viewModel.clientMovieRatingWithDetailsDto.comment}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
                 </LinearLayout>

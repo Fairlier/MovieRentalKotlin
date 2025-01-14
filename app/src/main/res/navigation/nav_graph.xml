@@ -306,6 +306,30 @@
             app:destination="@id/searchClientMovieRatingFragment"
             app:popUpTo="@id/searchClientMovieRatingFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_movieCatalogSelectionFragment_to_editClientMovieRatingFragment"
+            app:destination="@id/editClientMovieRatingFragment"
+            app:popUpTo="@id/editClientMovieRatingFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_movieCatalogSelectionFragment_to_insertMovieRentalFragment"
+            app:destination="@id/insertMovieRentalFragment"
+            app:popUpTo="@id/insertMovieRentalFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_movieCatalogSelectionFragment_to_searchMovieRentalFragment"
+            app:destination="@id/searchMovieRentalFragment"
+            app:popUpTo="@id/searchMovieRentalFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_movieCatalogSelectionFragment_to_editMovieRentalFragment"
+            app:destination="@id/editMovieRentalFragment"
+            app:popUpTo="@id/editMovieRentalFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -342,6 +366,30 @@
             app:destination="@id/searchClientMovieRatingFragment"
             app:popUpTo="@id/searchClientMovieRatingFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_clientCatalogSelectionFragment_to_editClientMovieRatingFragment"
+            app:destination="@id/editClientMovieRatingFragment"
+            app:popUpTo="@id/editClientMovieRatingFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_clientCatalogSelectionFragment_to_insertMovieRentalFragment"
+            app:destination="@id/insertMovieRentalFragment"
+            app:popUpTo="@id/insertMovieRentalFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_clientCatalogSelectionFragment_to_searchMovieRentalFragment"
+            app:destination="@id/searchMovieRentalFragment"
+            app:popUpTo="@id/searchMovieRentalFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_clientCatalogSelectionFragment_to_editMovieRentalFragment"
+            app:destination="@id/editMovieRentalFragment"
+            app:popUpTo="@id/editMovieRentalFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -354,6 +402,48 @@
             android:id="@+id/action_searchClientSelectionFragment_to_clientCatalogSelectionFragment"
             app:destination="@id/clientCatalogSelectionFragment"
             app:popUpTo="@id/clientCatalogSelectionFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/employeeCatalogSelectionFragment"
+        android:name="com.example.movierentalkotlin.fragment.employee.EmployeeCatalogSelectionFragment"
+        android:label="Сотрудники"
+        tools:layout="@layout/fragment_employee_catalog_selection" >
+
+        <action
+            android:id="@+id/action_employeeCatalogSelectionFragment_to_searchEmployeeSelectionFragment"
+            app:destination="@id/searchEmployeeSelectionFragment" />
+
+        <action
+            android:id="@+id/action_employeeCatalogSelectionFragment_to_insertMovieRentalFragment"
+            app:destination="@id/insertMovieRentalFragment"
+            app:popUpTo="@id/insertMovieRentalFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_employeeCatalogSelectionFragment_to_searchMovieRentalFragment"
+            app:destination="@id/searchMovieRentalFragment"
+            app:popUpTo="@id/searchMovieRentalFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_employeeCatalogSelectionFragment_to_editMovieRentalFragment"
+            app:destination="@id/editMovieRentalFragment"
+            app:popUpTo="@id/editMovieRentalFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchEmployeeSelectionFragment"
+        android:name="com.example.movierentalkotlin.fragment.employee.SearchEmployeeSelectionFragment"
+        android:label="Поиск"
+        tools:layout="@layout/fragment_search_employee_selection" >
+
+        <action
+            android:id="@+id/action_searchEmployeeSelectionFragment_to_employeeCatalogSelectionFragment"
+            app:destination="@id/employeeCatalogSelectionFragment"
+            app:popUpTo="@id/employeeCatalogSelectionFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -450,8 +540,16 @@
             app:argType="long" />
 
         <action
+            android:id="@+id/action_editClientMovieRatingFragment_to_movieCatalogSelectionFragment"
+            app:destination="@id/movieCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_editClientMovieRatingFragment_to_clientCatalogSelectionFragment"
+            app:destination="@id/clientCatalogSelectionFragment" />
+
+        <action
             android:id="@+id/action_editClientMovieRatingFragment_to_viewClientMovieRatingFragment"
-            app:destination="@id/viewEmployeeCatalogFragment"
+            app:destination="@id/viewClientMovieRatingFragment"
             app:popUpTo="@id/viewClientMovieRatingFragment"
             app:popUpToInclusive="true" />
 
@@ -459,6 +557,131 @@
             android:id="@+id/action_editClientMovieRatingFragment_to_clientMovieRatingCatalogFragment"
             app:destination="@id/clientMovieRatingCatalogFragment"
             app:popUpTo="@id/clientMovieRatingCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieRentalCatalogFragment"
+        android:name="com.example.movierentalkotlin.fragment.movieRental.MovieRentalCatalogFragment"
+        android:label="Аренда фильмов"
+        tools:layout="@layout/fragment_employee_catalog" >
+
+        <action
+            android:id="@+id/action_movieRentalCatalogFragment_to_viewMovieRentalFragment"
+            app:destination="@id/viewMovieRentalFragment" />
+
+        <action
+            android:id="@+id/action_movieRentalCatalogFragment_to_insertMovieRentalFragment"
+            app:destination="@id/insertMovieRentalFragment" />
+
+        <action
+            android:id="@+id/action_movieRentalCatalogFragment_to_searchMovieRentalFragment"
+            app:destination="@id/searchMovieRentalFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/insertMovieRentalFragment"
+        android:name="com.example.movierentalkotlin.fragment.movieRental.InsertMovieRentalFragment"
+        android:label="Добавление"
+        tools:layout="@layout/fragment_insert_movie_rental" >
+
+        <action
+            android:id="@+id/action_insertMovieRentalFragment_to_movieCatalogSelectionFragment"
+            app:destination="@id/movieCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_insertMovieRentalFragment_to_clientCatalogSelectionFragment"
+            app:destination="@id/clientCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_insertMovieRentalFragment_to_employeeCatalogSelectionFragment"
+            app:destination="@id/employeeCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_insertMovieRentalFragment_to_movieRentalCatalogFragment"
+            app:destination="@id/movieRentalCatalogFragment"
+            app:popUpTo="@id/movieRentalCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchMovieRentalFragment"
+        android:name="com.example.movierentalkotlin.fragment.movieRental.SearchMovieRentalFragment"
+        android:label="Поиск"
+        tools:layout="@layout/fragment_search_movie_rental" >
+
+        <action
+            android:id="@+id/action_searchMovieRentalFragment_to_movieCatalogSelectionFragment"
+            app:destination="@id/movieCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_searchMovieRentalFragment_to_clientCatalogSelectionFragment"
+            app:destination="@id/clientCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_searchMovieRentalFragment_to_employeeCatalogSelectionFragment"
+            app:destination="@id/employeeCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_searchMovieRentalFragment_to_movieRentalCatalogFragment"
+            app:destination="@id/movieRentalCatalogFragment"
+            app:popUpTo="@id/movieRentalCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewMovieRentalFragment"
+        android:name="com.example.movierentalkotlin.fragment.movieRental.ViewMovieRentalFragment"
+        android:label=""
+        tools:layout="@layout/fragment_view_movie_rental" >
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_viewMovieRentalFragment_to_editMovieRentalFragment"
+            app:destination="@id/editMovieRentalFragment" />
+
+        <action
+            android:id="@+id/action_viewMovieRentalFragment_to_movieRentalCatalogFragment"
+            app:destination="@id/movieRentalCatalogFragment"
+            app:popUpTo="@id/movieRentalCatalogFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editMovieRentalFragment"
+        android:name="com.example.movierentalkotlin.fragment.movieRental.EditMovieRentalFragment"
+        android:label="Редактирование"
+        tools:layout="@layout/fragment_edit_movie_rental" >
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_editMovieRentalFragment_to_movieCatalogSelectionFragment"
+            app:destination="@id/movieCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_editMovieRentalFragment_to_clientCatalogSelectionFragment"
+            app:destination="@id/clientCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_editMovieRentalFragment_to_employeeCatalogSelectionFragment"
+            app:destination="@id/employeeCatalogSelectionFragment" />
+
+        <action
+            android:id="@+id/action_editMovieRentalFragment_to_viewMovieRentalFragment"
+            app:destination="@id/viewMovieRentalFragment"
+            app:popUpTo="@id/viewMovieRentalFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_editMovieRentalFragment_to_movieRentalCatalogFragment"
+            app:destination="@id/movieRentalCatalogFragment"
+            app:popUpTo="@id/movieRentalCatalogFragment"
             app:popUpToInclusive="true" />
     </fragment>
 </navigation>

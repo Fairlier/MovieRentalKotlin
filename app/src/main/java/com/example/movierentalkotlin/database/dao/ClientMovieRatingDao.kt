@@ -28,21 +28,43 @@ interface ClientMovieRatingDao {
     @Query("SELECT * FROM client_movie_ratings ORDER BY id DESC")
     fun getAll(): LiveData<List<ClientMovieRating>>
 
-    @Query("""
+    @Query(
+        """
         SELECT * FROM client_movie_ratings
-        WHERE (:client_id IS NULL OR client_id = :client_id)
-        AND (:movie_id IS NULL OR movie_id = :movie_id)
+        WHERE (:clientId IS NULL OR client_id = :clientId)
+        AND (:movieId IS NULL OR movie_id = :movieId)
         AND (:rating IS NULL OR rating = :rating)
-    """)
+    """
+    )
     fun search(
-        client_id: Long?,
-        movie_id: Long?,
+        clientId: Long?,
+        movieId: Long?,
         rating: Double?
     ): LiveData<List<ClientMovieRating>>
 
     @Transaction
     @Query("""
-        SELECT cmr.*, c.*, m.*
+        SELECT cmr.id AS ratingId, 
+            cmr.id AS ratingId,
+            cmr.client_id AS clientId,
+            cmr.movie_id AS movieId,
+            cmr.rating AS rating,
+            cmr.comment AS comment,
+            c.full_name AS clientFullName,
+            c.date_of_birth AS clientDateOfBirth,
+            c.address AS clientAddress,
+            c.phone_number AS clientPhoneNumber,
+            c.date_of_registration AS clientDateOfRegistration,
+            c.image_url AS clientImageUrl,
+            m.title AS movieTitle,
+            m.release_year AS movieReleaseYear,
+            m.director AS movieDirector,
+            m.country AS movieCountry,
+            m.duration AS movieDuration,
+            m.rental_cost AS movieRentalCost,
+            m.average_rating AS movieAverageRating,
+            m.description AS movieDescription,
+            m.image_url AS movieImageUrl
         FROM client_movie_ratings AS cmr
         INNER JOIN clients AS c ON cmr.client_id = c.id
         INNER JOIN movies AS m ON cmr.movie_id = m.id
@@ -52,7 +74,27 @@ interface ClientMovieRatingDao {
 
     @Transaction
     @Query("""
-        SELECT cmr.*, c.*, m.*
+        SELECT cmr.id AS ratingId, 
+            cmr.id AS ratingId,
+            cmr.client_id AS clientId,
+            cmr.movie_id AS movieId,
+            cmr.rating AS rating,
+            cmr.comment AS comment,
+            c.full_name AS clientFullName,
+            c.date_of_birth AS clientDateOfBirth,
+            c.address AS clientAddress,
+            c.phone_number AS clientPhoneNumber,
+            c.date_of_registration AS clientDateOfRegistration,
+            c.image_url AS clientImageUrl,
+            m.title AS movieTitle,
+            m.release_year AS movieReleaseYear,
+            m.director AS movieDirector,
+            m.country AS movieCountry,
+            m.duration AS movieDuration,
+            m.rental_cost AS movieRentalCost,
+            m.average_rating AS movieAverageRating,
+            m.description AS movieDescription,
+            m.image_url AS movieImageUrl
         FROM client_movie_ratings AS cmr
         INNER JOIN clients AS c ON cmr.client_id = c.id
         INNER JOIN movies AS m ON cmr.movie_id = m.id
@@ -61,7 +103,27 @@ interface ClientMovieRatingDao {
 
     @Transaction
     @Query("""
-        SELECT cmr.*, c.*, m.*
+        SELECT cmr.id AS ratingId, 
+            cmr.id AS ratingId,
+            cmr.client_id AS clientId,
+            cmr.movie_id AS movieId,
+            cmr.rating AS rating,
+            cmr.comment AS comment,
+            c.full_name AS clientFullName,
+            c.date_of_birth AS clientDateOfBirth,
+            c.address AS clientAddress,
+            c.phone_number AS clientPhoneNumber,
+            c.date_of_registration AS clientDateOfRegistration,
+            c.image_url AS clientImageUrl,
+            m.title AS movieTitle,
+            m.release_year AS movieReleaseYear,
+            m.director AS movieDirector,
+            m.country AS movieCountry,
+            m.duration AS movieDuration,
+            m.rental_cost AS movieRentalCost,
+            m.average_rating AS movieAverageRating,
+            m.description AS movieDescription,
+            m.image_url AS movieImageUrl
         FROM client_movie_ratings AS cmr
         INNER JOIN clients AS c ON cmr.client_id = c.id
         INNER JOIN movies AS m ON cmr.movie_id = m.id

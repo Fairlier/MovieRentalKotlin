@@ -21,6 +21,11 @@
             android:id="@+id/clientMovieRatingCatalogFragment"
             android:icon="@drawable/baseline_star_rate_24"
             android:title="Рейтинг фильмов" />
+
+        <item
+            android:id="@+id/movieRentalCatalogFragment"
+            android:icon="@drawable/baseline_local_movies_24"
+            android:title="Аренда фильмов" />
     </group>
 
     <item android:title="">

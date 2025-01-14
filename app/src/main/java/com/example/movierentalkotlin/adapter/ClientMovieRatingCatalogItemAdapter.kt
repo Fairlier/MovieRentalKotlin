@@ -30,15 +30,9 @@ class ClientMovieRatingCatalogItemAdapter(val clickListener: (id: Long) -> Unit)
         }
 
         fun bind(item: ClientMovieRatingWithDetailsDto, clickListener: (id: Long) -> Unit) {
-            binding.clientMovieRating = item.clientMovieRating
-            binding.client = item.client
-            binding.movie = item.movie
+            binding.clientMovieRatingWithDetailsDto = item
             binding.root.setOnClickListener {
-                clickListener(item.clientMovieRating.id)
-                println("clientMovieRatingId: ${item.clientMovieRating.id}")
-                println("clientMovieRating: ${item.clientMovieRating.rating}")
-                println("client: ${item.client.id}")
-                println("movie: ${item.movie.id}")
+                clickListener(item.ratingId)
             }
         }
     }

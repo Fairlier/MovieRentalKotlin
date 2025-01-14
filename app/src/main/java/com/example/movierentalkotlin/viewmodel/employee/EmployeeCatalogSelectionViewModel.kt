@@ -9,29 +9,18 @@ import com.example.movierentalkotlin.util.Constants
 
 class EmployeeCatalogSelectionViewModel(val dao: EmployeeDao) : ViewModel() {
 
-    private val _navigateToView = MutableLiveData<Long?>()
-    val navigateToView: LiveData<Long?> get() = _navigateToView
-
-    private val _navigateToInsert = MutableLiveData<Boolean>(false)
-    val navigateToInsert: LiveData<Boolean> get() = _navigateToInsert
-
     private val _catalog = MutableLiveData<List<Employee>>()
     val catalog: LiveData<List<Employee>> get() = _catalog
 
+    private val _navigateToBack = MutableLiveData<Long?>()
+    val navigateToBack: LiveData<Long?> get() = _navigateToBack
+
     fun onCatalogItemClicked(id: Long) {
-        _navigateToView.value = id
+        _navigateToBack.value = id
     }
 
     fun onCatalogItemNavigated() {
-        _navigateToView.value = null
-    }
-
-    fun insert() {
-        _navigateToInsert.value = true
-    }
-
-    fun onNavigatedToInsert() {
-        _navigateToInsert.value = false
+        _navigateToBack.value = null
     }
 
     init {

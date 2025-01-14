@@ -7,14 +7,15 @@ import com.example.movierentalkotlin.database.dao.ClientMovieRatingDao
 import com.example.movierentalkotlin.database.dao.MovieDao
 import com.example.movierentalkotlin.viewmodel.clientMovieRating.EditClientMovieRatingViewModel
 
-class EditClientMovieRatingViewModelFactory(private val clientMovieRatingDao: ClientMovieRatingDao,
+class EditClientMovieRatingViewModelFactory(private val id: Long,
+                                            private val clientMovieRatingDao: ClientMovieRatingDao,
                                             private val clientDao: ClientDao,
                                             private val movieDao: MovieDao)
     : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EditClientMovieRatingViewModel::class.java)) {
-            return EditClientMovieRatingViewModel(clientMovieRatingDao, clientDao, movieDao) as T
+            return EditClientMovieRatingViewModel(id, clientMovieRatingDao, clientDao, movieDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel")
     }

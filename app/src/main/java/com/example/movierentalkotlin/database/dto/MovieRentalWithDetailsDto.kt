@@ -1,12 +1,13 @@
 package com.example.movierentalkotlin.database.dto
 
-data class ClientMovieRatingWithDetailsDto(
+data class MovieRentalWithDetailsDto(
 
-    val ratingId: Long,
+    val rentalId: Long,
     val clientId: Long,
+    val employeeId: Long,
     val movieId: Long,
-    val rating: Double,
-    val comment: String,
+    val dateOfReceipt: String,
+    val dateOfReturn: String,
 
     val clientFullName: String,
     val clientDateOfBirth: String,
@@ -14,6 +15,15 @@ data class ClientMovieRatingWithDetailsDto(
     val clientPhoneNumber: String,
     val clientDateOfRegistration: String,
     val clientImageUrl: String?,
+
+    val employeeFullName: String,
+    val employeeDateOfBirth: String,
+    val employeeAddress: String,
+    val employeePhoneNumber: String,
+    val employeeDateOfHire: String,
+    val employeeDateOfDismissal: String,
+    val employeeSalary: Double,
+    val employeeImageUrl: String?,
 
     val movieTitle: String,
     val movieReleaseYear: String,

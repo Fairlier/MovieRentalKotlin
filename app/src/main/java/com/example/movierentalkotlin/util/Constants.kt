@@ -63,8 +63,8 @@ object Constants {
         const val CLIENT_ID: String = "client_id"
         const val EMPLOYEE_ID: String = "employee_id"
         const val MOVIE_ID: String = "movie_id"
-        const val DATE_OF_RECEIPT: String = "date_of_receiving"
-        const val DATE_OF_RETURN: String = "return_date"
+        const val DATE_OF_RECEIPT: String = "date_of_receipt"
+        const val DATE_OF_RETURN: String = "date_of_return"
     }
 
     object ClientMovieRating {

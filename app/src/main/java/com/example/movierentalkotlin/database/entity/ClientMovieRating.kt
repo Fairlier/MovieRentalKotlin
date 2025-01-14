@@ -2,10 +2,27 @@ package com.example.movierentalkotlin.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.movierentalkotlin.util.Constants
 
-@Entity(tableName = Constants.ClientMovieRating.TABLE_NAME)
+@Entity(
+    tableName = Constants.ClientMovieRating.TABLE_NAME,
+    foreignKeys = [ForeignKey(
+        entity = Client::class,
+        parentColumns = [Constants.Client.ID],
+        childColumns = [Constants.ClientMovieRating.CLIENT_ID]
+    ), ForeignKey(
+        entity = Movie::class,
+        parentColumns = [Constants.Movie.ID],
+        childColumns = [Constants.ClientMovieRating.MOVIE_ID]
+    )],
+    indices = [
+        Index(value = [Constants.ClientMovieRating.CLIENT_ID]),
+        Index(value = [Constants.ClientMovieRating.MOVIE_ID])
+    ]
+)
 data class ClientMovieRating(
 
     @PrimaryKey(autoGenerate = true)

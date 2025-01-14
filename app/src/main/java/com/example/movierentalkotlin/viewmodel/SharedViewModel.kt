@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movierentalkotlin.util.ClientMovieRatingData
 import com.example.movierentalkotlin.util.Constants
+import com.example.movierentalkotlin.util.MovieRentalData
 
 class SharedViewModel : ViewModel() {
 
@@ -36,6 +37,12 @@ class SharedViewModel : ViewModel() {
     val selectedEmployeeId: LiveData<Long?> get() = _selectedEmployeeId
 
     var clientMovieRatingData = ClientMovieRatingData()
+
+    var movieRentalData = MovieRentalData()
+
+    var currentIdForEditClientMovieRating: Long? = null
+
+    var currentIdForEditMovieRental: Long? = null
 
     fun setMovieFilters(filters: Map<String, Any?>) {
         _movieFilters.value = filters
@@ -95,5 +102,21 @@ class SharedViewModel : ViewModel() {
 
     fun clearClientMovieRatingData() {
         this.clientMovieRatingData = ClientMovieRatingData()
+    }
+
+    fun initializationMovieRentalData(movieRentalData: MovieRentalData) {
+        this.movieRentalData = movieRentalData.copy()
+    }
+
+    fun clearMovieRentalData() {
+        this.movieRentalData = MovieRentalData()
+    }
+
+    fun clearCurrentIdForEditClientMovieRating() {
+        this.currentIdForEditClientMovieRating = null
+    }
+
+    fun clearCurrentIdForEditMovieRental() {
+        this.currentIdForEditMovieRental = null
     }
 }

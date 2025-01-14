@@ -11,11 +11,14 @@ import com.example.movierentalkotlin.database.entity.ClientMovieRating
 import com.example.movierentalkotlin.util.ClientMovieRatingData
 import kotlinx.coroutines.launch
 
-class EditClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRatingDao,
+class EditClientMovieRatingViewModel(val id: Long,
+                                     val clientMovieRatingDao: ClientMovieRatingDao,
                                      val clientDao: ClientDao,
                                      val movieDao: MovieDao) : ViewModel() {
 
+    val clientMovieRating = clientMovieRatingDao.getById(id)
     val clientMovieRatingData = MutableLiveData<ClientMovieRatingData>(ClientMovieRatingData())
+    val clientMovieRatingWithDetailsDto = clientMovieRatingDao.getByIdWithDetails(id)
 
     var ratingAsString: String
         get() = clientMovieRatingData.value?.rating?.toString() ?: ""
@@ -25,8 +28,11 @@ class EditClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRating
             clientMovieRatingData.value = updatedData
         }
 
-    private val _navigateToCatalogAfterInsert = MutableLiveData<Boolean>(false)
-    val navigateToCatalogAfterInsert: LiveData<Boolean> get() = _navigateToCatalogAfterInsert
+    private val _navigateToViewAfterUpdate = MutableLiveData<Boolean>(false)
+    val navigateToViewAfterUpdate: LiveData<Boolean> get() = _navigateToViewAfterUpdate
+
+    private val _navigateToViewAfterDelete = MutableLiveData<Boolean>(false)
+    val navigateToViewAfterDelete: LiveData<Boolean> get() = _navigateToViewAfterDelete
 
     private val _navigateToClientCatalogSelection = MutableLiveData<Boolean>(false)
     val navigateToClientCatalogSelection: LiveData<Boolean> get() = _navigateToClientCatalogSelection
@@ -34,11 +40,39 @@ class EditClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRating
     private val _navigateToMovieCatalogSelection = MutableLiveData<Boolean>(false)
     val navigateToMovieCatalogSelection: LiveData<Boolean> get() = _navigateToMovieCatalogSelection
 
-    private val _showValidationError = MutableLiveData<Boolean>(false)
-    val showValidationError: LiveData<Boolean> get() = _showValidationError
-
     fun initializationClientMovieRatingData(clientMovieRatingData: ClientMovieRatingData) {
         this.clientMovieRatingData.value = clientMovieRatingData.copy()
+    }
+
+    fun updateClientMovieRatingDataFromDto() {
+        if (clientMovieRatingData.value?.clientId == null || clientMovieRatingData.value?.movieId == null) {
+            clientMovieRatingWithDetailsDto.observeForever { dto ->
+                dto?.let {
+                    val updatedData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
+                    if (updatedData.clientId == null) {
+                        updatedData.clientId = it.clientId
+                        updatedData.clientFullName = it.clientFullName
+                        updatedData.clientDateOfBirth = it.clientDateOfBirth
+                        updatedData.clientAddress = it.clientAddress
+                        updatedData.clientPhoneNumber = it.clientPhoneNumber
+                        updatedData.clientDateOfRegistration = it.clientDateOfRegistration
+                        updatedData.clientImageUrl = it.clientImageUrl
+                    }
+                    if (updatedData.movieId == null) {
+                        updatedData.movieId = it.movieId
+                        updatedData.movieTitle = it.movieTitle
+                        updatedData.movieReleaseYear = it.movieReleaseYear
+                        updatedData.movieDirector = it.movieDirector
+                        updatedData.movieCountry = it.movieCountry
+                        updatedData.movieDuration = it.movieDuration
+                        updatedData.movieRentalCost = it.movieRentalCost
+                        updatedData.movieAverageRating = it.movieAverageRating
+                        updatedData.movieImageUrl = it.movieImageUrl
+                    }
+                    clientMovieRatingData.value = updatedData
+                }
+            }
+        }
     }
 
     fun onClientCardClicked() {
@@ -93,30 +127,43 @@ class EditClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRating
         }
     }
 
-    fun insert() {
-        viewModelScope.launch {
-            val currentData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
-            if (currentData.clientId == null || currentData.movieId == null) {
-                _showValidationError.value = true
-                return@launch
+    fun update() {
+        clientMovieRating.observeForever { itemToUpdate ->
+            viewModelScope.launch {
+                if (itemToUpdate != null) {
+                    val updatedRating = itemToUpdate.copy(
+                        clientId = clientMovieRatingData.value?.clientId
+                            ?: clientMovieRatingWithDetailsDto.value?.clientId ?: itemToUpdate.clientId,
+                        movieId = clientMovieRatingData.value?.movieId
+                            ?: clientMovieRatingWithDetailsDto.value?.movieId ?: itemToUpdate.movieId,
+                        rating = clientMovieRatingData.value?.rating
+                            ?: clientMovieRatingWithDetailsDto.value?.rating ?: itemToUpdate.rating,
+                        comment = clientMovieRatingData.value?.comment
+                            ?: clientMovieRatingWithDetailsDto.value?.comment ?: itemToUpdate.comment
+                    )
+                    clientMovieRatingDao.update(updatedRating)
+                    _navigateToViewAfterUpdate.value = true
+                }
             }
-
-            val clientMovieRating = ClientMovieRating(
-                clientId = currentData.clientId!!,
-                movieId = currentData.movieId!!,
-                rating = currentData.rating,
-                comment = currentData.comment
-            )
-            clientMovieRatingDao.insert(clientMovieRating)
-            _navigateToCatalogAfterInsert.value = true
         }
     }
 
-    fun onNavigatedToCatalogAfterInsert() {
-        _navigateToCatalogAfterInsert.value = false
+    fun delete() {
+        clientMovieRating.observeForever { itemToUpdate ->
+            viewModelScope.launch {
+                if (itemToUpdate != null) {
+                    clientMovieRatingDao.delete(itemToUpdate)
+                    _navigateToViewAfterDelete.value = true
+                }
+            }
+        }
     }
 
-    fun onValidationErrorShown() {
-        _showValidationError.value = false
+    fun onNavigatedToViewAfterUpdate() {
+        _navigateToViewAfterUpdate.value = false
+    }
+
+    fun onNavigatedToViewAfterDelete() {
+        _navigateToViewAfterDelete.value = false
     }
 }

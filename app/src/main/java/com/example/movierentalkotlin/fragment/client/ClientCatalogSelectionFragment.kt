@@ -73,14 +73,16 @@ class ClientCatalogSelectionFragment : Fragment() {
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.menuToolbar)
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.clientMovieRatingCatalogFragment),
+            setOf(
+                R.id.clientMovieRatingCatalogFragment,
+                R.id.movieRentalCatalogFragment
+            ),
             (requireActivity() as MainActivity).binding.drawerLayout
         )
         binding.menuToolbar.setupWithNavController(navController, appBarConfiguration)
 
         binding.menuToolbar.setNavigationOnClickListener {
-            navController.navigate(ClientCatalogSelectionFragmentDirections
-                .actionClientCatalogSelectionFragmentToInsertClientMovieRatingFragment())
+            this.findNavController().navigateUp()
         }
 
         val adapter = ClientCatalogItemAdapter{ id ->
@@ -114,6 +116,40 @@ class ClientCatalogSelectionFragment : Fragment() {
                             .actionClientCatalogSelectionFragmentToSearchClientMovieRatingFragment()
                         this.findNavController().navigate(action)
                         viewModel.onCatalogItemNavigated()
+                    }
+                    Constants.FragmentSource.EDIT_CLIENT_MOVIE_RATING -> {
+                        sharedViewModel.setSelectedClientId(id)
+                        sharedViewModel.currentIdForEditClientMovieRating?.let { currentIdForEditClientMovieRating ->
+                            val action =
+                                ClientCatalogSelectionFragmentDirections
+                                    .actionClientCatalogSelectionFragmentToEditClientMovieRatingFragment(currentIdForEditClientMovieRating)
+                            findNavController().navigate(action)
+                            viewModel.onCatalogItemNavigated()
+                        }
+                    }
+                    Constants.FragmentSource.INSERT_MOVIE_RENTAL -> {
+                        sharedViewModel.setSelectedClientId(id)
+                        val action = ClientCatalogSelectionFragmentDirections
+                            .actionClientCatalogSelectionFragmentToInsertMovieRentalFragment()
+                        this.findNavController().navigate(action)
+                        viewModel.onCatalogItemNavigated()
+                    }
+                    Constants.FragmentSource.SEARCH_MOVIE_RENTAL -> {
+                        sharedViewModel.setSelectedClientId(id)
+                        val action = ClientCatalogSelectionFragmentDirections
+                            .actionClientCatalogSelectionFragmentToSearchMovieRentalFragment()
+                        this.findNavController().navigate(action)
+                        viewModel.onCatalogItemNavigated()
+                    }
+                    Constants.FragmentSource.EDIT_MOVIE_RENTAL -> {
+                        sharedViewModel.setSelectedClientId(id)
+                        sharedViewModel.currentIdForEditMovieRental?.let { currentIdForEditMovieRental ->
+                            val action =
+                                ClientCatalogSelectionFragmentDirections
+                                    .actionClientCatalogSelectionFragmentToEditMovieRentalFragment(currentIdForEditMovieRental)
+                            findNavController().navigate(action)
+                            viewModel.onCatalogItemNavigated()
+                        }
                     }
                     else -> {
                         this.findNavController().navigateUp()
