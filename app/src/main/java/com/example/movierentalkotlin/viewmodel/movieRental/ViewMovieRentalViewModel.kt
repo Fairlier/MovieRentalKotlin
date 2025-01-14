@@ -1,10 +1,10 @@
 package com.example.movierentalkotlin.viewmodel.movieRental
 
 import androidx.lifecycle.ViewModel
-import com.example.movierentalkotlin.database.dao.ClientMovieRatingDao
+import com.example.movierentalkotlin.database.dao.MovieRentalDao
 
 class ViewMovieRentalViewModel(val id: Long,
-                               val clientMovieRatingDao: ClientMovieRatingDao) : ViewModel() {
+                               val movieRentalDao: MovieRentalDao) : ViewModel() {
 
-    val clientMovieRatingWithDetailsDto = clientMovieRatingDao.getByIdWithDetails(id)
+    val movieRentalWithDetailsDto = movieRentalDao.getByIdWithDetails(id)
 }
