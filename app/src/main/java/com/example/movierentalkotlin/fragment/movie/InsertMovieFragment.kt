@@ -1,5 +1,6 @@
 package com.example.movierentalkotlin.fragment.movie
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ import com.example.movierentalkotlin.databinding.FragmentInsertMovieBinding
 import com.example.movierentalkotlin.util.Constants
 import com.example.movierentalkotlin.viewmodel.movie.InsertMovieViewModel
 import com.example.movierentalkotlin.viewmodelfactory.movie.InsertMovieViewModelFactory
+import java.util.Calendar
 
 class InsertMovieFragment : Fragment() {
 
@@ -98,6 +100,27 @@ class InsertMovieFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
                 viewModel.onValidationErrorShown()
+            }
+        }
+
+        viewModel.showDatePickerForField.observe(viewLifecycleOwner) { field ->
+            if (field != null) {
+                val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+                val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+                val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(),
+                    { _, year, month, dayOfMonth ->
+                        viewModel.onDateSelected(year, month, dayOfMonth, field)
+                    },
+                    currentYear,
+                    currentMonth,
+                    currentDay
+                )
+                datePickerDialog.show()
+
+                viewModel.onDatePickerShown()
             }
         }
     }

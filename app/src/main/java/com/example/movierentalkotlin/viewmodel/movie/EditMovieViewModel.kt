@@ -6,8 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movierentalkotlin.database.dao.MovieDao
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
+
+    val releaseYear = MutableLiveData<String>("")
 
     val _durationAsString = MutableLiveData<String>()
 
@@ -21,6 +26,9 @@ class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
 
     private val _navigateToViewAfterDelete = MutableLiveData<Boolean>(false)
     val navigateToViewAfterDelete: LiveData<Boolean> get() = _navigateToViewAfterDelete
+
+    private val _showDatePickerForField = MutableLiveData<String?>()
+    val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
 
     val movie = dao.getById(id)
 
@@ -38,6 +46,7 @@ class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
         viewModelScope.launch {
             val itemToUpdate = movie.value
             if (itemToUpdate != null) {
+                itemToUpdate.releaseYear = releaseYear.value.toString()
                 itemToUpdate.duration = _durationAsString.value?.toDoubleOrNull() ?: 0.0
                 itemToUpdate.rentalCost = _rentalCostAsString.value?.toDoubleOrNull() ?: 0.0
                 itemToUpdate.imageUrl = _currentImageUrl.value
@@ -60,5 +69,26 @@ class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
 
     fun onNavigatedToViewAfterDelete() {
         _navigateToViewAfterDelete.value = false
+    }
+
+    fun showDatePicker(field: String) {
+        _showDatePickerForField.value = field
+    }
+
+    fun onDateSelected(year: Int, month: Int, day: Int, field: String) {
+        val calendar = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+
+        val dateFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+
+        when (field) {
+            "releaseYear" -> releaseYear.value = formattedDate
+        }
+    }
+
+    fun onDatePickerShown() {
+        _showDatePickerForField.value = null
     }
 }

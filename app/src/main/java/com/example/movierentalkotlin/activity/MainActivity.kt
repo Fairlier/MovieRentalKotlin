@@ -3,7 +3,6 @@ package com.example.movierentalkotlin.activity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE)
         val isLoggedIn  = sharedPreferences.getBoolean("isLoggedIn", false)
         val graph = navController.navInflater.inflate(R.navigation.nav_graph)
-        val startDestination = if (isLoggedIn) { // TODO
+        val startDestination = if (isLoggedIn) {
             R.id.movieCatalogFragment
         } else {
             R.id.authorizationFragment

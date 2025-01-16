@@ -7,15 +7,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.movierentalkotlin.database.dao.EmployeeDao
 import com.example.movierentalkotlin.database.entity.Employee
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class InsertEmployeeViewModel(val dao: EmployeeDao) : ViewModel() {
 
     var fullName = ""
-    var dateOfBirth = ""
+    val dateOfBirth  = MutableLiveData<String>("")
     var address = ""
     var phoneNumber = ""
-    var dateOfHire = ""
-    var dateOfDismissal = ""
+    val dateOfHire = MutableLiveData<String>("")
+    val dateOfDismissal = MutableLiveData<String>("")
     var salary = 0.0
     var imageUrl: String? = null
 
@@ -33,6 +36,9 @@ class InsertEmployeeViewModel(val dao: EmployeeDao) : ViewModel() {
     private val _showValidationError = MutableLiveData<Boolean>(false)
     val showValidationError: LiveData<Boolean> get() = _showValidationError
 
+    private val _showDatePickerForField = MutableLiveData<String?>()
+    val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
+
     fun insert() {
         viewModelScope.launch {
             if (fullName.isBlank()
@@ -45,11 +51,11 @@ class InsertEmployeeViewModel(val dao: EmployeeDao) : ViewModel() {
             }
             val employee = Employee(
                 fullName = fullName,
-                dateOfBirth = dateOfBirth,
+                dateOfBirth = dateOfBirth.toString(),
                 address = address,
                 phoneNumber = phoneNumber,
-                dateOfHire = dateOfHire,
-                dateOfDismissal = dateOfDismissal,
+                dateOfHire = dateOfHire.toString(),
+                dateOfDismissal = dateOfDismissal.toString(),
                 salary = salary,
                 imageUrl = _currentImageUrl.value
             )
@@ -65,4 +71,27 @@ class InsertEmployeeViewModel(val dao: EmployeeDao) : ViewModel() {
     fun onValidationErrorShown() {
         _showValidationError.value = false
     }
+    fun showDatePicker(field: String) {
+        _showDatePickerForField.value = field
+    }
+
+    fun onDateSelected(year: Int, month: Int, day: Int, field: String) {
+        val calendar = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+
+        when (field) {
+            "dateOfBirth" -> dateOfBirth.value = formattedDate
+            "dateOfHire" -> dateOfHire.value = formattedDate
+            "dateOfDismissal" -> dateOfDismissal.value = formattedDate
+        }
+    }
+
+    fun onDatePickerShown() {
+        _showDatePickerForField.value = null
+    }
+
 }

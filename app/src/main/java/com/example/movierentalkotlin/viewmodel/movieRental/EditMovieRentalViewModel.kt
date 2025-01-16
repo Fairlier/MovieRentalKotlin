@@ -10,6 +10,9 @@ import com.example.movierentalkotlin.database.dao.MovieDao
 import com.example.movierentalkotlin.database.dao.MovieRentalDao
 import com.example.movierentalkotlin.util.MovieRentalData
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class EditMovieRentalViewModel(val id: Long,
                                val movieRentalDao: MovieRentalDao,
@@ -20,6 +23,9 @@ class EditMovieRentalViewModel(val id: Long,
     val movieRental = movieRentalDao.getById(id)
     val movieRentalData = MutableLiveData<MovieRentalData>(MovieRentalData())
     val movieRentalWithDetailsDto = movieRentalDao.getByIdWithDetails(id)
+
+    val dateOfReceipt = MutableLiveData<String>("")
+    val dateOfReturn = MutableLiveData<String>("")
 
     private val _navigateToViewAfterUpdate = MutableLiveData<Boolean>(false)
     val navigateToViewAfterUpdate: LiveData<Boolean> get() = _navigateToViewAfterUpdate
@@ -35,6 +41,14 @@ class EditMovieRentalViewModel(val id: Long,
 
     private val _navigateToMovieCatalogSelection = MutableLiveData<Boolean>(false)
     val navigateToMovieCatalogSelection: LiveData<Boolean> get() = _navigateToMovieCatalogSelection
+
+    private val _showDatePickerForField = MutableLiveData<String?>()
+    val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
+
+    private fun updateMovieRentalData(update: (MovieRentalData) -> MovieRentalData) {
+        val currentData = movieRentalData.value ?: MovieRentalData()
+        movieRentalData.value = update(currentData)
+    }
 
     fun initializationMovieRentalData(movieRentalData: MovieRentalData) {
         this.movieRentalData.value = movieRentalData.copy()
@@ -78,9 +92,11 @@ class EditMovieRentalViewModel(val id: Long,
                     }
                     if (updatedData.dateOfReceipt.isEmpty()) {
                         updatedData.dateOfReceipt = it.dateOfReceipt
+                        dateOfReceipt.value = it.dateOfReceipt
                     }
                     if (updatedData.dateOfReturn.isEmpty()) {
                         updatedData.dateOfReturn = it.dateOfReturn
+                        dateOfReturn.value = it.dateOfReturn
                     }
                     movieRentalData.value = updatedData
                 }
@@ -124,6 +140,9 @@ class EditMovieRentalViewModel(val id: Long,
                 updatedData.clientPhoneNumber = it.phoneNumber
                 updatedData.clientDateOfRegistration = it.dateOfRegistration
                 updatedData.clientImageUrl = it.imageUrl
+
+                updatedData.dateOfReceipt = dateOfReceipt.value.toString()
+                updatedData.dateOfReturn = dateOfReturn.value.toString()
                 movieRentalData.postValue(updatedData)
             }
         }
@@ -143,6 +162,9 @@ class EditMovieRentalViewModel(val id: Long,
                 updatedData.employeeDateOfDismissal = it.dateOfDismissal
                 updatedData.employeeSalary = it.salary
                 updatedData.clientImageUrl = it.imageUrl
+
+                updatedData.dateOfReceipt = dateOfReceipt.value.toString()
+                updatedData.dateOfReturn = dateOfReturn.value.toString()
                 movieRentalData.postValue(updatedData)
             }
         }
@@ -162,6 +184,9 @@ class EditMovieRentalViewModel(val id: Long,
                 updatedData.movieRentalCost = it.rentalCost
                 updatedData.movieAverageRating = it.averageRating
                 updatedData.movieImageUrl = it.imageUrl
+
+                updatedData.dateOfReceipt = dateOfReceipt.value.toString()
+                updatedData.dateOfReturn = dateOfReturn.value.toString()
                 movieRentalData.postValue(updatedData)
             }
         }
@@ -178,10 +203,8 @@ class EditMovieRentalViewModel(val id: Long,
                             ?: movieRentalWithDetailsDto.value?.employeeId ?: itemToUpdate.employeeId,
                         movieId = movieRentalData.value?.movieId
                             ?: movieRentalWithDetailsDto.value?.movieId ?: itemToUpdate.movieId,
-                        dateOfReceipt = movieRentalData.value?.dateOfReceipt
-                            ?: movieRentalWithDetailsDto.value?.dateOfReceipt ?: itemToUpdate.dateOfReceipt,
-                        dateOfReturn = movieRentalData.value?.dateOfReturn
-                            ?: movieRentalWithDetailsDto.value?.dateOfReturn ?: itemToUpdate.dateOfReturn
+                        dateOfReceipt = dateOfReceipt.value.toString(),
+                        dateOfReturn = dateOfReturn.value.toString()
                     )
                     movieRentalDao.update(updatedRating)
                     _navigateToViewAfterUpdate.value = true
@@ -207,5 +230,27 @@ class EditMovieRentalViewModel(val id: Long,
 
     fun onNavigatedToViewAfterDelete() {
         _navigateToViewAfterDelete.value = false
+    }
+
+    fun showDatePicker(field: String) {
+        _showDatePickerForField.value = field
+    }
+
+    fun onDateSelected(year: Int, month: Int, day: Int, field: String) {
+        val calendar = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+
+        when (field) {
+            "dateOfReceipt" -> dateOfReceipt.value = formattedDate
+            "dateOfReturn" -> dateOfReturn.value = formattedDate
+        }
+    }
+
+    fun onDatePickerShown() {
+        _showDatePickerForField.value = null
     }
 }

@@ -7,14 +7,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.movierentalkotlin.database.dao.ClientDao
 import com.example.movierentalkotlin.database.entity.Client
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class InsertClientViewModel(val dao: ClientDao) : ViewModel() {
 
     var fullName = ""
-    var dateOfBirth = ""
+    val dateOfBirth = MutableLiveData<String>("")
     var address = ""
     var phoneNumber = ""
-    var dateOfRegistration = ""
+    val dateOfRegistration = MutableLiveData<String>("")
     var imageUrl: String? = null
 
     val _currentImageUrl = MutableLiveData<String?>()
@@ -25,6 +28,9 @@ class InsertClientViewModel(val dao: ClientDao) : ViewModel() {
 
     private val _showValidationError = MutableLiveData<Boolean>(false)
     val showValidationError: LiveData<Boolean> get() = _showValidationError
+
+    private val _showDatePickerForField = MutableLiveData<String?>()
+    val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
 
     fun insert() {
         viewModelScope.launch {
@@ -37,10 +43,10 @@ class InsertClientViewModel(val dao: ClientDao) : ViewModel() {
             }
             val client = Client(
                 fullName = fullName,
-                dateOfBirth = dateOfBirth,
+                dateOfBirth = dateOfBirth.value.toString(),
                 address = address,
                 phoneNumber = phoneNumber,
-                dateOfRegistration = dateOfRegistration,
+                dateOfRegistration = dateOfRegistration.value.toString(),
                 imageUrl = _currentImageUrl.value
             )
             dao.insert(client)
@@ -54,5 +60,27 @@ class InsertClientViewModel(val dao: ClientDao) : ViewModel() {
 
     fun onValidationErrorShown() {
         _showValidationError.value = false
+    }
+
+    fun showDatePicker(field: String) {
+        _showDatePickerForField.value = field
+    }
+
+    fun onDateSelected(year: Int, month: Int, day: Int, field: String) {
+        val calendar = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+
+        when (field) {
+            "dateOfBirth" -> dateOfBirth.value = formattedDate
+            "dateOfRegistration" -> dateOfRegistration.value = formattedDate
+        }
+    }
+
+    fun onDatePickerShown() {
+        _showDatePickerForField.value = null
     }
 }

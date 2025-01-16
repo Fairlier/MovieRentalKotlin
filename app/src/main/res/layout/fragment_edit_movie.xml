@@ -90,8 +90,10 @@
                             android:id="@+id/movie_release_year"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
-                            android:text="@={viewModel.movie.releaseYear}"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:onClick="@{() -> viewModel.showDatePicker(`releaseYear`)}"
+                            android:text="@={viewModel.releaseYear}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
 

@@ -536,8 +536,10 @@
                             android:id="@+id/movie_rental_date_of_receipt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
-                            android:text="@={viewModel.movieRentalData.dateOfReceipt}"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:onClick="@{() -> viewModel.showDatePicker(`dateOfReceipt`)}"
+                            android:text="@={viewModel.dateOfReceipt}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
 

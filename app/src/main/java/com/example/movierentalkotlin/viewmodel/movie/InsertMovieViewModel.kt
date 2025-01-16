@@ -7,11 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.movierentalkotlin.database.dao.MovieDao
 import com.example.movierentalkotlin.database.entity.Movie
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class InsertMovieViewModel(val dao: MovieDao) : ViewModel() {
 
     var title = ""
-    var releaseYear = ""
+    val releaseYear = MutableLiveData<String>("")
     var director = ""
     var country = ""
     var duration = 0.0
@@ -39,6 +42,9 @@ class InsertMovieViewModel(val dao: MovieDao) : ViewModel() {
     private val _showValidationError = MutableLiveData<Boolean>(false)
     val showValidationError: LiveData<Boolean> get() = _showValidationError
 
+    private val _showDatePickerForField = MutableLiveData<String?>()
+    val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
+
     fun insert() {
         viewModelScope.launch {
             if (title.isBlank()
@@ -51,7 +57,7 @@ class InsertMovieViewModel(val dao: MovieDao) : ViewModel() {
             }
                 val movie = Movie(
                 title = title,
-                releaseYear = releaseYear,
+                releaseYear = releaseYear.value.toString(),
                 director = director,
                 country = country,
                 duration = duration,
@@ -71,5 +77,26 @@ class InsertMovieViewModel(val dao: MovieDao) : ViewModel() {
 
     fun onValidationErrorShown() {
         _showValidationError.value = false
+    }
+
+    fun showDatePicker(field: String) {
+        _showDatePickerForField.value = field
+    }
+
+    fun onDateSelected(year: Int, month: Int, day: Int, field: String) {
+        val calendar = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+
+        val dateFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+
+        when (field) {
+            "releaseYear" -> releaseYear.value = formattedDate
+        }
+    }
+
+    fun onDatePickerShown() {
+        _showDatePickerForField.value = null
     }
 }

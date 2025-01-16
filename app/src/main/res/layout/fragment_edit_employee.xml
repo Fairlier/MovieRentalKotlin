@@ -90,8 +90,10 @@
                             android:id="@+id/employee_date_of_birth"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
-                            android:text="@={viewModel.employee.dateOfBirth}"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:onClick="@{() -> viewModel.showDatePicker(`dateOfBirth`)}"
+                            android:text="@={viewModel.dateOfBirth}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
 
@@ -153,8 +155,10 @@
                             android:id="@+id/employee_date_of_hire"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
-                            android:text="@={viewModel.employee.dateOfHire}"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:onClick="@{() -> viewModel.showDatePicker(`dateOfHire`)}"
+                            android:text="@={viewModel.dateOfHire}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
 
@@ -174,8 +178,10 @@
                             android:id="@+id/employee_date_of_dismissal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
-                            android:text="@={viewModel.employee.dateOfDismissal}"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:onClick="@{() -> viewModel.showDatePicker(`dateOfDismissal`)}"
+                            android:text="@={viewModel.dateOfDismissal}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
 

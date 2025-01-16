@@ -90,7 +90,9 @@
                             android:id="@+id/client_date_of_birth"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:onClick="@{() -> viewModel.showDatePicker(`dateOfBirth`)}"
                             android:text="@={viewModel.dateOfBirth}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
@@ -153,7 +155,9 @@
                             android:id="@+id/client_date_of_registration"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:onClick="@{() -> viewModel.showDatePicker(`dateOfRegistration`)}"
                             android:text="@={viewModel.dateOfRegistration}"
                             android:textColor="@android:color/black" />
                     </LinearLayout>
