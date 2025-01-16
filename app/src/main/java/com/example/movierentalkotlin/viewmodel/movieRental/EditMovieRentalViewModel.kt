@@ -52,6 +52,8 @@ class EditMovieRentalViewModel(val id: Long,
 
     fun initializationMovieRentalData(movieRentalData: MovieRentalData) {
         this.movieRentalData.value = movieRentalData.copy()
+        this.dateOfReceipt.value = movieRentalData.dateOfReceipt
+        this.dateOfReturn.value = movieRentalData.dateOfReturn
     }
 
     fun updateMovieRentalDataFromDto() {
