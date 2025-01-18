@@ -9,6 +9,9 @@ import com.example.movierentalkotlin.database.dao.MovieDao
 import com.example.movierentalkotlin.database.dao.MovieRentalDao
 import com.example.movierentalkotlin.util.Constants
 import com.example.movierentalkotlin.util.MovieRentalData
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class SearchMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
                                  val clientDao: ClientDao,
@@ -16,6 +19,9 @@ class SearchMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
                                  val movieDao: MovieDao) : ViewModel() {
 
     val movieRentalData = MutableLiveData<MovieRentalData>(MovieRentalData())
+
+    val dateOfReceipt = MutableLiveData<String>("")
+    val dateOfReturn = MutableLiveData<String>("")
 
     private val _navigateToCatalogAfterSearch = MutableLiveData<Boolean>(false)
     val navigateToCatalogAfterSearch: LiveData<Boolean> get() = _navigateToCatalogAfterSearch
@@ -35,11 +41,18 @@ class SearchMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
     private val _showValidationError = MutableLiveData<Boolean>(false)
     val showValidationError: LiveData<Boolean> get() = _showValidationError
 
+    private val _showDatePickerForField = MutableLiveData<String?>()
+    val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
+
     fun initializationMovieRentalData(movieRentalData: MovieRentalData) {
         this.movieRentalData.value = movieRentalData.copy()
+        dateOfReceipt.value = movieRentalData.dateOfReceipt
+        dateOfReturn.value = movieRentalData.dateOfReturn
     }
 
     fun onClientCardClicked() {
+        movieRentalData.value!!.dateOfReceipt = dateOfReceipt.value.toString()
+        movieRentalData.value!!.dateOfReturn = dateOfReturn.value.toString()
         _navigateToClientCatalogSelection.value = true
     }
 
@@ -48,6 +61,8 @@ class SearchMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
     }
 
     fun onEmployeeCardClicked() {
+        movieRentalData.value!!.dateOfReceipt = dateOfReceipt.value.toString()
+        movieRentalData.value!!.dateOfReturn = dateOfReturn.value.toString()
         _navigateToEmployeeCatalogSelection.value = true
     }
 
@@ -56,6 +71,8 @@ class SearchMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
     }
 
     fun onMovieCardClicked() {
+        movieRentalData.value!!.dateOfReceipt = dateOfReceipt.value.toString()
+        movieRentalData.value!!.dateOfReturn = dateOfReturn.value.toString()
         _navigateToMovieCatalogSelection.value = true
     }
 
@@ -124,8 +141,8 @@ class SearchMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
             Constants.MovieRental.CLIENT_ID to  currentData.clientId,
             Constants.MovieRental.EMPLOYEE_ID to  currentData.employeeId,
             Constants.MovieRental.MOVIE_ID to currentData.movieId,
-            Constants.MovieRental.DATE_OF_RECEIPT to currentData.dateOfReceipt.takeIf { it.isNotEmpty() },
-            Constants.MovieRental.DATE_OF_RETURN to currentData.dateOfReturn.takeIf { it.isNotEmpty() }
+            Constants.MovieRental.DATE_OF_RECEIPT to dateOfReceipt.value.toString().takeIf { it.isNotEmpty() },
+            Constants.MovieRental.DATE_OF_RETURN to dateOfReturn.value.toString().takeIf { it.isNotEmpty() }
         )
         _navigateToCatalogAfterSearch.value = true
     }
@@ -136,5 +153,27 @@ class SearchMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
 
     fun onValidationErrorShown() {
         _showValidationError.value = false
+    }
+
+    fun showDatePicker(field: String) {
+        _showDatePickerForField.value = field
+    }
+
+    fun onDateSelected(year: Int, month: Int, day: Int, field: String) {
+        val calendar = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+
+        when (field) {
+            "dateOfReceipt" -> dateOfReceipt.value = formattedDate
+            "dateOfReturn" -> dateOfReturn.value = formattedDate
+        }
+    }
+
+    fun onDatePickerShown() {
+        _showDatePickerForField.value = null
     }
 }

@@ -98,7 +98,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="4dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="vertical">
 
                                         <TextView
                                             android:id="@+id/client_date_of_birth_label"
@@ -119,7 +119,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="4dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="vertical">
 
                                         <TextView
                                             android:id="@+id/client_address_label"
@@ -140,12 +140,12 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="4dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="vertical">
 
                                         <TextView
                                             android:id="@+id/client_phone_number_label"
                                             android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
+                                            android:layout_height="match_parent"
                                             android:text="Номер телефона: "
                                             android:textColor="@android:color/darker_gray" />
 
@@ -161,7 +161,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="4dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="vertical">
 
                                         <TextView
                                             android:id="@+id/client_date_of_registration_label"
@@ -241,7 +241,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="4dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="vertical">
 
                                         <TextView
                                             android:id="@+id/movie_release_year_label"
@@ -262,7 +262,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="4dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="vertical">
 
                                         <TextView
                                             android:id="@+id/movie_country_label"
@@ -283,7 +283,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="4dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="vertical">
 
                                         <TextView
                                             android:id="@+id/movie_director_label"
@@ -304,7 +304,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="4dp"
-                                        android:orientation="horizontal">
+                                        android:orientation="vertical">
 
                                         <TextView
                                             android:id="@+id/movie_duration_label"
@@ -320,37 +320,39 @@
                                             android:text="@{String.valueOf(viewModel.clientMovieRatingData.movieDuration)}"
                                             android:textColor="@android:color/black" />
                                     </LinearLayout>
-                                </LinearLayout>
 
-                                <LinearLayout
-                                    android:id="@+id/movie_rating_cost_layout"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="0dp"
-                                    android:orientation="vertical"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <TextView
-                                        android:id="@+id/movie_average_rating"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="end"
-                                        android:text="@{String.valueOf(viewModel.clientMovieRatingData.movieAverageRating)}"
-                                        android:textColor="@android:color/black" />
-
-                                    <Space
+                                    <LinearLayout
+                                        android:id="@+id/movie_rating_cost_layout"
                                         android:layout_width="match_parent"
-                                        android:layout_height="0dp"
-                                        android:layout_weight="1" />
-
-                                    <TextView
-                                        android:id="@+id/movie_rental_cost"
-                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_gravity="end"
-                                        android:text="@{String.valueOf(viewModel.clientMovieRatingData.movieRentalCost)}"
-                                        android:textColor="@android:color/black" />
+                                        android:layout_marginTop="16dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            android:id="@+id/movie_average_rating"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="start"
+                                            android:text="@{String.valueOf(viewModel.clientMovieRatingData.movieAverageRating)}"
+                                            android:textColor="@android:color/black"
+                                            android:drawableStart="@drawable/baseline_star_24"
+                                            android:drawablePadding="4dp" />
+
+                                        <Space
+                                            android:layout_width="0dp"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1" />
+
+                                        <TextView
+                                            android:id="@+id/movie_rental_cost"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="end"
+                                            android:text="@{String.valueOf(viewModel.clientMovieRatingData.movieRentalCost)}"
+                                            android:textColor="@android:color/black"
+                                            android:drawableStart="@drawable/baseline_currency_ruble_24"
+                                            android:drawablePadding="4dp" />
+                                    </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>

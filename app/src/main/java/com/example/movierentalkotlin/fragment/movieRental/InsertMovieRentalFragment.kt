@@ -186,26 +186,26 @@ class InsertMovieRentalFragment : Fragment() {
             }
         }
 
-//        viewModel.showDatePickerForField.observe(viewLifecycleOwner) { field ->
-//            if (field != null) {
-//                val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-//                val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
-//                val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-//
-//                val datePickerDialog = DatePickerDialog(
-//                    requireContext(),
-//                    { _, year, month, dayOfMonth ->
-//                        viewModel.onDateSelected(year, month, dayOfMonth, field)
-//                    },
-//                    currentYear,
-//                    currentMonth,
-//                    currentDay
-//                )
-//                datePickerDialog.show()
-//
-//                viewModel.onDatePickerShown()
-//            }
-//        }
+        viewModel.showDatePickerForField.observe(viewLifecycleOwner) { field ->
+            if (field != null) {
+                val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+                val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+                val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(),
+                    { _, year, month, dayOfMonth ->
+                        viewModel.onDateSelected(year, month, dayOfMonth, field)
+                    },
+                    currentYear,
+                    currentMonth,
+                    currentDay
+                )
+                datePickerDialog.show()
+
+                viewModel.onDatePickerShown()
+            }
+        }
     }
 
     override fun onDestroyView() {

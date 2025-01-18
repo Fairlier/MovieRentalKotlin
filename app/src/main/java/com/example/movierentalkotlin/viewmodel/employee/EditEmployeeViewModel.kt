@@ -52,7 +52,7 @@ class EditEmployeeViewModel(id: Long, val dao: EmployeeDao) : ViewModel() {
                 itemToUpdate.dateOfHire = dateOfHire.value.toString()
                 itemToUpdate.dateOfDismissal = dateOfDismissal.value.toString()
                 itemToUpdate.salary = _salaryAsString.value?.toDoubleOrNull() ?: 0.0
-                itemToUpdate.imageUrl = _currentImageUrl.value
+                itemToUpdate.imageUrl = _currentImageUrl.value.toString()
                 dao.update(itemToUpdate)
                 _navigateToViewAfterUpdate.value = true
             }

@@ -3,12 +3,20 @@ package com.example.movierentalkotlin.activity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.movierentalkotlin.R
+import com.example.movierentalkotlin.database.MovieRentalDatabase
+import com.example.movierentalkotlin.database.entity.Client
+import com.example.movierentalkotlin.database.entity.ClientMovieRating
+import com.example.movierentalkotlin.database.entity.Employee
+import com.example.movierentalkotlin.database.entity.Movie
+import com.example.movierentalkotlin.database.entity.MovieRental
 import com.example.movierentalkotlin.databinding.ActivityMainBinding
 import com.example.movierentalkotlin.viewmodel.AuthorizationViewModel
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 

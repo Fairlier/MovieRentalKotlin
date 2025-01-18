@@ -11,6 +11,9 @@ import com.example.movierentalkotlin.database.dao.MovieDao
 import com.example.movierentalkotlin.database.entity.MovieRental
 import com.example.movierentalkotlin.util.MovieRentalData
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class InsertMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
                                  val clientDao: ClientDao,
@@ -18,6 +21,9 @@ class InsertMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
                                  val movieDao: MovieDao) : ViewModel() {
 
     val movieRentalData = MutableLiveData<MovieRentalData>(MovieRentalData())
+
+    val dateOfReceipt = MutableLiveData<String>("")
+    val dateOfReturn = MutableLiveData<String>("")
 
     private val _navigateToCatalogAfterInsert = MutableLiveData<Boolean>(false)
     val navigateToCatalogAfterInsert: LiveData<Boolean> get() = _navigateToCatalogAfterInsert
@@ -34,11 +40,16 @@ class InsertMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
     private val _showValidationError = MutableLiveData<Boolean>(false)
     val showValidationError: LiveData<Boolean> get() = _showValidationError
 
+    private val _showDatePickerForField = MutableLiveData<String?>()
+    val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
+
     fun initializationMovieRentalData(movieRentalData: MovieRentalData) {
         this.movieRentalData.value = movieRentalData.copy()
     }
 
     fun onClientCardClicked() {
+        movieRentalData.value!!.dateOfReceipt = dateOfReceipt.value.toString()
+        movieRentalData.value!!.dateOfReturn = dateOfReturn.value.toString()
         _navigateToClientCatalogSelection.value = true
     }
 
@@ -47,6 +58,8 @@ class InsertMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
     }
 
     fun onEmployeeCardClicked() {
+        movieRentalData.value!!.dateOfReceipt = dateOfReceipt.value.toString()
+        movieRentalData.value!!.dateOfReturn = dateOfReturn.value.toString()
         _navigateToEmployeeCatalogSelection.value = true
     }
 
@@ -55,6 +68,8 @@ class InsertMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
     }
 
     fun onMovieCardClicked() {
+        movieRentalData.value!!.dateOfReceipt = dateOfReceipt.value.toString()
+        movieRentalData.value!!.dateOfReturn = dateOfReturn.value.toString()
         _navigateToMovieCatalogSelection.value = true
     }
 
@@ -129,8 +144,8 @@ class InsertMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
                 clientId = currentData.clientId!!,
                 employeeId = currentData.employeeId!!,
                 movieId = currentData.movieId!!,
-                dateOfReceipt = currentData.dateOfReceipt,
-                dateOfReturn = currentData.dateOfReturn
+                dateOfReceipt = dateOfReceipt.value.toString(),
+                dateOfReturn = dateOfReturn.value.toString()
             )
             movieRentalDao.insert(movieRental)
             _navigateToCatalogAfterInsert.value = true
@@ -143,5 +158,27 @@ class InsertMovieRentalViewModel(val movieRentalDao: MovieRentalDao,
 
     fun onValidationErrorShown() {
         _showValidationError.value = false
+    }
+
+    fun showDatePicker(field: String) {
+        _showDatePickerForField.value = field
+    }
+
+    fun onDateSelected(year: Int, month: Int, day: Int, field: String) {
+        val calendar = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time)
+
+        when (field) {
+            "dateOfReceipt" -> dateOfReceipt.value = formattedDate
+            "dateOfReturn" -> dateOfReturn.value = formattedDate
+        }
+    }
+
+    fun onDatePickerShown() {
+        _showDatePickerForField.value = null
     }
 }

@@ -34,12 +34,12 @@ class MovieCatalogViewModel(val dao: MovieDao) : ViewModel() {
         _navigateToInsert.value = false
     }
 
-    fun setFilters(filters: Map<String, Any?>) {
-        search(filters)
-    }
-
     init {
         search(emptyMap())
+    }
+
+    fun setFilters(filters: Map<String, Any?>) {
+        search(filters)
     }
 
     private fun search(filters: Map<String, Any?>) {

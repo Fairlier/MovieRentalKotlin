@@ -46,12 +46,12 @@ class SearchMovieViewModel(val dao: MovieDao) : ViewModel() {
     fun search() {
         _filters.value = mapOf(
             Constants.Movie.TITLE to title.takeIf { it.isNotEmpty() },
-            Constants.Movie.RELEASE_YEAR to releaseYear.toString().takeIf { it.isNotEmpty() },
+            Constants.Movie.RELEASE_YEAR to releaseYear.value.toString().takeIf { it.isNotEmpty() },
             Constants.Movie.DIRECTOR to director.takeIf { it.isNotEmpty() },
             Constants.Movie.COUNTRY to country.takeIf { it.isNotEmpty() },
-            Constants.Movie.DURATION to if (duration > 0) duration else null,
-            Constants.Movie.RENTAL_COST to if (rentalCost > 0) rentalCost else null,
-            Constants.Movie.AVERAGE_RATING to if (averageRating > 0) averageRating else null
+            Constants.Movie.DURATION to if (duration > 0.0) duration else null,
+            Constants.Movie.RENTAL_COST to if (rentalCost > 0.0) rentalCost else null,
+            Constants.Movie.AVERAGE_RATING to if (averageRating > 0.0) averageRating else null
         )
         _navigateToCatalogAfterSearch.value = true
     }

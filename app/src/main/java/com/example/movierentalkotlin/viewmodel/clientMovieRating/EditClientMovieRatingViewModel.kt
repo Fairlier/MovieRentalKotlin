@@ -148,6 +148,14 @@ class EditClientMovieRatingViewModel(val id: Long,
                             ?: clientMovieRatingWithDetailsDto.value?.comment ?: itemToUpdate.comment
                     )
                     clientMovieRatingDao.update(updatedRating)
+
+                    val newAverage = clientMovieRatingDao.calculateAverageRating(clientMovieRatingData.value?.movieId
+                        ?: clientMovieRatingWithDetailsDto.value?.movieId ?: itemToUpdate.movieId)
+                    if (newAverage != null) {
+                        movieDao.updateAverageRating(clientMovieRatingData.value?.movieId
+                            ?: clientMovieRatingWithDetailsDto.value?.movieId ?: itemToUpdate.movieId, newAverage)
+                    }
+
                     _navigateToViewAfterUpdate.value = true
                 }
             }

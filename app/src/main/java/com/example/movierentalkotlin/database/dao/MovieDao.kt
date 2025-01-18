@@ -14,6 +14,9 @@ interface MovieDao {
     @Insert
     suspend fun insert(movie: Movie)
 
+    @Insert
+    suspend fun insertAll(movies: List<Movie>)
+
     @Update
     suspend fun update(movie: Movie)
 
@@ -45,4 +48,11 @@ interface MovieDao {
         rentalCost: Double?,
         averageRating: Double?
     ): LiveData<List<Movie>>
+
+    @Query("""
+        UPDATE movies 
+        SET average_rating = :newAverage 
+        WHERE id = :movieId
+    """)
+    suspend fun updateAverageRating(movieId: Long, newAverage: Double)
 }

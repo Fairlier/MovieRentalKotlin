@@ -51,13 +51,13 @@ class InsertEmployeeViewModel(val dao: EmployeeDao) : ViewModel() {
             }
             val employee = Employee(
                 fullName = fullName,
-                dateOfBirth = dateOfBirth.toString(),
+                dateOfBirth = dateOfBirth.value.toString(),
                 address = address,
                 phoneNumber = phoneNumber,
-                dateOfHire = dateOfHire.toString(),
-                dateOfDismissal = dateOfDismissal.toString(),
+                dateOfHire = dateOfHire.value.toString(),
+                dateOfDismissal = dateOfDismissal.value.toString(),
                 salary = salary,
-                imageUrl = _currentImageUrl.value
+                imageUrl = _currentImageUrl.value.toString()
             )
             dao.insert(employee)
             _navigateToCatalogAfterInsert.value = true

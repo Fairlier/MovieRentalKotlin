@@ -14,6 +14,9 @@ interface EmployeeDao {
     @Insert
     suspend fun insert(employee: Employee)
 
+    @Insert
+    suspend fun insertAll(employees: List<Employee>)
+
     @Update
     suspend fun update(employee: Employee)
 

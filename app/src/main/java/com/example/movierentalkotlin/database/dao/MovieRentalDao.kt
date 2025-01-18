@@ -14,13 +14,16 @@ import com.example.movierentalkotlin.database.entity.MovieRental
 interface MovieRentalDao {
 
     @Insert
-    suspend fun insert(movie: MovieRental)
+    suspend fun insert(movieRental: MovieRental)
+
+    @Insert
+    suspend fun insertAll(movieRentals: List<MovieRental>)
 
     @Update
-    suspend fun update(movie: MovieRental)
+    suspend fun update(movieRentals: MovieRental)
 
     @Delete
-    suspend fun delete(movie: MovieRental)
+    suspend fun delete(movieRentals: MovieRental)
 
     @Query("SELECT * FROM movie_rentals WHERE id = :id")
     fun getById(id: Long): LiveData<MovieRental>

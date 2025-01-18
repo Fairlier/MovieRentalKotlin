@@ -16,6 +16,9 @@ interface ClientMovieRatingDao {
     @Insert
     suspend fun insert(clientMovieRating: ClientMovieRating)
 
+    @Insert
+    suspend fun insertAll(clientMovieRatings: List<ClientMovieRating>)
+
     @Update
     suspend fun update(clientMovieRating: ClientMovieRating)
 
@@ -136,4 +139,11 @@ interface ClientMovieRatingDao {
         movieId: Long?,
         rating: Double?
     ): LiveData<List<ClientMovieRatingWithDetailsDto>>
+
+    @Query("""
+        SELECT AVG(rating) 
+        FROM client_movie_ratings 
+        WHERE movie_id = :movieId
+    """)
+    suspend fun calculateAverageRating(movieId: Long): Double?
 }

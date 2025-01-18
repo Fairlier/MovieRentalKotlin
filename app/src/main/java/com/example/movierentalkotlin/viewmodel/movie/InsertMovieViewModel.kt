@@ -64,7 +64,7 @@ class InsertMovieViewModel(val dao: MovieDao) : ViewModel() {
                 rentalCost = rentalCost,
                 averageRating = averageRating,
                 description = description,
-                imageUrl = _currentImageUrl.value
+                imageUrl = _currentImageUrl.value.toString()
             )
             dao.insert(movie)
             _navigateToCatalogAfterInsert.value = true

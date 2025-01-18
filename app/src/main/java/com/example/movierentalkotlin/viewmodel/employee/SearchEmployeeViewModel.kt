@@ -36,11 +36,11 @@ class SearchEmployeeViewModel(val dao: EmployeeDao) : ViewModel() {
     fun search() {
         _filters.value = mapOf(
             Constants.Employee.FULL_NAME to fullName.takeIf { it.isNotEmpty() },
-            Constants.Employee.DATE_OF_BIRTH to dateOfBirth.toString().takeIf { it.isNotEmpty() },
+            Constants.Employee.DATE_OF_BIRTH to dateOfBirth.value.toString().takeIf { it.isNotEmpty() },
             Constants.Employee.ADDRESS to address.takeIf { it.isNotEmpty() },
             Constants.Employee.PHONE_NUMBER to phoneNumber.takeIf { it.isNotEmpty() },
-            Constants.Employee.DATE_OF_HIRE to dateOfHire.toString().takeIf { it.isNotEmpty() },
-            Constants.Employee.DATE_OF_DISMISSAL to dateOfDismissal.toString().takeIf { it.isNotEmpty() },
+            Constants.Employee.DATE_OF_HIRE to dateOfHire.value.toString().takeIf { it.isNotEmpty() },
+            Constants.Employee.DATE_OF_DISMISSAL to dateOfDismissal.value.toString().takeIf { it.isNotEmpty() },
             Constants.Employee.SALARY to if (salary > 0) salary else null
         )
         _navigateToCatalogAfterSearch.value = true

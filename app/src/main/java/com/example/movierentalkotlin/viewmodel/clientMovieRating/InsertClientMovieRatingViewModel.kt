@@ -108,6 +108,12 @@ class InsertClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRati
                 comment = currentData.comment
             )
             clientMovieRatingDao.insert(clientMovieRating)
+
+            val newAverage = clientMovieRatingDao.calculateAverageRating(currentData.movieId!!)
+            if (newAverage != null) {
+                movieDao.updateAverageRating(currentData.movieId!!, newAverage)
+            }
+
             _navigateToCatalogAfterInsert.value = true
         }
     }

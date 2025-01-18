@@ -14,6 +14,9 @@ interface ClientDao {
     @Insert
     suspend fun insert(client: Client)
 
+    @Insert
+    suspend fun insertAll(clients: List<Client>)
+
     @Update
     suspend fun update(client: Client)
 

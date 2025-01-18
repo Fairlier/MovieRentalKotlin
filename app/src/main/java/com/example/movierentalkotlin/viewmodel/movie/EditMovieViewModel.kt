@@ -49,7 +49,7 @@ class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
                 itemToUpdate.releaseYear = releaseYear.value.toString()
                 itemToUpdate.duration = _durationAsString.value?.toDoubleOrNull() ?: 0.0
                 itemToUpdate.rentalCost = _rentalCostAsString.value?.toDoubleOrNull() ?: 0.0
-                itemToUpdate.imageUrl = _currentImageUrl.value
+                itemToUpdate.imageUrl = _currentImageUrl.value.toString()
                 dao.update(itemToUpdate)
                 _navigateToViewAfterUpdate.value = true
             }

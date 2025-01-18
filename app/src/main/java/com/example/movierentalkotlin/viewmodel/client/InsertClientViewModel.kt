@@ -47,7 +47,7 @@ class InsertClientViewModel(val dao: ClientDao) : ViewModel() {
                 address = address,
                 phoneNumber = phoneNumber,
                 dateOfRegistration = dateOfRegistration.value.toString(),
-                imageUrl = _currentImageUrl.value
+                imageUrl = _currentImageUrl.value.toString()
             )
             dao.insert(client)
             _navigateToCatalogAfterInsert.value = true

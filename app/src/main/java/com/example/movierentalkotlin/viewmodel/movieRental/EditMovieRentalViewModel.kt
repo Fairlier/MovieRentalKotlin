@@ -45,15 +45,10 @@ class EditMovieRentalViewModel(val id: Long,
     private val _showDatePickerForField = MutableLiveData<String?>()
     val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
 
-    private fun updateMovieRentalData(update: (MovieRentalData) -> MovieRentalData) {
-        val currentData = movieRentalData.value ?: MovieRentalData()
-        movieRentalData.value = update(currentData)
-    }
-
     fun initializationMovieRentalData(movieRentalData: MovieRentalData) {
         this.movieRentalData.value = movieRentalData.copy()
-        this.dateOfReceipt.value = movieRentalData.dateOfReceipt
-        this.dateOfReturn.value = movieRentalData.dateOfReturn
+        dateOfReceipt.value = movieRentalData.dateOfReceipt
+        dateOfReturn.value = movieRentalData.dateOfReturn
     }
 
     fun updateMovieRentalDataFromDto() {
@@ -107,6 +102,8 @@ class EditMovieRentalViewModel(val id: Long,
     }
 
     fun onClientCardClicked() {
+        movieRentalData.value!!.dateOfReceipt = dateOfReceipt.value.toString()
+        movieRentalData.value!!.dateOfReturn = dateOfReturn.value.toString()
         _navigateToClientCatalogSelection.value = true
     }
 
@@ -115,6 +112,8 @@ class EditMovieRentalViewModel(val id: Long,
     }
 
     fun onEmployeeCardClicked() {
+        movieRentalData.value!!.dateOfReceipt = dateOfReceipt.value.toString()
+        movieRentalData.value!!.dateOfReturn = dateOfReturn.value.toString()
         _navigateToEmployeeCatalogSelection.value = true
     }
 
@@ -123,6 +122,8 @@ class EditMovieRentalViewModel(val id: Long,
     }
 
     fun onMovieCardClicked() {
+        movieRentalData.value!!.dateOfReceipt = dateOfReceipt.value.toString()
+        movieRentalData.value!!.dateOfReturn = dateOfReturn.value.toString()
         _navigateToMovieCatalogSelection.value = true
     }
 
@@ -142,9 +143,6 @@ class EditMovieRentalViewModel(val id: Long,
                 updatedData.clientPhoneNumber = it.phoneNumber
                 updatedData.clientDateOfRegistration = it.dateOfRegistration
                 updatedData.clientImageUrl = it.imageUrl
-
-                updatedData.dateOfReceipt = dateOfReceipt.value.toString()
-                updatedData.dateOfReturn = dateOfReturn.value.toString()
                 movieRentalData.postValue(updatedData)
             }
         }
@@ -164,9 +162,6 @@ class EditMovieRentalViewModel(val id: Long,
                 updatedData.employeeDateOfDismissal = it.dateOfDismissal
                 updatedData.employeeSalary = it.salary
                 updatedData.clientImageUrl = it.imageUrl
-
-                updatedData.dateOfReceipt = dateOfReceipt.value.toString()
-                updatedData.dateOfReturn = dateOfReturn.value.toString()
                 movieRentalData.postValue(updatedData)
             }
         }
@@ -186,9 +181,6 @@ class EditMovieRentalViewModel(val id: Long,
                 updatedData.movieRentalCost = it.rentalCost
                 updatedData.movieAverageRating = it.averageRating
                 updatedData.movieImageUrl = it.imageUrl
-
-                updatedData.dateOfReceipt = dateOfReceipt.value.toString()
-                updatedData.dateOfReturn = dateOfReturn.value.toString()
                 movieRentalData.postValue(updatedData)
             }
         }
@@ -198,7 +190,7 @@ class EditMovieRentalViewModel(val id: Long,
         movieRental.observeForever { itemToUpdate ->
             viewModelScope.launch {
                 if (itemToUpdate != null) {
-                    val updatedRating = itemToUpdate.copy(
+                    val updatedData = itemToUpdate.copy(
                         clientId = movieRentalData.value?.clientId
                             ?: movieRentalWithDetailsDto.value?.clientId ?: itemToUpdate.clientId,
                         employeeId = movieRentalData.value?.employeeId
@@ -208,7 +200,7 @@ class EditMovieRentalViewModel(val id: Long,
                         dateOfReceipt = dateOfReceipt.value.toString(),
                         dateOfReturn = dateOfReturn.value.toString()
                     )
-                    movieRentalDao.update(updatedRating)
+                    movieRentalDao.update(updatedData)
                     _navigateToViewAfterUpdate.value = true
                 }
             }
