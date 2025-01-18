@@ -18,15 +18,6 @@ class EditClientViewModel(id: Long, val dao: ClientDao) : ViewModel() {
     val _currentImageUrl = MutableLiveData<String?>()
     val currentImageUrl: LiveData<String?> get() = _currentImageUrl
 
-    private val _navigateToViewAfterUpdate = MutableLiveData<Boolean>(false)
-    val navigateToViewAfterUpdate: LiveData<Boolean> get() = _navigateToViewAfterUpdate
-
-    private val _navigateToCatalogAfterDelete = MutableLiveData<Boolean>(false)
-    val navigateToCatalogAfterDelete: LiveData<Boolean> get() = _navigateToCatalogAfterDelete
-
-    private val _showDatePickerForField = MutableLiveData<String?>()
-    val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
-
     val client = dao.getById(id)
 
     init {
@@ -38,6 +29,15 @@ class EditClientViewModel(id: Long, val dao: ClientDao) : ViewModel() {
             }
         }
     }
+
+    private val _navigateToViewAfterUpdate = MutableLiveData<Boolean>(false)
+    val navigateToViewAfterUpdate: LiveData<Boolean> get() = _navigateToViewAfterUpdate
+
+    private val _navigateToCatalogAfterDelete = MutableLiveData<Boolean>(false)
+    val navigateToCatalogAfterDelete: LiveData<Boolean> get() = _navigateToCatalogAfterDelete
+
+    private val _showDatePickerForField = MutableLiveData<String?>()
+    val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
 
     fun update() {
         viewModelScope.launch {

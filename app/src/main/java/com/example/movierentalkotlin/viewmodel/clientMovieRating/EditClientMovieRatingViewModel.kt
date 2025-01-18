@@ -20,13 +20,7 @@ class EditClientMovieRatingViewModel(val id: Long,
     val clientMovieRatingData = MutableLiveData<ClientMovieRatingData>(ClientMovieRatingData())
     val clientMovieRatingWithDetailsDto = clientMovieRatingDao.getByIdWithDetails(id)
 
-    var ratingAsString: String
-        get() = clientMovieRatingData.value?.rating?.toString() ?: ""
-        set(value) {
-            val updatedData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
-            updatedData.rating = value.toDoubleOrNull() ?: 0.0
-            clientMovieRatingData.value = updatedData
-        }
+    val ratingAsString = MutableLiveData<String>("")
 
     private val _navigateToViewAfterUpdate = MutableLiveData<Boolean>(false)
     val navigateToViewAfterUpdate: LiveData<Boolean> get() = _navigateToViewAfterUpdate
@@ -42,6 +36,7 @@ class EditClientMovieRatingViewModel(val id: Long,
 
     fun initializationClientMovieRatingData(clientMovieRatingData: ClientMovieRatingData) {
         this.clientMovieRatingData.value = clientMovieRatingData.copy()
+        ratingAsString.value = clientMovieRatingData.rating.toString()
     }
 
     fun updateClientMovieRatingDataFromDto() {
@@ -71,6 +66,7 @@ class EditClientMovieRatingViewModel(val id: Long,
                     }
                     if (updatedData.rating <= 0.0) {
                         updatedData.rating = it.rating
+                        ratingAsString.value = it.rating.toString()
                     }
                     if (updatedData.comment.isEmpty()) {
                         updatedData.comment = it.comment
@@ -82,6 +78,7 @@ class EditClientMovieRatingViewModel(val id: Long,
     }
 
     fun onClientCardClicked() {
+        clientMovieRatingData.value!!.rating = ratingAsString.value?.toDoubleOrNull() ?: 0.0
         _navigateToClientCatalogSelection.value = true
     }
 
@@ -90,6 +87,7 @@ class EditClientMovieRatingViewModel(val id: Long,
     }
 
     fun onMovieCardClicked() {
+        clientMovieRatingData.value!!.rating = ratingAsString.value?.toDoubleOrNull() ?: 0.0
         _navigateToMovieCatalogSelection.value = true
     }
 
@@ -142,8 +140,7 @@ class EditClientMovieRatingViewModel(val id: Long,
                             ?: clientMovieRatingWithDetailsDto.value?.clientId ?: itemToUpdate.clientId,
                         movieId = clientMovieRatingData.value?.movieId
                             ?: clientMovieRatingWithDetailsDto.value?.movieId ?: itemToUpdate.movieId,
-                        rating = clientMovieRatingData.value?.rating
-                            ?: clientMovieRatingWithDetailsDto.value?.rating ?: itemToUpdate.rating,
+                        rating = ratingAsString.value?.toDoubleOrNull() ?: itemToUpdate.rating,
                         comment = clientMovieRatingData.value?.comment
                             ?: clientMovieRatingWithDetailsDto.value?.comment ?: itemToUpdate.comment
                     )

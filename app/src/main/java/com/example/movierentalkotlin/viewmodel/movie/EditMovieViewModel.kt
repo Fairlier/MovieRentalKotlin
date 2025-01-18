@@ -21,6 +21,19 @@ class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
     val _currentImageUrl = MutableLiveData<String?>()
     val currentImageUrl: LiveData<String?> get() = _currentImageUrl
 
+    val movie = dao.getById(id)
+
+    init {
+        movie.observeForever { movie ->
+            if (movie != null) {
+                releaseYear.value = movie.releaseYear
+                _durationAsString.value = movie.duration.toString()
+                _rentalCostAsString.value = movie.rentalCost.toString()
+                _currentImageUrl.value = movie.imageUrl
+            }
+        }
+    }
+
     private val _navigateToViewAfterUpdate = MutableLiveData<Boolean>(false)
     val navigateToViewAfterUpdate: LiveData<Boolean> get() = _navigateToViewAfterUpdate
 
@@ -29,18 +42,6 @@ class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
 
     private val _showDatePickerForField = MutableLiveData<String?>()
     val showDatePickerForField: LiveData<String?> get() = _showDatePickerForField
-
-    val movie = dao.getById(id)
-
-    init {
-        movie.observeForever { movie ->
-            if (movie != null) {
-                _durationAsString.value = movie.duration.toString()
-                _rentalCostAsString.value = movie.rentalCost.toString()
-                _currentImageUrl.value = movie.imageUrl
-            }
-        }
-    }
 
     fun update() {
         viewModelScope.launch {

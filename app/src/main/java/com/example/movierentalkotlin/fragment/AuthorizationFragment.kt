@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.movierentalkotlin.databinding.FragmentAuthorizationBinding
 import com.example.movierentalkotlin.util.Constants
+import com.example.movierentalkotlin.util.SessionManager
 import com.example.movierentalkotlin.viewmodel.AuthorizationViewModel
 
 class AuthorizationFragment : Fragment() {
@@ -36,7 +37,7 @@ class AuthorizationFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.logout(requireContext())
+        val sessionManager = SessionManager(this.requireContext())
 
         val roles = arrayOf(Constants.Role.ADMINISTRATOR)
         val adapter = ArrayAdapter(
@@ -60,6 +61,7 @@ class AuthorizationFragment : Fragment() {
 
         viewModel.navigateToCatalog.observe(viewLifecycleOwner) { navigate ->
             if (navigate) {
+                sessionManager.setLoginState(true, viewModel.selectedRole.value.toString())
                 val action = AuthorizationFragmentDirections
                     .actionAuthorizationFragmentToMovieCatalogFragment()
                 view.findNavController().navigate(action)

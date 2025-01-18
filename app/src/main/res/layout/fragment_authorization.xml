@@ -50,7 +50,7 @@
                 android:layout_height="50dp"
                 android:text="Войти"
                 android:textSize="16sp"
-                android:onClick="@{() -> viewModel.login(context)}" />
+                android:onClick="@{() -> viewModel.login()}" />
         </LinearLayout>
     </LinearLayout>
 </layout>

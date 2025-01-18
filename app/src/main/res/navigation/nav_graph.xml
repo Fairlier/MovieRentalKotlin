@@ -13,7 +13,9 @@
 
         <action
             android:id="@+id/action_authorizationFragment_to_movieCatalogFragment"
-            app:destination="@id/movieCatalogFragment" />
+            app:destination="@id/movieCatalogFragment"
+            app:popUpTo="@id/authorizationFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
