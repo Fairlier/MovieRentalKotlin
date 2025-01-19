@@ -452,7 +452,7 @@
     <fragment
         android:id="@+id/clientMovieRatingCatalogFragment"
         android:name="com.example.movierentalkotlin.fragment.clientMovieRating.ClientMovieRatingCatalogFragment"
-        android:label="Рейтинг фильмов"
+        android:label="Оценки фильмов"
         tools:layout="@layout/fragment_employee_catalog" >
 
         <action

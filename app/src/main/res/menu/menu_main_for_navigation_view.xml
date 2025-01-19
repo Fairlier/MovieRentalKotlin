@@ -20,7 +20,7 @@
         <item
             android:id="@+id/clientMovieRatingCatalogFragment"
             android:icon="@drawable/baseline_star_rate_24"
-            android:title="Рейтинг фильмов" />
+            android:title="Оценки фильмов" />
 
         <item
             android:id="@+id/movieRentalCatalogFragment"
