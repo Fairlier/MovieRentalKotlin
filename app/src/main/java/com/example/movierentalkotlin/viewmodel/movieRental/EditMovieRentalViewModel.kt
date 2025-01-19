@@ -190,7 +190,7 @@ class EditMovieRentalViewModel(val id: Long,
         movieRental.observeForever { itemToUpdate ->
             viewModelScope.launch {
                 if (itemToUpdate != null) {
-                    val updatedData = itemToUpdate.copy(
+                    val currentData = itemToUpdate.copy(
                         clientId = movieRentalData.value?.clientId
                             ?: movieRentalWithDetailsDto.value?.clientId ?: itemToUpdate.clientId,
                         employeeId = movieRentalData.value?.employeeId
@@ -200,7 +200,7 @@ class EditMovieRentalViewModel(val id: Long,
                         dateOfReceipt = dateOfReceipt.value.toString(),
                         dateOfReturn = dateOfReturn.value.toString()
                     )
-                    movieRentalDao.update(updatedData)
+                    movieRentalDao.update(currentData)
                     _navigateToViewAfterUpdate.value = true
                 }
             }

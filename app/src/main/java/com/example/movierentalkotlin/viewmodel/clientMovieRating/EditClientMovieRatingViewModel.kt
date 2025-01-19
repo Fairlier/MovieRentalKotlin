@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.movierentalkotlin.database.dao.ClientDao
 import com.example.movierentalkotlin.database.dao.ClientMovieRatingDao
 import com.example.movierentalkotlin.database.dao.MovieDao
-import com.example.movierentalkotlin.database.entity.ClientMovieRating
 import com.example.movierentalkotlin.util.ClientMovieRatingData
 import kotlinx.coroutines.launch
 
@@ -36,7 +35,7 @@ class EditClientMovieRatingViewModel(val id: Long,
 
     fun initializationClientMovieRatingData(clientMovieRatingData: ClientMovieRatingData) {
         this.clientMovieRatingData.value = clientMovieRatingData.copy()
-        ratingAsString.value = clientMovieRatingData.rating.toString()
+        ratingAsString.value = clientMovieRatingData.rating.coerceIn(0.0, 10.0).toString()
     }
 
     fun updateClientMovieRatingDataFromDto() {
@@ -135,22 +134,29 @@ class EditClientMovieRatingViewModel(val id: Long,
         clientMovieRating.observeForever { itemToUpdate ->
             viewModelScope.launch {
                 if (itemToUpdate != null) {
-                    val updatedRating = itemToUpdate.copy(
+                    val currentData = itemToUpdate.copy(
                         clientId = clientMovieRatingData.value?.clientId
                             ?: clientMovieRatingWithDetailsDto.value?.clientId ?: itemToUpdate.clientId,
                         movieId = clientMovieRatingData.value?.movieId
                             ?: clientMovieRatingWithDetailsDto.value?.movieId ?: itemToUpdate.movieId,
-                        rating = ratingAsString.value?.toDoubleOrNull() ?: itemToUpdate.rating,
+                        rating = (ratingAsString.value?.toDoubleOrNull() ?: itemToUpdate.rating).coerceIn(0.0, 10.0),
                         comment = clientMovieRatingData.value?.comment
                             ?: clientMovieRatingWithDetailsDto.value?.comment ?: itemToUpdate.comment
                     )
-                    clientMovieRatingDao.update(updatedRating)
+                    clientMovieRatingDao.update(currentData)
 
-                    val newAverage = clientMovieRatingDao.calculateAverageRating(clientMovieRatingData.value?.movieId
-                        ?: clientMovieRatingWithDetailsDto.value?.movieId ?: itemToUpdate.movieId)
-                    if (newAverage != null) {
-                        movieDao.updateAverageRating(clientMovieRatingData.value?.movieId
-                            ?: clientMovieRatingWithDetailsDto.value?.movieId ?: itemToUpdate.movieId, newAverage)
+                    val rawAverageRating = clientMovieRatingDao.calculateAverageRating(
+                        clientMovieRatingData.value?.movieId
+                            ?: clientMovieRatingWithDetailsDto.value?.movieId ?: itemToUpdate.movieId
+                    )
+
+                    if (rawAverageRating != null) {
+                        val normalizedAverageRating = rawAverageRating.coerceIn(0.0, 10.0)
+                        movieDao.updateAverageRating(
+                            clientMovieRatingData.value?.movieId
+                                ?: clientMovieRatingWithDetailsDto.value?.movieId ?: itemToUpdate.movieId,
+                            normalizedAverageRating
+                        )
                     }
 
                     _navigateToViewAfterUpdate.value = true

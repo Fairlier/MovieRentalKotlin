@@ -45,13 +45,13 @@ class EditMovieViewModel(id: Long, val dao: MovieDao) : ViewModel() {
 
     fun update() {
         viewModelScope.launch {
-            val itemToUpdate = movie.value
-            if (itemToUpdate != null) {
-                itemToUpdate.releaseYear = releaseYear.value.toString()
-                itemToUpdate.duration = _durationAsString.value?.toDoubleOrNull() ?: 0.0
-                itemToUpdate.rentalCost = _rentalCostAsString.value?.toDoubleOrNull() ?: 0.0
-                itemToUpdate.imageUrl = _currentImageUrl.value.toString()
-                dao.update(itemToUpdate)
+            val currentData = movie.value
+            if (currentData != null) {
+                currentData.releaseYear = releaseYear.value.toString()
+                currentData.duration = _durationAsString.value?.toDoubleOrNull() ?: 0.0
+                currentData.rentalCost = _rentalCostAsString.value?.toDoubleOrNull() ?: 0.0
+                currentData.imageUrl = _currentImageUrl.value.toString()
+                dao.update(currentData)
                 _navigateToViewAfterUpdate.value = true
             }
         }

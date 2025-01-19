@@ -21,7 +21,7 @@ class InsertClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRati
         get() = clientMovieRatingData.value?.rating?.toString() ?: ""
         set(value) {
             val updatedData = clientMovieRatingData.value?.copy() ?: ClientMovieRatingData()
-            updatedData.rating = value.toDoubleOrNull() ?: 0.0
+            updatedData.rating = (value.toDoubleOrNull() ?: 0.0).coerceIn(0.0, 10.0)
             clientMovieRatingData.value = updatedData
         }
 
@@ -104,14 +104,16 @@ class InsertClientMovieRatingViewModel(val clientMovieRatingDao: ClientMovieRati
             val clientMovieRating = ClientMovieRating(
                 clientId = currentData.clientId!!,
                 movieId = currentData.movieId!!,
-                rating = currentData.rating,
+                rating = currentData.rating.coerceIn(0.0, 10.0),
                 comment = currentData.comment
             )
             clientMovieRatingDao.insert(clientMovieRating)
 
-            val newAverage = clientMovieRatingDao.calculateAverageRating(currentData.movieId!!)
-            if (newAverage != null) {
-                movieDao.updateAverageRating(currentData.movieId!!, newAverage)
+            val rawAverageRating = clientMovieRatingDao.calculateAverageRating(currentData.movieId!!)
+
+            if (rawAverageRating != null) {
+                val normalizedAverageRating = rawAverageRating.coerceIn(0.0, 10.0)
+                movieDao.updateAverageRating(currentData.movieId!!, normalizedAverageRating)
             }
 
             _navigateToCatalogAfterInsert.value = true

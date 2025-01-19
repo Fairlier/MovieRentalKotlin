@@ -9,14 +9,14 @@ import com.example.movierentalkotlin.util.Constants
 
 class ClientMovieRatingCatalogViewModel(val dao: ClientMovieRatingDao) : ViewModel() {
 
+    private val _catalog = MutableLiveData<List<ClientMovieRatingWithDetailsDto>>()
+    val catalog: LiveData<List<ClientMovieRatingWithDetailsDto>> get() = _catalog
+
     private val _navigateToView = MutableLiveData<Long?>()
     val navigateToView: LiveData<Long?> get() = _navigateToView
 
     private val _navigateToInsert = MutableLiveData<Boolean>(false)
     val navigateToInsert: LiveData<Boolean> get() = _navigateToInsert
-
-    private val _catalog = MutableLiveData<List<ClientMovieRatingWithDetailsDto>>()
-    val catalog: LiveData<List<ClientMovieRatingWithDetailsDto>> get() = _catalog
 
     fun onCatalogItemClicked(id: Long) {
         _navigateToView.value = id

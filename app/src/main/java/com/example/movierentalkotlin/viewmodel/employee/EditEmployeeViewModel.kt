@@ -46,14 +46,14 @@ class EditEmployeeViewModel(id: Long, val dao: EmployeeDao) : ViewModel() {
 
     fun update() {
         viewModelScope.launch {
-            val itemToUpdate = employee.value
-            if (itemToUpdate != null) {
-                itemToUpdate.dateOfBirth = dateOfBirth.value.toString()
-                itemToUpdate.dateOfHire = dateOfHire.value.toString()
-                itemToUpdate.dateOfDismissal = dateOfDismissal.value.toString()
-                itemToUpdate.salary = _salaryAsString.value?.toDoubleOrNull() ?: 0.0
-                itemToUpdate.imageUrl = _currentImageUrl.value.toString()
-                dao.update(itemToUpdate)
+            val currentData = employee.value
+            if (currentData != null) {
+                currentData.dateOfBirth = dateOfBirth.value.toString()
+                currentData.dateOfHire = dateOfHire.value.toString()
+                currentData.dateOfDismissal = dateOfDismissal.value.toString()
+                currentData.salary = _salaryAsString.value?.toDoubleOrNull() ?: 0.0
+                currentData.imageUrl = _currentImageUrl.value.toString()
+                dao.update(currentData)
                 _navigateToViewAfterUpdate.value = true
             }
         }
