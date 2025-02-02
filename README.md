@@ -8,8 +8,8 @@
 
 База данных состоит из пяти таблиц: movies, employees, clients, movie_rentals, client_movie_ratings.
 
-![image](https://media.discordapp.net/attachments/786554540442386432/1333522099381211189/IPapkIcmC5mbu5nXu5UYAFnnu6qbu6rfu6sTu7nRs2arm7jyogAAA7.png?ex=679932bc&is=6797e13c&hm=04395f6c79e6e23be60fc1f43f33b597fb5369563488ab92a53c0d5d2dd654ca&=&format=webp&quality=lossless)
+![db](https://github.com/user-attachments/assets/ae6332b6-1ebd-4ef3-9147-af3c14566cad)
 
 Видео, демонстрирующее работу приложения: [видео](https://drive.google.com/file/d/1_HKwq-8N95N00YTqiRSd-W29khGIe_jy/view?usp=sharing)
 
-![image](https://media.discordapp.net/attachments/786554540442386432/1333530212318707743/movie-rental-kotlin.png?ex=67993a4a&is=6797e8ca&hm=662af1cadcc4b22fc39be76a1d1144bf35b7f9d4be205939ec28db2786a5d07f&=&format=webp&quality=lossless&width=326&height=619)
+![movie-rental](https://github.com/user-attachments/assets/c25f7918-c715-4c18-9bc4-ba7901dabdfd)
